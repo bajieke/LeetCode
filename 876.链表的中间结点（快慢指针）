@@ -1,0 +1,25 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head){
+        ListNode *fast=head;
+        ListNode *slow=head;
+        while(fast!=NULL && fast->next!=NULL)
+        {
+            slow=slow->next;           //偶数个时，fast 为空，停止
+            fast=fast->next->next;      
+            // 奇数个时，进行到，fast为尾结点，就应该停止
+            //此时，fast!=NULL, fast->next==NULL ,应该停止，所以两个条件都要满足&& 而不是||
+        }
+        return slow;
+    }
+};
