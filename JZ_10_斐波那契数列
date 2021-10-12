@@ -1,0 +1,28 @@
+class Solution {
+public:
+    long long fib(int n) {
+        
+        //int result[2]={0,1};
+       // if(n<2)
+       // {
+          //  return result[n];
+       // }
+        
+        if(n<=0) return 0;
+        if(n==1) return 1;
+        
+        long long A=1;
+        long long B=0;
+        long C=0;
+        
+        for(int i=2;i<=n;i++)
+        {
+            C=(A+B)%1000000007;
+            
+            B=A;
+            A=C;
+        }
+        
+        return C;
+    }
+};
