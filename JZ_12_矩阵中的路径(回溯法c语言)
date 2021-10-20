@@ -1,0 +1,65 @@
+bool hasPath(char* matrix,int rows,int cols,char* str)
+{
+    if(matrix==nullptr || rows<=0 ||cols<=0 ||str==nullptr)
+        return false;
+    
+    bool* visited=new bool[rows*cols];
+    memset(visited,0,rows*cols);
+    
+    int pathLength=0;
+    
+    for(int row=0;row<=rows;row++)
+    {
+        for(int col=0;col<=cols;cols++)
+        {
+            if(hasPathCore(matrix,rows,cols,row,col,str,pathLength,visited))
+                return true;
+        }
+    }
+    
+    delete[] visited;
+    
+    return false;
+}
+
+bool hasPathCore(const char* matrix,int rows,int cols,int row,int col,const char*str,int pathLength,bool* visited)
+{
+    //递归到最后一步,才算成功，否则按照定义的false返回
+    if(str[pathLength]=='\0')
+    {
+        return true;
+    }
+    
+    //定义，找寻路径是否成功
+    bool hasPath=false;
+   
+    //各路径试探
+    //行列满足要求，对应字符相等，未被标记
+    if(row>0 && row<=rows && col>0 && col<=cols && matrix[row*cols+col]==str[pathLength] && visited[row*cols+col]==false)
+    {
+        pathLength++;
+        
+        visited[row*cols+col]==true;
+        
+        //递归调用
+        hasPath=hasPathCore(matrix,rows,cols,row+1,col,str,pathLength,visited[(row+1)*cols+col])
+             || hasPathCore(matrix,rows,cols,row-1,col,str,pathLength,visited[(row-1)*cols+col])
+             || hasPathCore(matrix,rows,cols,row,col+1,str,pathLength,visited[row*cols+(col+1)])
+             || hasPathCore(matrix,rows,cols,row,col-1,str,pathLength,visited[row*cols+(col-1)]);
+        
+        //4种路径都不满足，返回上一层
+        if(!hasPath)
+        {
+            pathLength--;
+            visited[row*cols+col]=false;
+        }
+    }
+    
+    //返回结果
+    return hasPath;
+}
+
+
+
+
+    
