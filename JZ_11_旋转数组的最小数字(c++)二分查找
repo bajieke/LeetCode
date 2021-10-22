@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int minArray(vector<int>& numbers) 
+    {
+        int i=0;
+        int j=numbers.size()-1;
+        
+        int m=i;
+        
+        //只有一个数字
+        if(j==0)
+        {
+            return numbers[i];
+        }
+        
+        //反转了至少一个数字
+        while(numbers[i]>=numbers[j])
+        {
+            if((j-i)==1)
+            {
+                return numbers[j];
+                break;
+            }
+            
+            m=(i+j)/2;
+            
+            if(numbers[m]>numbers[j]) 
+            {
+                i=m;
+            }
+            else if(numbers[m]<numbers[j])
+            {
+                j=m;
+            }
+            else if(numbers[m]==numbers[j])
+            {
+                //j--;
+            }
+       }
+       //反转了0个数字
+       return numbers [i];
+}；
+//特殊情况
+// 10 1 10 10 10
+//2 22 1 2
+//1
+//12 3
