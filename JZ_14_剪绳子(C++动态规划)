@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int cuttingRope(int n) {
+        if(n<2)
+            return 0;
+        if(n==2)           // f(2)=1
+            return 1;
+        if(n==3)           // f(3)=2
+            return 2;
+        
+        //从0到n总共 n+1个
+        int* product=new int[n+1];
+        
+        //代表每段长度
+        product[0]=0;
+        product[1]=1;
+        product[2]=2;
+        product[3]=3;
+        
+        int max=0;
+        
+        for(int i=4;i<=n;i++)
+        {
+            max=0;
+            for(int j=0;j<=i/2;j++)
+            {
+                int temp=product[j]*product[i-j];
+                if(max<temp)
+                {
+                    max=temp;
+                }
+                product[i]=max;   // f(i)=max
+            }
+        }
+        
+        max=product[n];
+        
+        delete[] product;
+        
+        return max;
+    }
+};
