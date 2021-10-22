@@ -1,0 +1,23 @@
+//贪婪算法
+//尽可能3的次数多
+//最后为4个时，尽可能是4
+//
+
+int cuttingRope(int n){
+    if(n<2)
+        return 0;
+    if(n==2)
+        return 1;
+    if(n==3)
+        return 2;
+    
+    int timesOf3=n/3;
+    
+    if(n-timesOf3==1)
+        timesOf3--;
+    
+    int timesOf2=(n-timesOf3*3)/2;
+    
+    return (int)(pow(3,timesOf3)*pow(2,timesOf2));
+}
+
