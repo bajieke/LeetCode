@@ -1,0 +1,35 @@
+class Solution
+{
+public:
+    double myPow(double x,int n)
+    {
+        //n有符号数，范围大
+        long num=n;
+        double ans=1.0;  
+        
+        if(num==0 || x==0)
+            return 1;
+        
+        //如果指数为负数
+        if(num<0)
+        {
+            x=1.0/x;
+            num=(-num);
+        }
+               
+        while(num)
+        {
+            if(num&1)  //指数为奇数
+            {
+                ans=ans*x;
+            }  
+            x=x*x;
+            num=num>>1;
+        }
+        
+        return ans;
+    }
+};
+
+
+
