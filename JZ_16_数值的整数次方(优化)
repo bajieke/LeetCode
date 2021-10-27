@@ -1,0 +1,56 @@
+bool g_InvalidInput=false;
+
+double Power(double base,int exponent)
+{
+    g_InvalidInput=false;
+    
+    if(equal(base,0.0) && exponent<0)
+    {    
+        g_InvalidInput=true;
+        return 0.0;
+    }
+    
+    if(exponent<0)
+        unsigned int absExponent=(unsigned int)(-exponent);
+    absExponent=(unsigned int)(exponent);
+    
+    double result=PowerWithUnsignedExponent(base,absExponent);
+    
+    if(exponent<0)
+        result=1.0/result;
+    
+    return result;
+}
+
+double PowerWithUnsignedExponent(double base,unsigned int absExponent)
+{
+    double result=1.0;
+    
+    for(int i=0;i<absExponent;i++)
+    {
+        result*=base;
+    }
+    
+    return result;
+}
+
+double PowerWithUnsignedExponent(double base,unsigned int absExponent)
+{
+    if(exponent==0)
+        return 1;
+    if(exponent==1)
+        return base;
+    
+    //递归调用
+    double result=PowerWithUnsignedExponent(base,exponent>>1);
+    
+    result*=result;
+    
+    //指数为奇数多乘一个base本身
+    if(n&1)
+        result*=base;
+    return result;
+}
+
+    
+  
