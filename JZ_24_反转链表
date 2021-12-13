@@ -1,0 +1,55 @@
+//——————————面试题24.反转链表————————————————
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* pHead) {
+        if(pHead==nullptr || pHead->next==nullptr)
+        {
+            return pHead;
+        }
+    
+        ListNode *pBefore=pHead;
+        ListNode *p1=pBefore->next;
+    
+        //只有两个节点
+        if(p1->next==nullptr)
+        {
+            p1->next=pBefore;
+            pBefore->next=nullptr;
+            return p1;
+        }
+        else //p1->next!=nullptr
+        {
+            ListNode *pNext=p1->next;
+            
+            ListNode *pTail=pBefore;
+            
+            while(p1!=nullptr)
+            {
+                p1->next=pBefore;
+                
+                if(pNext==nullptr)
+                { 
+                    pTail->next=nullptr;
+                    return p1;
+                }
+                pBefore=p1;
+                p1=pNext;
+                pNext=pNext->next;
+            }
+            
+            pTail->next=nullptr;
+        }
+        
+        return p1;
+    }
+};
+               
+    
