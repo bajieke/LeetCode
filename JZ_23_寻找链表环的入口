@@ -1,0 +1,68 @@
+//如果存在环，找到相遇节点
+//否则返回空
+ListNode *MeetingNode(ListNode *pHead)
+{
+    if(pHead==nullptr)
+    {
+        return nullptr;
+    }
+    
+    ListNode *low=pHead;
+    ListNode *fast=pHead;
+    
+    while(fast && fast->next && low!=fast)
+    {
+        low=low->next;
+        fast=fast->next->next;
+    }
+    
+    if(fast->next==nullptr)
+    {
+        return nullptr;
+    }
+    else
+    {
+        return low;
+    }
+}
+
+//找到环中任意一个节点，得出环的数目
+//找到环的入口地址
+ListNode *EntryNodeOfLoop(ListNode *pHead)
+{
+    if(pHead==nullptr || pHead->next==nullptr)
+        return nullptr;
+        
+    ListNode *fast=MeetingNode(pHead);
+    if(fast==nullptr)
+    {
+        return nullptr;
+    }
+    
+    ListNode *now=fast;
+    int count=0;
+    
+    //while循环第一步先执行循环体，不判断条件
+    while(now!=fast)
+    {
+        fast=fast->next;
+        ++count;
+    }
+    
+    ListNode *p1=pHead;
+    ListNode *p2=pHead;
+    
+    while(p1!=nullptr && count>0)
+    {
+        p1=p1->next;
+        --count;
+    }
+    
+    while(p1!=p2 && p1!=nullptr && p2!=nullptr)
+    {
+        p1=p1->next;
+        p2=p2->next;
+    }
+    
+    return p1;
+}
