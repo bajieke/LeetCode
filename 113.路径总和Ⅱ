@@ -1,0 +1,194 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+ * };
+
+ */
+
+class Solution {
+
+private:
+
+    vector<vector<int>> result;
+
+    vector<int> path;  
+
+    //path找到以后，都会回溯
+
+    //所以相当于清空了再来
+
+    
+
+    void traversal(TreeNode* node,int sum) {
+
+        //退出条件，且满足要求
+
+        if(!node->left && !node->right && sum==0) {
+
+            result.push_back(path);
+
+            return;
+
+        }
+
+        //退出条件，不满足要求
+
+        if(!node->left && !node->right)
+
+            return;
+
+            
+
+        //左
+
+        if(node->left) {
+
+            path.push_back(node->left->val);
+
+            sum -= node->left->val;
+
+            traversal(node->left,sum);
+
+            path.pop_back();
+
+            sum += node->left->val;
+
+        }
+
+        //右
+
+        if(node->right) {
+
+            path.push_back(node->right->val);
+
+            sum -= node->right->val;
+
+            traversal(node->right,sum);
+
+            path.pop_back();
+
+            sum += node->right->val;
+
+        }
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+
+        if(root == nullptr) return result;
+
+        path.push_back(root->val);
+
+        traversal(root,targetSum-root->val);
+
+        return result;
+
+    }
+
+};
+
+
+
+
+//方法二
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+ * };
+
+ */
+
+class Solution {
+
+public:
+
+    bool hasPathSum(TreeNode* root, int targetSum) {
+
+        stack<pair<TreeNode*,int>> stk;
+
+        if(root == nullptr) return false;
+
+        
+
+        stk.push(pair<TreeNode*,int>(root,root->val));
+
+        while(!stk.empty()) {
+
+            pair<TreeNode*,int> node = stk.top();
+
+            stk.pop();
+
+            
+
+            //判断
+
+            if(!node.first->left && !node.first->right 
+
+                            && node.second==targetSum)
+
+                return true;
+
+            
+
+            //右
+
+if(node.first->right)(
+
+stk.push(pair<TreeNode*,int>
+
+(node.first->right,
+
+node.second+node.first->right>val));
+
+//左
+
+if(node.first->left) 
+
+stk.push(pair<TreeNode*,int>
+
+(node.first->left,
+
+node.second+node.first->left->val));
+
+return false;
+
+};
+
+
+
