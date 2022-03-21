@@ -1,0 +1,84 @@
+//递归法
+class Solution {
+
+public:
+
+    TreeNode* searchBST(TreeNode* root, int val) {
+
+        //不存在这个结点
+
+        if(root == nullptr)
+
+            return nullptr;
+
+        
+
+        //  1
+
+        if(root->val == val)
+
+            return root;
+
+            
+
+        //  2
+
+        if(val > root->val)
+
+            return searchBST(root->right,val);
+
+            //一找到，就立马返回
+
+        
+
+        //  3
+
+        if(val < root->val)
+
+            return searchBST(root->left,val);
+
+            
+
+        return nullptr;
+
+    }
+
+};
+
+
+
+//迭代法
+
+class Solution {
+
+public:
+
+    TreeNode* searchBST(TreeNode* root, int val) {
+
+        //基于二叉搜索的特点
+
+        //只要寻找结点的过程中
+
+        //为空了，说明不存在
+
+        while(root != nullptr) {
+
+            if(root->val == val)
+
+                return root;
+
+            else if(val < root->val)
+
+                root = root->left;
+
+            else if(val > root->val)
+
+                root = root->right;
+
+        }
+
+        return root;
+
+    }
+
+};
