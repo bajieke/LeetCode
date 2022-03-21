@@ -1,0 +1,113 @@
+
+
+//递归法，中序遍历
+
+class Solution {
+
+private:
+
+    vector<int> vec;
+
+    
+
+    void traversal(TreeNode* node) {
+
+        if(node == nullptr)
+
+            return;
+
+            
+
+        traversal(node->left);
+
+        
+
+        vec.push_back(node->val);
+
+        
+
+        traversal(node->right);
+
+    }
+
+    
+
+    
+
+public:
+
+    bool isValidBST(TreeNode* root) {
+
+        vec.clear();
+
+        traversal(root);
+
+        
+
+        for(int i=1; i<vec.size(); i++) {
+
+            if(vec[i-1] >= vec[i])
+
+                return false;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+};
+
+
+
+
+
+//迭代法
+
+class Solution {
+
+public:
+
+    TreeNode* pre = nullptr;
+
+    
+
+    bool isValidBST(TreeNode* root) {
+
+        if(root == nullptr)
+
+            return true;
+
+        
+
+        //左
+
+        bool left = isValidBST(root->left);
+
+        
+
+        //中
+
+        if(pre!=nullptr && pre->val>=root->val) {
+
+            return false;
+
+        }
+
+        pre = root;
+
+        
+
+        //右
+
+        bool right = isValidBST(root->right);
+
+        
+
+        return left && right;
+
+    }
+
+};
