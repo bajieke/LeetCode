@@ -1,0 +1,93 @@
+class Solution{
+
+private:
+
+    //先序遍历，构建umap
+
+    void traversal(TreeNode* cur,
+
+                   unordered_map<int,int>& umap) {
+
+        //退出条件
+
+        if(cur==nullptr) return;
+
+        
+
+        umap[cur->val]++;
+
+        
+
+        traversal(cur->left,umap);
+
+        traversal(cur->right,umap);
+
+    }
+
+    
+
+    bool static cmp(const pair<int,int>& a,
+
+                    const pair<int,int>& b) {
+
+        return a.second > b.second;
+
+    }
+
+    
+
+public:
+
+    vector<int> findMode(TreeNode* root) {
+
+        vector<int> result;
+
+        if(root == nullptr) return result;
+
+        
+
+        unordered_map<int,int> umap;
+
+        
+
+        //构造umap
+
+        traversal(root,umap);
+
+        
+
+        //umap  --->   vector
+
+        vector<pair<int,int>> vec(umap.begin(),
+
+                                  umap.end());
+
+        sort(vec.begin(),vec.end(),cmp);
+
+        
+
+        //获取频率最高一个元素
+
+        result.push_back(vec[0].first);
+
+        
+
+        //寻找与它频率一样的元素
+
+        for(int i=1; i<vec.size(); i++) {
+
+            if(vec[i].second == vec[0].second)
+
+                result.push_back(vec[i].first);
+
+            else 
+
+                break; //一旦找到，不必再找(排序的))
+
+        }
+
+        return result;
+
+    }
+
+};
