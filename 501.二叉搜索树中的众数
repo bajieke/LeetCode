@@ -1,0 +1,110 @@
+//方法1
+class Solution{
+private:
+    vector<int> result;
+
+    TreeNode* pre = nullptr;
+    int maxCount;
+    int count;
+
+    void searchBST(TreeNode* cur) {
+        //退出条件
+        if(cur == nullptr) return;
+
+        //左
+        searchBST(cur->left);
+
+        //中
+                        //中序遍历第一个结点
+        if(pre == nullptr)
+            count = 1;
+        else if(pre->val == cur->val)  
+            count++;
+        else            //和前一个值不相等
+            count = 1;
+        pre = cur;
+        
+        //相同数目，添加进去
+        if(count == maxCount)
+            result.push_back(cur->val);
+
+        //刷新maxCount 和 result
+        if(count > maxCount) {
+            maxCount = count;
+
+            result.clear();
+            result.push_back(cur->val);
+        }
+
+        //右
+        searchBST(cur->right);
+    }
+
+public:
+    vector<int> findMode(TreeNode* root) {
+        result.clear();
+        maxCount = 0;
+
+        if(root == nullptr)
+            return result;
+
+        searchBST(root);
+        return result;
+    }
+};
+
+
+
+
+
+//方法2
+class Solution{
+public:
+    vector<int> findMode(TreeNode* root) {
+        vector<int> result;
+        if(root == nullptr)
+            return result;
+
+        TreeNode* cur = root;
+        TreeNode* pre = nullptr;
+        stack<TreeNode*> stk;
+
+        int count = 0;
+        int maxCount = 0;
+
+        while(cur!= nullptr || !stk.empty()) {
+            if(cur != nullptr) {
+                stk.push(cur);
+                cur = cur->left;
+            }
+            else {
+                cur = stk.top();
+                stk.pop();
+
+                if(pre == nullptr) {
+                    count = 1;
+                }
+                else if(pre->val == cur->val) {
+                    count++;
+                }
+                else {
+                    count = 1;
+                }
+                pre = cur;
+
+                if(count == maxCount)
+                    result.push_back(cur->val);
+
+                if(count > maxCount) {
+                    maxCount = count;
+                    result.clear();
+                    result.push_back(cur->val);
+                }
+
+                cur = cur->right;
+            }
+        }
+        return result;
+    }
+};
+
