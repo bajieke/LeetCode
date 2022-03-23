@@ -1,0 +1,81 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+
+ */
+
+//普通二叉树
+
+//二叉树，没有重复元素
+
+//从底向上，回溯，后序遍历
+
+class Solution {
+
+public:
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+        //退出条件
+
+        if(root==p || root==q || root==nullptr)
+
+            return root;
+
+        
+
+        //左
+
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+
+        
+
+        //右
+
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+
+        
+
+        //中
+
+        //(根据左右)，判断返回值
+
+        //符合条件
+
+        if(left!= nullptr && right!=nullptr)
+
+            return root;
+
+        //其他情况
+
+        if(left!=nullptr && right==nullptr)
+
+            return left;
+
+        else if(right!=nullptr && left==nullptr)
+
+            return right;
+
+        else
+
+            return nullptr;
+
+            
+
+        return nullptr;
+
+    }
+
+};
