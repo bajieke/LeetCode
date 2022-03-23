@@ -77,3 +77,74 @@ public:
     }
 
 };
+
+
+
+//修改版本
+//二叉搜索树的最近公共祖先
+
+//递归法
+
+class Solution {
+
+private:
+
+    TreeNode* traversal(TreeNode* cur,TreeNode* p,TreeNode* q) {
+
+        //有方向的从上往下
+
+        
+
+        //退出条件
+
+        if(cur == nullptr)
+
+            return nullptr;
+
+        
+
+        //向左
+
+        if(cur->val>p->val && cur->val>q->val) {
+
+            return traversal(cur->left,p,q);
+
+        }
+
+        //向右
+
+        if(cur->val<p->val && cur->val<q->val) {
+
+            return traversal(cur->right,p,q);
+
+        }
+
+        
+
+        //满足条件
+
+        // A < cur->val < B
+
+        return cur;
+
+    }
+
+    
+
+public:
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+        if(!root || !p || !q)
+
+            return nullptr;
+
+            
+
+        return traversal(root,p,q);
+
+    }
+
+};
+
+
