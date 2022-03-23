@@ -1,0 +1,76 @@
+//迭代法
+
+class Solution {
+
+public:
+
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+
+        //下面操作不包含这种情况，特殊处理
+
+        if(root == nullptr) {
+
+            TreeNode* node = new TreeNode(val);
+
+            return node;
+
+        }
+
+        
+
+        TreeNode* pre = nullptr;
+
+        TreeNode* cur = root;
+
+        
+
+        while(cur!=nullptr) {
+
+            pre = cur;
+
+            
+
+            //向左向右只能二选一
+
+            //向左
+
+            if(cur->val > val) 
+
+                cur = cur->left;
+
+                
+
+            //向右
+
+            //if(cur->val < val)
+
+            else
+
+                cur = cur->right;
+
+        }
+
+        
+
+        if(cur == nullptr) {
+
+            TreeNode* node = new TreeNode(val);
+
+            if(pre->val > val)
+
+                pre->left = node;
+
+            else
+
+                pre->right = node;
+
+        }
+
+        
+
+        return root;
+
+    }
+
+};
+
