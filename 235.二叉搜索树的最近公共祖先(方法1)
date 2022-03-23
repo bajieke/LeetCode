@@ -1,0 +1,79 @@
+//递归法
+
+class Solution {
+
+private:
+
+    TreeNode* traversal(TreeNode* cur,TreeNode* p,TreeNode* q) {
+
+        //有方向的从上往下
+
+        
+
+        //退出条件
+
+        if(cur == nullptr)
+
+            return nullptr;
+
+        
+
+        //向左
+
+        if(cur->val>p->val && cur->val>q->val) {
+
+            TreeNode* left = traversal(cur->left,p,q);
+
+            //1.如果是NULL 说明递归到最后没找到
+
+                //没找到，返回 root了
+
+            //2.找到，return cur 不为空
+
+            if(left != nullptr)
+
+                return left;
+
+        }
+
+        //向右
+
+        if(cur->val<p->val && cur->val<q->val) {
+
+            TreeNode* right = traversal(cur->right,p,q);
+
+            
+
+            if(right != nullptr)
+
+                return right;
+
+        }
+
+        
+
+        //满足条件
+
+        // A < cur->val < B
+
+        return cur;
+
+    }
+
+    
+
+public:
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+
+        if(!root || !p || !q)
+
+            return nullptr;
+
+            
+
+        return traversal(root,p,q);
+
+    }
+
+};
