@@ -1,0 +1,80 @@
+//递归法
+class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        TreeNode* node = new TreeNode(0);
+        if(nums.size()==1) {
+            node->val = nums[0];
+            return node;
+        }
+        
+        //①寻找最大值(根)
+        int maxValue = INT_MIN;
+        int maxValueIndex = 0;
+        for(int i=0; i<nums.size(); i++) {
+            if(maxValue < nums[i]) { 
+                maxValue = nums[i];
+                maxValueIndex = i;
+            }
+        }
+        
+        node->val = maxValue;
+        
+        //②构造左子树
+        if(maxValueIndex > 0) {
+            vector<int> leftNums(nums.begin(),
+                        nums.begin()+maxValueIndex);
+            node->left = constructMaximumBinaryTree
+                                          (leftNums);
+        }
+        
+        //③构造右子树
+        if(maxValueIndex < nums.size()-1) {
+            vector<int> rightNums
+                        (nums.begin()+maxValueIndex+1,
+                         nums.end());
+            node->right = constructMaximumBinaryTree
+                                        (rightNums);
+        }
+        return node;
+    }
+};      
+
+
+//
+//使用下标法
+class Solution {
+private:
+    TreeNode* traversal(vector<int>& nums,int left,int right) {
+        //退出条件，只有一个结点
+        if(left >= right)
+            return nullptr;
+            
+        //①寻找最大值(父亲结点)
+        int maxValueIndex = left;
+        for(int i=left+1; i<right; i++) {
+            if(nums[maxValueIndex] < nums[i])
+                maxValueIndex = i;
+        }
+        
+        TreeNode* node = new TreeNode(0);
+        node->val = nums[maxValueIndex];
+           
+        //②构建左子树
+        node->left = traversal(nums,left,
+                                    maxValueIndex);
+        
+        //③构建右子树
+        node->right = traversal(nums,maxValueIndex+1,
+                                     right);
+        
+        return node;
+    }
+    
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& 
+                                               nums) {
+        return traversal(nums,0,nums.size());
+    }
+};   
+
