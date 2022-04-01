@@ -1,0 +1,28 @@
+//递归法
+class Solution {
+private:
+    //左闭右闭区间
+    TreeNode* traversal(vector<int> nums,int left,int right) {
+        //退出条件
+        if(left > right)
+            return nullptr;
+        
+        //分割点
+        int mid = left + (right-left)/2;
+        TreeNode* root = new TreeNode(nums[mid]);
+        
+        //分割左右区间(左右子树)
+        root->left = traversal(nums,left,mid-1);
+        root->right = traversal(nums,mid+1,right);
+        
+        //返回本结点
+        return root;
+    }
+    
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        TreeNode* root = traversal(nums,
+                                      0,nums.size()-1);
+        return root;
+    }
+};
