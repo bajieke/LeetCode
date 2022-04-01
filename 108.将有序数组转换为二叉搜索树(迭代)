@@ -1,0 +1,48 @@
+//迭代法
+//三个队列
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        if(nums.size() == 0)
+            return nullptr;
+        
+        //遍历元素，队列
+        queue<TreeNode*> nodeQue;
+        queue<int> leftQue;   //区间，左边界
+        queue<int> rightQue;  //区间，右边界
+        
+        //入队
+        TreeNode* root = new TreeNode(0);
+        nodeQue.push(root);
+        leftQue.push(0);
+        rightQue.push(nums.size()-1);
+        
+        //while循环处理，队列元素
+        while(!nodeQue.empty()) {
+            //处理当前队首
+            TreeNode* curNode = new TreeNode(0);
+            curNode = nodeQue.front();
+            nodeQue.pop();
+            
+            int left = leftQue.front();
+            leftQue.pop();
+            
+            int right = rightQue.front();
+            rightQue.pop();
+            
+            int mid = left + (right-left)/2;
+            curNode->val = nums[mid];
+            
+            
+            //右区间，入队
+            if(right >= mid+1) {
+                curNode->right = new TreeNode(0);
+                nodeQue.push(curNode->right);
+                leftQue.push(mid+1);
+                rightQue.push(right);
+            }
+        }
+        //返回跟结点
+        return root;
+    }
+};
