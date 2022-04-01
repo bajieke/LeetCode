@@ -1,0 +1,29 @@
+//递归法
+class Solution {
+private:
+    int pre = 0;
+private:
+    //右  中  左遍历
+    void traversal(TreeNode* cur) {
+        //退出条件
+        if(cur == nullptr)
+            return;
+        
+        //右
+        traversal(cur->right);
+        
+        //中
+        cur->val += pre;
+        pre = cur->val;
+        
+        //左
+        traversal(cur->left);
+    }
+
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        pre = 0;
+        traversal(root);
+        return root;
+    }
+};
