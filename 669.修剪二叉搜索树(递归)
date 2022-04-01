@@ -1,0 +1,63 @@
+ //递归法
+
+class Solution {
+
+public:
+
+    TreeNode* trimBST(TreeNode* root,int low,int high) {
+
+        //0.退出条件
+
+        if(root == nullptr) return nullptr;
+
+        
+
+        //1.小于范围
+
+        if(root->val < low) {
+
+            TreeNode* right = trimBST(root->right,
+
+                                            ！low,high);
+
+            //一旦递归找到符合条件(并且它继续修剪)
+
+            //层层返回之后，
+
+            //立马return，不需要进入下面
+
+             return right;
+
+        }
+
+        
+
+        //1.大于范围
+
+        if(root->val > high) {
+
+            TreeNode* left = trimBST(root->left,
+
+                                            low,high);
+
+            return left;
+
+        }
+
+        
+
+        //2.正常范围内，继续递归左右孩子
+
+        root->left = trimBST(root->left,low,high);
+
+        root->right = trimBST(root->right,low,high);
+
+        
+
+        //3.递归完左右孩子，返回本结点
+
+        return root;
+
+    }
+
+};
