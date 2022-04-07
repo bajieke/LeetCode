@@ -1,0 +1,103 @@
+class Solution {
+
+private:
+
+    const string letterMap[10] = {
+
+        " ",    //0
+
+        " ",    //1
+
+        "abc",    //2
+
+        "def",    //3
+
+        "ghi",    //4
+
+        "jkl",    //5
+
+        "mno",    //6
+
+        "pqrs",   //7
+
+        "tuv",    //8
+
+        "wxyz",   //9
+
+    };
+
+    vector<string> result;
+
+    string s;
+
+    
+
+    void backTracking(string digits,int index) {
+
+        //退出条件
+
+        if(index == digits.size()) {
+
+            result.push_back(s);
+
+            return;
+
+        }
+
+        
+
+        //获取本层递归数字，找到对应字母
+
+        int dept = digits[index] - '0';
+
+        //找到数字对应字符串
+
+        string letters = letterMap[dept];
+
+        
+
+        //宽度
+
+        for(int i=0; i<letters.size(); i++) {
+
+            s.push_back(letters[i]);
+
+                           //index+1隐藏回溯
+
+            backTracking(digits,index+1);
+
+            
+
+            s.pop_back();
+
+        }
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<string> letterCombinations(string digits) {
+
+        result.clear();
+
+        s.clear();
+
+        
+
+        if(digits.size() == 0)
+
+            return result;
+
+        
+
+        backTracking(digits,0);
+
+        return result;
+
+    }
+
+};
