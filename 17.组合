@@ -1,0 +1,61 @@
+class Solution {
+
+private:
+
+    vector<vector<int>> result;
+
+    vector<int> path;
+
+    
+
+    //回溯算法
+
+    void backTracking(int n,int k,int startIndex) {
+
+         //退出条件
+
+         if(path.size() == k) {
+
+            result.push_back(path);
+
+            return;
+
+        }
+
+        
+
+        //递归回溯
+
+        for(int i=startIndex; i<=n; i++) {
+
+            path.push_back(i);
+
+            backTracking(n,k,i+1);
+
+            path.pop_back();
+
+        }
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<vector<int>> combine(int n, int k) {
+
+        result.clear();
+
+        path.clear();
+
+        
+
+        backTracking(n,k,1);
+
+        return result;
+
+    }
+
+};
