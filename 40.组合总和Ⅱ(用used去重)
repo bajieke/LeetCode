@@ -1,0 +1,67 @@
+//进行了优化－－－－－(用used去重))
+class Solution {
+private:
+    vector<vector<int>> result;
+    vector<int> path;
+    
+    void backTracking(vector<int> candidates,
+                                  int target,int sum,
+                                  int startIndex,
+                                  vector<bool>& used){
+        //退出条件
+        //if(sum > target)
+            //return;
+            
+        if(sum == target) {
+            result.push_back(path);
+            return;
+        }
+        
+        //递归-回溯
+        for(int i=startIndex; i<candidates.size() &&
+                            sum+candidates[i]<=target; 
+                                                 i++)
+                                                     {
+            //同一树层去重复
+            if(i>0 && candidates[i]==candidates[i-1] &&
+                                   used[i-1]==false) {
+                continue;
+                //只是跳过这一枝而已，后面的继续
+            }
+            
+            //处理
+            path.push_back(candidates[i]);
+            sum += candidates[i];
+            used[i] = true;
+            
+            //递归       //i+1 原因: 在每个组合种只能使用一次
+            backTracking(candidates,target,sum,
+                                           i+1,used);
+            
+            //回溯
+            used[i] = false;
+            sum -= candidates[i];
+            path.pop_back();
+        }
+        
+        return;
+    }
+    
+public:
+    vector<vector<int>> combinationSum2(vector<int>& 
+                              candidates, int target) {
+        result.clear();
+        path.clear();
+        
+        //记录位标志，用来判断 同一树层去重
+        vector<bool> used(candidates.size(),false);
+        
+        if(candidates.size() == 0) 
+            return result;
+        
+        //不排序，会出错
+        sort(candidates.begin(),candidates.end());
+        backTracking(candidates,target,0,0,used);
+        return result;
+    }
+};
