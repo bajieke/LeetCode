@@ -1,0 +1,70 @@
+class Solution {
+private: 
+    vector<string> result;
+    bool isVaild(const string& s,int start,int end) {
+        if(start > end)
+            return false;
+            
+        //1. 开头为0(比如025)   但(0.0.0.0)合法
+        if(start!=end && s[start]=='0') 
+            return false;
+            
+        //2. 超过255
+        int num = 0;
+        for(int i=start; i<=end; i++) {
+            if(s[i]>'9' && s[i]<'0')
+                return false;
+            
+            //s[i]－'0必须得'
+            num = num*10 + (s[i]-'0');
+            
+            if(num > 255)
+                return false;
+        }
+        return true;
+    }
+    
+    void backTracking(string& s,int startIndex,
+                                     int pointNum) {
+        //退出条件－前三组顺利通过
+        if(pointNum == 3) {
+            //再检查最后一轮
+            if(isVaild(s,startIndex,s.size()-1)) {
+                result.push_back(s);
+            }
+            return;
+                
+        }
+        
+        //递归－回溯
+        for(int i=startIndex; i<s.size(); i++) {
+            if(isVaild(s,startIndex,i)) {
+                //处理
+                s.insert(s.begin()+i+1,'.');
+                pointNum++;
+            
+                //递归
+                backTracking(s,i+2,pointNum);
+            
+                //回溯
+                pointNum--;
+                s.erase(s.begin()+i+1);
+            }
+            else {
+                continue;
+            }
+        }
+        return;
+    }
+    
+public:
+    vector<string> restoreIpAddresses(string s) {
+        result.clear();
+        
+        if(s.size() > 12 || s.size()==0) 
+            return result;
+            
+        backTracking(s,0,0);
+        return result;
+    }
+};
