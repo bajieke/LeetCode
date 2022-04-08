@@ -1,0 +1,115 @@
+class Solution {
+
+private:
+
+    vector<vector<string>> result;
+
+    vector<string> path;
+
+    
+
+    //判断回文串
+
+    bool ispalindrome(const string& s,int start,
+
+                                        int end) {
+
+        for(int i=start,j=end; i<j; i++,j--) {
+
+            if(s[i] != s[j])
+
+                return false;
+
+        }
+
+        return true;
+
+    }
+
+    
+
+    //回溯函数
+
+    void backTracking(string s,int startIndex) {
+
+        //退出条件
+
+        if(startIndex >= s.size()) {
+
+            //不是回文的，不会进去递归循环
+
+            //也不会path，把它push进去
+
+            result.push_back(path);
+
+            return;
+
+        }
+
+        
+
+        //递归－回溯
+
+        for(int i=startIndex; i<s.size(); i++) {
+
+            if(ispalindrome(s,startIndex,i)) {
+
+                //处理
+
+                string str = s.substr(startIndex,
+
+                                      i-startIndex+1);
+
+                path.push_back(str);
+
+                
+
+                //递归
+
+                backTracking(s,i+1);
+
+                
+
+                //回溯
+
+                path.pop_back();
+
+            }
+
+            else {
+
+                //不是回文串，不做任何处理，直接下一个
+
+                continue;
+
+            }
+
+        }
+
+        return;
+
+    }
+
+public: 
+
+    vector<vector<string>> partition(string s) {
+
+        result.clear();
+
+        path.clear();
+
+        
+
+        if(s.size() == 0)
+
+            return result;
+
+            
+
+        backTracking(s,0);
+
+        return result;
+
+    }
+
+};
