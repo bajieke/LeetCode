@@ -1,0 +1,109 @@
+//回溯法－哈希去重
+
+class Solution {
+
+private:
+
+    vector<vector<int>> result;
+
+    vector<int> path;
+
+    
+
+    void backTracking(vector<int>& nums,int startIndex) 
+
+                                                     {
+
+        //result 收集，(之前＞1个)
+
+        if(path.size() > 1) {
+
+            result.push_back(path);
+
+        }
+
+        
+
+        //退出条件－可以不存在 (i+1)不会进入无线递归？
+
+        if(startIndex >= nums.size()) {
+
+            return;
+
+        }
+
+        
+
+        //递归－回溯
+
+        unordered_set<int> uset;
+
+        for(int i=startIndex; i<nums.size(); i++) {
+
+            //去重条件  
+
+            // 1.递增子序列  2.同一for层，不重复
+
+            if(!path.empty() && nums[i]<path.back() 
+
+                || uset.find(nums[i]) != uset.end()) {
+
+                
+
+                continue;
+
+            }
+
+            
+
+            //标记一下
+
+            uset.insert(nums[i]);
+
+            
+
+            //进行 处理－递归－回溯
+
+            path.push_back(nums[i]);
+
+            backTracking(nums,i+1);
+
+            path.pop_back();
+
+        }
+
+        
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<vector<int>> findSubsequences(vector<int>& 
+
+                                                nums) {
+
+        result.clear();
+
+        path.clear();
+
+        
+
+        if(nums.size() == 0)
+
+            return result;
+
+        
+
+        //我要去重，但我不能排序(不能改变原数组)
+
+        backTracking(nums,0);
+
+        return result;
+
+    }
+
+};
