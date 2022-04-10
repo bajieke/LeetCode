@@ -1,0 +1,80 @@
+//回溯法
+
+class Solution {
+
+private:
+
+    vector<int> path;
+
+    vector<vector<int>> result;
+
+    
+
+    void backTracking(vector<int>& nums,int startIndex)
+
+                                                      {
+
+        //result 收集上一轮递归 结果集path
+
+        result.push_back(path);
+
+        
+
+        //判断退出条件
+
+        if(startIndex >= nums.size()) {
+
+            return;
+
+        }
+
+        
+
+        //递归－回溯
+
+        for(int i=startIndex; i<nums.size(); i++) {
+
+            path.push_back(nums[i]);
+
+            
+
+            backTracking(nums,i+1);
+
+            
+
+            path.pop_back();
+
+        }
+
+        
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+
+        path.clear();
+
+        result.clear();
+
+        
+
+        if(nums.size() == 0)
+
+            return result;
+
+        
+
+        backTracking(nums,0);
+
+        return result;
+
+    }
+
+};
+
