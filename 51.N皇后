@@ -1,0 +1,145 @@
+class Solution {
+
+private:
+
+    //result收集的是，符合条件的各个棋盘
+
+    vector<vector<string>> result;
+
+    
+
+    //是否符合N皇后棋盘
+
+    bool isVaild(int row,int col,int n,
+
+                         vector<string>& chessBoard) {
+
+        //1.检查不同行
+
+            //递归中已经是不同行了
+
+        
+
+        //2.检查不同列
+
+        for (int i = 0; i < row; i++) {
+
+            if(chessBoard[i][col] == 'Q')
+
+                return false;
+
+        }
+
+        
+
+        //3.检查不同斜线
+
+            //3.1 成45°角
+
+        for(int i=row-1,j=col+1; i>=0 && j<n; i--,j++)
+
+                                                      {
+
+            if(chessBoard[i][j] == 'Q')
+
+                return false;
+
+        } 
+
+        
+
+            //3.2 成135°角
+
+        for(int i=row-1,j=col-1; i>=0 && j>=0; i--,j--)
+
+                                                      {
+
+            if(chessBoard[i][j] == 'Q')
+
+                return false;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+    
+
+    //回溯法
+
+    void backTracking(int n,int row,vector<string>& 
+
+                                        chessBoard) {
+
+        //退出条件
+
+        if(row == n) {
+
+            result.push_back(chessBoard);
+
+            return;
+
+        }
+
+        
+
+        //递归－回溯
+
+        for(int col = 0; col < n; col++) {
+
+            if(isVaild(row,col,n,chessBoard)) {
+
+                chessBoard[row][col] = 'Q';
+
+            
+
+                backTracking(n ,row + 1, chessBoard);
+
+            
+
+                chessBoard[row][col] = '.';
+
+            }
+
+        }
+
+        
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<vector<string>> solveNQueens(int n) {
+
+        result.clear();
+
+        
+
+        if(n<1) return result;
+
+    
+
+        vector<string> chessBoard(n, string(n,'.'));
+
+        
+
+        backTracking(n, 0, chessBoard);
+
+        return result;
+
+        
+
+    }
+
+};
+
+             
+
+                              
