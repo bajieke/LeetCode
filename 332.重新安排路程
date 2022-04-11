@@ -1,0 +1,107 @@
+class Solution {
+
+private:
+
+    //记录  出发地－目的地
+
+    unordered_map<string, map<string,int>> targets;
+
+    
+
+    //返回类型为bool，遇到就返回，不用遍历整颗树
+
+    bool backTracking(vector<string>& result,
+
+                                  int ticketNum) {
+
+        //退出条件
+
+        if(result.size() == ticketNum+1)
+
+            return true;
+
+        
+
+        //递归－回溯
+
+        //for(pair<const string, int> target :—————×
+
+        //for(auto  target :          —————————————×
+
+        //for(auto & target :         —————————————✓
+
+        for(pair<const string, int>& target :
+
+                 targets[result[result.size()-1]]) {
+
+            //对组还没被标记
+
+            if(target.second > 0) {
+
+                //处理
+
+                result.push_back(target.first);
+
+                target.second--;
+
+            
+
+                //递归
+
+                if(backTracking(result,ticketNum))
+
+                    return true;
+
+                
+
+                //回溯
+
+                result.pop_back();
+
+                target.second++;
+
+            }
+
+        }
+
+        //尝试所有，都不满足
+
+        return false;
+
+    }
+
+public:
+
+   vector<string> findItinerary(vector<vector<string>>
+
+                                            &tickets) {
+
+        targets.clear();
+
+        vector<string> result;
+
+        
+
+        //初始化 targets (记录映射关系)
+
+        for(const vector<string>& ticket: tickets) {
+
+            targets[ticket[0]][ticket[1]]++;
+
+        }
+
+        
+
+        result.push_back("JFK");
+
+        
+
+        backTracking(result,tickets.size());
+
+        
+
+        return result;
+
+  }
+
+};
