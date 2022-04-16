@@ -1,0 +1,46 @@
+//贪心算法2
+
+class Solution {
+
+public:
+
+    int jump(vector<int>& nums) {
+
+        if(nums.size() == 1) return 0;
+
+        
+
+        int curTail = 0;
+
+        int nextCover = 0;    
+
+        int ans = 0;
+
+        
+
+        //有 i<= nums.size()－2 的限制
+
+        for(int i=0; i<nums.size() - 1; i++) {
+
+            nextCover = max(i+nums[i], nextCover);
+
+            
+
+            //只要到达当前范围末尾，就++，走一步
+
+            if(i == curTail) {
+
+                ans++;
+
+                curTail = nextCover;
+
+            }
+
+        }
+
+        return ans;
+
+    }
+
+};
+
