@@ -1,0 +1,60 @@
+//先满足大胃口孩子
+class Solution {
+public:
+    int findContentChildren(vector<int>& g,
+                            vector<int>& s) {
+        if(s.size() == 0 || g.size() == 0)
+            return 0;
+            
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
+        
+        int result = 0;
+        int index = s.size() - 1;
+        
+        for(int i=g.size()-1; i>=0; i--) {
+            //index在－－  所以，index有可能会为负
+            //满足的条件下，饼干才会滑动(＋孩子滑动)
+            if(index>=0 && s[index] >= g[i]) {
+                index--;
+                result++;
+            }
+            //不满足条件下，孩子才会滑动
+        }
+        
+        return result;
+    }
+};
+
+
+
+
+
+
+//－－－－－－－－－－－－－－－－－－－
+//先满足胃口小的孩子
+class Solution {
+public:
+    int findContentChildren(vector<int>& g,
+                            vector<int>& s) {
+        if(g.size()==0 || s.size()==0)
+            return 0;
+        
+        sort(g.begin(),g.end());
+        sort(s.begin(),s.end());
+        
+        int index = 0;
+        
+        for(int i=0; i<s.size(); i++) {
+            //满足的条件下，孩子才滑动(＋饼干滑动)
+            if(index<g.size() && s[i] >= g[index]) {
+                index++;
+            }
+            //不满足条件下，饼干滑动
+        }
+        
+        return index;
+    }
+};
+
+    
