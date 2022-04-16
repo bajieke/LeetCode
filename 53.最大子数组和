@@ -1,0 +1,93 @@
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        int max = INT32_MIN;
+
+        int sum = 0;
+
+        
+
+        for(int i=0; i<nums.size(); i++) {
+
+            //更新sum，下一轮开始
+
+            //sum = nums[i];
+
+            sum = 0;
+
+            
+
+            //j=i+1
+
+            for(int j=i; j<nums.size(); j++) {
+
+                
+
+                
+
+                sum += nums[j];
+
+                
+
+                //更新max，从本位开始更新(－2，1)
+
+                if(max < sum) max = sum;
+
+                
+
+                //错误，局部贪心
+
+                //if(sum < 0) sum = 0;
+
+            }
+
+        }
+
+        
+
+        return max;
+
+    }
+
+};
+
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        int max = INT32_MIN;
+
+        int sum = 0;
+
+        
+
+        //只用了 一层for循环
+
+        for(int i=0; i<nums.size(); i++) {
+
+            //局部贪心
+
+            if(sum < 0) sum = 0;
+
+            
+
+            sum += nums[i];
+
+            
+
+            if(max < sum) max = sum;
+
+        }
+
+        
+
+        return max;
+
+    }
+
+};
