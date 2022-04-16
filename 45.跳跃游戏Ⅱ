@@ -1,0 +1,69 @@
+//这个跳跃游戏，规定一定会达到最后
+
+class Solution {
+
+public:
+
+    int jump(vector<int>& nums) {
+
+        if(nums.size() == 1) return 0;
+
+        
+
+        int ans = 0;
+
+        int curTail = 0;
+
+        int nextCover = 0;
+
+        
+
+        for(int i = 0; i < nums.size(); i++) {
+
+            //每次更新 覆盖范围
+
+            nextCover = max(i+nums[i], nextCover);
+
+            
+
+            //i到达 本次范围末尾
+
+            if(i == curTail) {
+
+                //当前未达到最后一步
+
+                if(curTail != nums.size()-1) {
+
+                    ans++;
+
+                    curTail=  nextCover;
+
+                    
+
+                    if(nextCover >= nums.size()-1)
+
+                        //①覆盖范围到达
+
+                        break;
+
+                }
+
+                //当前已经达到最后一步
+
+                else {
+
+                    //②直接到最后一步
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+        return ans;
+
+    }
+
+};
