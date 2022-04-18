@@ -1,0 +1,127 @@
+//贪心算法2-全部最优角度
+
+class Solution {
+
+public:
+
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+
+        int curSum = 0;
+
+        int min = INT32_MAX;
+
+        
+
+        for(int i=0; i<gas.size(); i++) {
+
+            int rest = gas[i] - cost[i];
+
+            curSum += rest;
+
+            //更新 最小累加最小差值
+
+            if(curSum < min) {
+
+                min = curSum;
+
+            }
+
+        }
+
+        //1. 总gas < 总cost
+
+        if(curSum < 0) return -1;
+
+        
+
+        //2. 从0开始，符合条件
+
+        if(min >= 0) return 0;
+
+        
+
+        //3. 从后向前看，使得min抵消
+
+        for(int i=gas.size()-1; i>=0; i--) {
+
+            int rest = gas[i] - cost[i];
+
+            min += rest;
+
+            //逆序全部抵消，正着来一定满足条件
+
+            if(min >= 0) return i;
+
+        }
+
+        
+
+        return -1;
+
+    }
+
+};
+
+
+
+
+
+
+//贪心算法2－局部最优
+
+class Solution {
+
+public:
+
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+
+        int curSum = 0;
+
+        int totalSum = 0;
+
+        
+
+        //标记的起始位置
+
+        int start = 0;
+
+        
+
+        for(int i=0; i<gas.size(); i++) {
+
+            curSum += gas[i] - cost[i];
+
+            totalSum += gas[i] -cost[i];
+
+            //当前累加和<0，最少从i+1开始重新判断
+
+            if(curSum < 0) {
+
+                curSum = 0;
+
+                start = i+1;
+
+            }
+
+        }
+
+        
+
+        //①. 判断 存不存在 符合条件起始节点
+
+        if(totalSum < 0) return -1;
+
+        
+
+        //②. 在①的条件下，更新的start
+
+        return start;
+
+    
+
+    }
+
+};
+        
+
+        
