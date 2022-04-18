@@ -1,0 +1,67 @@
+//暴力解法
+
+class Solution {
+
+private:
+
+    bool check(int num) {
+
+        //初始时，obj>=9 ，因为t的范围(0~9)
+
+        //刚开始 一定要 t＜=obj
+
+        int obj = 10;
+
+        
+
+        while(num) {
+
+            //末尾数字
+
+            int t = num % 10;
+
+            
+
+            if(t > obj) {
+
+                return false;
+
+            }
+
+            else { // t <= obj
+
+                //更新obj为 后位小值
+
+                obj = t;
+
+            }
+
+            
+
+            //去末尾数字
+
+            num = num / 10;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+public:
+
+    int monotoneIncreasingDigits(int n) {
+
+        for(int i = n; i > 0; i--) {
+
+            if (check(i)) return i;
+
+        }
+
+        return 0;
+
+    }
+
+};
