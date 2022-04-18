@@ -1,0 +1,83 @@
+//贪心算法(尽可能找零，找10块，5块剩多)
+
+class Solution {
+
+public:
+
+    bool lemonadeChange(vector<int>& bills) {
+
+        int five = 0;
+
+        int ten = 0;
+
+        int twenty = 0;
+
+        
+
+        //柠檬水找零
+
+        for(auto bill : bills) {
+
+            if (bill == 5) {
+
+                //直接收就好
+
+                five++;
+
+            }
+
+            
+
+            if (bill == 10) {
+
+                //无零钱可找
+
+                if(five <= 0) {
+
+                    return false;
+
+                }
+
+                five--;
+
+                ten++;
+
+            }
+
+            
+
+            if (bill == 20) {
+
+                //优先找零 10块＋5块
+
+                if(ten > 0 && five > 0) {
+
+                    five--;
+
+                    ten--;
+
+                    twenty++;
+
+                }
+
+                //找零 5块＋5块＋5块
+
+                else if(five >= 3) {
+
+                    five -= 3;
+
+                    twenty++;
+
+                }
+
+                //无法找零
+
+                else {
+
+                    return false;
+
+                }
+
+            }
+
+ 
