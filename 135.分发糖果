@@ -1,0 +1,61 @@
+//贪心算法
+
+class Solution {
+
+public:
+
+    int candy(vector<int>& ratings) {
+
+        vector<int> candyVec(ratings.size(),1);
+
+        
+
+        //1. 从前向后，处理(小，大)情况
+
+        //局部最优(只要右边评分高，右(比左)多得一个糖果)
+
+        for(int i=1; i<ratings.size(); i++) {
+
+            if(ratings[i-1] < ratings[i])
+
+                candyVec[i] = candyVec[i-1] + 1;
+
+        }
+
+        
+
+        //2. 从后向前，处理(大，小)情况
+
+        //局部最优(大于左边，又大于右边)
+
+        for(int i=ratings.size()-2; i>=0; i--) {
+
+            if(ratings[i] > ratings[i+1]) {
+
+                //利用上一次比较结果，max( , )
+
+                //[i]糖果数量，即大于左边，又大于右边
+
+                candyVec[i] = max(candyVec[i], 
+
+                                  candyVec[i+1]+1);
+
+            } 
+
+        }
+
+        
+
+        int result = 0;
+
+        for(int i=0; i<candyVec.size(); i++)
+
+            result += candyVec[i];
+
+        
+
+        return result;
+
+    }
+
+};
