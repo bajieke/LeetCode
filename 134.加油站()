@@ -1,0 +1,53 @@
+//1.暴力解法
+
+class Solution {
+
+public:
+
+    int canCompleteCircuit(vector<int>&gas, 
+
+                                vector<int>& cost) {
+
+        //输入数组为非空数组，长度相同
+
+        //元素均不为负
+
+        
+
+        for(int i=0; i<gas.size(); i++) {
+
+            //用i表示出发结点
+
+            int rest = gas[i] - cost[i];
+
+            int index = (i+1) % gas.size();
+
+            
+
+            //用index来模拟环路
+
+            while(rest>0 && index!=i) {
+
+                //检测过程中， rest必须>0
+
+                rest += gas[index] - cost[index];
+
+                index = (index+1) % gas.size();
+
+            }
+
+            
+
+            //结果 rest必须＞=0
+
+            if(rest>=0 && index==i) return i;
+
+        }
+
+        
+
+        return -1;
+
+    }
+
+};
