@@ -1,0 +1,74 @@
+//贪心算法(尽可能气球成堆，射击)
+
+class Solution {
+
+private:
+
+    static bool cmp(const vector<int>& a, 
+
+                    const vector<int>& b) {
+
+        return a[0] < b[0];
+
+    }
+
+    
+
+public:
+
+    int findMinArrowShots(vector<vector<int>>& points) {
+
+        //没有气球
+
+        if(points.size() == 0) return 0;
+
+        //有1个气球
+
+        if(points.size() == 1) return 1;
+
+        
+
+        sort(points.begin(), points.end(),cmp);
+
+        
+
+        int result = 0;
+
+        for(int i=1; i<points.size(); i++) {
+
+            //1. 气球[i] 与 气球[i-1] 不相邻
+
+            if(points[i][0] > points[i-1][1]) {
+
+                //为前面气球堆，准备的箭
+
+                result++;
+
+            }
+
+            //2. 气球[i] 与 气球[i-1] 相邻
+
+            else {
+
+                //更新气球尾巴end，规整到前一堆气球中
+
+                points[i][1] = min(points[i][1], 
+
+                                   points[i-1][1]);
+
+            }
+
+        }
+
+        
+
+        result++;
+
+           
+
+        return result;
+
+    }
+
+};
+
