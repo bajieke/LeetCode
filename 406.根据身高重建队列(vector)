@@ -1,0 +1,61 @@
+//贪心－－－按照身高先拍好，再插入
+
+class Solution {
+
+private:
+
+    static bool cmp(const vector<int>& a, 
+
+                    const vector<int>&b) {
+
+        //身高相等，人数小的排前面
+
+        if(a[0] == b[0]) return a[1]<b[1];
+
+        
+
+        return a[0] > b[0];
+
+    }
+
+public:
+
+    vector<vector<int>> reconstructQueue(
+
+                        vector<vector<int>>& people) {
+
+        //队列
+
+        vector<vector<int>> queue;
+
+        
+
+        if(people.size() == 0) return queue;
+
+        
+
+        //先根据身高－排序
+
+        sort(people.begin(), people.end(),cmp);
+
+        
+
+        //再根据人数－插入(一个一个插入)
+
+        for(int i=0; i<people.size(); i++) {
+
+            int index = people[i][1];
+
+            queue.insert(queue.begin()+index, 
+
+                         people[i]);
+
+        }
+
+        
+
+        return queue;
+
+    }
+
+};
