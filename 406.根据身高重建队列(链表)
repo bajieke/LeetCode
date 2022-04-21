@@ -1,0 +1,77 @@
+//使用 链表list 代替 vector 的插入
+
+class Solution {
+
+private:
+
+    static bool cmp(const vector<int>&a,
+
+                    const vector<int>& b) {
+
+        //身高相等－人数少排前面
+
+        if(a[0] == b[0]) return a[1] < b[1];
+
+        
+
+        return a[0] > b[0];
+
+    }
+
+public:
+
+    vector<vector<int>> reconstructQueue(
+
+                        vector<vector<int>>& people) {
+
+        list<vector<int>> queue;
+
+        
+
+        if(people.size() == 0)
+
+            return vector<vector<int>>();
+
+        
+
+        //按照身高－排序
+
+        sort(people.begin(), people.end(), cmp);
+
+        
+
+        //按照人数－插入
+
+        for(int i=0; i<people.size(); i++) {
+
+            int index = people[i][1];
+
+           
+
+            //list迭代器，不支持加减运算
+
+            list<vector<int>>::iterator it = 
+
+                                       queue.begin();
+
+            while(index--) {
+
+                it++;
+
+            }
+
+            
+
+            queue.insert(it, people[i]);
+
+        }
+
+        
+
+        return vector<vector<int>>(queue.begin(),
+
+                                   queue.end());
+
+    }
+
+};
