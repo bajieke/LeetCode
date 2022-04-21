@@ -1,0 +1,79 @@
+//射爆箭头法
+
+class Solution {
+
+private:
+
+    static bool cmp(const vector<int>& a, 
+
+                    const vector<int>& b) {
+
+        //
+
+        return a[0] < b[0];
+
+    }
+
+public:
+
+    int eraseOverlapIntervals(vector<vector<int>>& 
+
+                                        intervals) {
+
+        //
+
+        if(intervals.size() == 0) return 0;
+
+        if(intervals.size() == 1) return 0;
+
+        
+
+        //左边界排序
+
+        sort(intervals.begin(), intervals.end(), cmp);
+
+        
+
+        //箭的个数
+
+        int result = 0;
+
+        
+
+        //从左向右遍历
+
+        for(int i=1; i<intervals.size(); i++) {
+
+            // [i-1]  和 [i] 相邻
+
+            if(intervals[i-1][1] <= intervals[i][0]) {
+
+                result++;
+
+            }
+
+            //不相邻
+
+            else {
+
+                intervals[i][1] = min(intervals[i][1],
+
+                                    intervals[i-1][1]);
+
+            }
+
+        }
+
+        
+
+        result++;
+
+        
+
+        return intervals.size()-result;
+
+        
+
+    }
+
+};
