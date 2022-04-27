@@ -1,0 +1,60 @@
+class Solution {
+
+public:
+
+    vector<int> partitionLabels(string s) {
+
+        vector<int> result;
+
+        int hash[26] = { 0 };
+
+        
+
+        if(s.size() == 0) return result;
+
+        
+
+        //更新26哦个字母出现的最远位置
+
+        for(int i=0; i<s.size(); i++) {
+
+            hash[s[i] - 'a'] = i;
+
+        }
+
+        
+
+        int left = 0;
+
+        int right = 0;
+
+        
+
+        for(int i=0; i<s.size(); i++) {
+
+            //在 i 未到 right 之前，更新最大right
+
+            right = max(right, hash[s[i] - 'a']);
+
+            
+
+            //i 到达了 right
+
+            if(i == right) {
+
+                result.push_back(right - left + 1);
+
+                left = i + 1;
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
