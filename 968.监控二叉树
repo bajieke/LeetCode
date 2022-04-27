@@ -1,0 +1,145 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+ * };
+
+ */
+
+class Solution {
+
+// 0   无覆盖
+
+// 1   安装摄像头
+
+// 2   有覆盖
+
+private:
+
+    //摄像头个数
+
+    int result = 0;
+
+    //后序遍历
+
+    int Traversal(TreeNode* cur) {
+
+        //退出条件
+
+        //空结点－覆盖状态 
+
+        //因为 (叶子结点－无覆盖)
+
+        if(cur == nullptr) {
+
+            //覆盖状态
+
+            return 2;
+
+        }
+
+        
+
+        
+
+        //左右递归————————⑴
+
+        int left = Traversal(cur->left);
+
+        int right = Traversal(cur->right);
+
+        
+
+        
+
+        //后序处理————————⑵
+
+        
+
+        //①左右－同时覆盖
+
+        if(left == 2 && right == 2) {
+
+            //父结点－无覆盖
+
+            return 0;
+
+        }
+
+        
+
+         //②只要有一个－无覆盖
+
+        if(left == 0 || right == 0) {
+
+            //必须加个摄像头
+
+            result++;
+
+            //并且返回它的状态
+
+            return 1;
+
+        }
+
+        
+
+        //③只要有一个－有摄像头
+
+        if(left == 1 || right == 1) {
+
+            //就有覆盖
+
+            return 2;
+
+        }
+
+        
+
+        //不会走到这一步
+
+        return -1;
+
+    }
+
+public:
+
+    int minCameraCover(TreeNode* root) {
+
+        //result清零
+
+        result = 0;
+
+        
+
+        //④父结点－无覆盖情况
+
+        if(Traversal(root) == 0) {
+
+            result++;
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+        
