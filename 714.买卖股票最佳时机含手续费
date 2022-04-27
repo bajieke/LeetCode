@@ -1,0 +1,66 @@
+class Solution {
+
+public:
+
+    int maxProfit(vector<int>& prices, int fee) {
+
+        int minPrice = prices[0];
+
+        int result = 0;
+
+        
+
+        for(int i = 0; i < prices.size(); i++) {
+
+            //更新minPrice
+
+            if(prices[i] < minPrice) {
+
+                minPrice = prices[i];
+
+            }
+
+            
+
+            //无利润，且此时卖出，会亏本
+
+            if(prices[i] >= minPrice && prices[i] <=
+
+                                     minPrice + fee) {
+
+                //不做处理
+
+                continue;
+
+            }
+
+            
+
+            //有利润了，但利润持续更新中...
+
+            if(prices[i] > minPrice + fee) {
+
+                //叠加利润
+
+                result += prices[i] - minPrice - fee;
+
+                
+
+                //保证下一次，至少比 prices[i] 大 
+
+                //下一次的prices[i+1] 要> minPrice + fee
+
+                minPrice = prices[i] - fee;
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
