@@ -1,0 +1,86 @@
+/*
+
+class Solution {
+
+public:
+
+    int climbStairs(int n) {
+
+        //特殊情况
+
+        if(n == 1) return 1;
+
+        if(n == 2) return 2;
+
+        
+
+        vector<int> dp(n+1);
+
+        
+
+        //初始化
+
+        dp[1] = 1;
+
+        dp[2] = 2;
+
+        
+
+        //从前向后
+
+        for(int i = 3; i <= n; i++) {
+
+            dp[i] = dp[i-1] + dp[i-2];
+
+        }
+
+        
+
+        return dp[n];
+
+    }
+
+};
+
+*/
+
+class Solution {
+
+public:
+
+    int climbStairs(int n) {
+
+        if(n == 1) return 1;
+
+        if(n == 2) return 2;
+
+        
+
+        int dp[2] = {1, 2};
+
+        
+
+        int stairsNum = 0;
+
+        
+
+        for(int i = 3; i <= n; i++) {
+
+            stairsNum = dp[1] + dp[0];
+
+            
+
+            dp[0] = dp[1];
+
+            dp[1] = stairsNum;
+
+        }
+
+        
+
+        return stairsNum;
+
+    }
+
+};
+
