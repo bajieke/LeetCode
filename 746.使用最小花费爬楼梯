@@ -1,0 +1,86 @@
+/*
+
+//动态规划－1
+
+//第一步花费体力，最后一步不花费体力
+
+class Solution {
+
+public:
+
+    int minCostClimbingStairs(vector<int>& cost) {
+
+        
+
+        vector<int> dp(cost.size());
+
+        
+
+        dp[0] = cost[0];
+
+        dp[1] = cost[1];
+
+        
+
+        for(int i = 2; i < dp.size(); i++) {
+
+            //dp[i] 到达第i个台阶，所需最少体力值
+
+            dp[i] = min(dp[i-1], dp[i-2]) + cost[i];
+
+        }
+
+        
+
+        return min(dp[cost.size()-1], 
+
+                   dp[cost.size()-2]);
+
+    }
+
+};
+
+*/
+
+//动态规划－2优化空间
+
+//第一步花费体力，最后一步不花费体力
+
+class Solution {
+
+public:
+
+    int minCostClimbingStairs(vector<int>& cost) {
+
+        
+
+        int dp[2] = {cost[0], cost[1]};
+
+        
+
+        int dpi;
+
+        
+
+        for(int i = 2; i < cost.size(); i++) {
+
+            //dp[i] 到达第i个台阶，所需最少体力值
+
+            dpi = min(dp[0], dp[1]) + cost[i];
+
+            
+
+            dp[0] = dp[1];
+
+            dp[1] = dpi;
+
+        }
+
+        
+
+        return min(dp[0], dp[1]);
+
+    }
+
+};
+
