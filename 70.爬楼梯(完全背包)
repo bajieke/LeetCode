@@ -1,0 +1,100 @@
+//完全背包解法
+
+class Solution {
+
+public:
+
+    int climbStairs(int n) {
+
+        //定义
+
+        vector<int> dp(n + 1, 0);
+
+        
+
+        //初始化
+
+        dp[0] = 1;
+
+        
+
+        int m = 2;
+
+        
+
+        //排列－遍历方式
+
+        //遍历背包容量(总台阶数)
+
+        for(int j = 1; j <= n; j++) {
+
+            //遍历物品
+
+            for(int i = 1; i <= m; i++) {
+
+                if(j >= i)
+
+                    dp[j] += dp[j - i];
+
+            }
+
+        }
+
+        
+
+        return dp[n];
+
+    }
+
+};
+
+    
+
+//完全背包解法
+
+class Solution {
+
+public:
+
+    int climbStairs(int n, int m) {
+
+        //定义
+
+        vector<int> dp(n + 1, 0);
+
+        
+
+        //初始化
+
+        dp[0] = 1;
+
+        
+
+        //排列－遍历方式
+
+        //遍历背包容量(总台阶数)
+
+        for(int j = 1; j =< n; j++) {
+
+            //遍历物品
+
+            for(int i = 1; i <= m; i++) {
+
+                if(j >= i)
+
+                    dp[j] += dp[j - i];
+
+            }
+
+        }
+
+        
+
+        return dp[n];
+
+    }
+
+};
+
+    
+
