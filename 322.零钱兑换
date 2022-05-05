@@ -1,0 +1,51 @@
+//完全背包
+
+class Solution {
+
+public:
+
+    int coinChange(vector<int>& coins, int amount) {
+
+        //定义 + 初始化
+
+        vector<int> dp(amount + 1, INT_MAX);
+
+        
+
+        //初始化
+
+        dp[0] = 0;
+
+        
+
+        //遍历物品
+
+        for(int i = 0; i < coins.size(); i++) {
+
+            //遍历背包容量
+
+            for(int j = coins[i]; j <= amount; j++) {
+
+                //已经是最大了，不能再加一
+
+                if(dp[j - coins[i]] !=  INT_MAX) 
+
+                    dp[j] = min(dp[j], 
+
+                                dp[j - coins[i]] + 1);
+
+            }
+
+        }
+
+        
+
+        if(dp[amount] == INT_MAX) return -1;
+
+        
+
+        return dp[amount];
+
+    }
+
+};
