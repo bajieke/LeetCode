@@ -1,0 +1,41 @@
+//完全背包
+
+class Solution {
+
+public:
+
+    int numSquares(int n) {
+
+        //定义 + 初始化
+
+        vector<int> dp(n + 1, INT_MAX);
+
+        
+
+        //初始化
+
+        dp[0] = 0;
+
+        
+
+        //先遍历物品
+
+        for(int i = 1; i*i <= n; i++) {
+
+            //再遍历背包
+
+            for(int j = i*i; j <= n; j++) {
+
+                dp[j] = min(dp[j], dp[j - i*i] + 1);
+
+            }
+
+        }
+
+        
+
+        return dp[n];
+
+    }
+
+};
