@@ -1,0 +1,120 @@
+/*
+
+//动态规划
+
+class Solution {
+
+public:
+
+    int maxProfit(vector<int>& prices) {
+
+        vector<vector<int>> dp(prices.size(), vector<int>(2));
+
+        
+
+        //下面要用到prices[1]，要让其有意义
+
+        if(prices.size() == 0) return 0;
+
+        
+
+        //第一天持有股票
+
+        dp[0][0] = -prices[0];
+
+        //第一天不持有股票
+
+        dp[0][1] = 0;
+
+        
+
+        for(int i = 1; i < prices.size(); i++) {
+
+            //持有股票(买入股票)
+
+            //从上次买入的 和 这次买入的 选一个大的
+
+            dp[i][0] = max(dp[i-1][0], -prices[i]);
+
+            
+
+            //不持有股票(卖出股票)－
+
+            //从 上次卖出 和 这次卖出的 选一个大的
+
+            dp[i][1] = max(dp[i-1][1], 
+
+                           prices[i] + dp[i-1][0]);
+
+        }
+
+        
+
+        //最后一天不持有股票，肯定挣钱啊
+
+        return dp[prices.size()-1][1];
+
+    }
+
+};
+
+*/
+
+
+
+
+
+
+//动态规划－滚动数组－节省空间
+
+class Solution {
+
+public:
+
+    int maxProfit(vector<int>& prices) {
+
+        //只用 [i-1]和 [i] 两个空间
+
+        vector<vector<int>>dp(2, vector<int>(2));
+
+        
+
+        //
+
+        dp[0][0] = -prices[0];
+
+         dp[0][1] = 0;
+
+        
+
+        for(int i = 1; i < prices.size(); i++) {
+
+            //持有股票
+
+            dp[i % 2][0] = max(dp[(i-1) % 2][0], 
+
+                               -prices[i]);
+
+            
+
+            //不持有股票
+
+            dp[i % 2][1] = max(dp[(i-1) % 2][1], 
+
+                         prices[i] + dp[(i-1) % 2][0]);
+
+        }
+
+        
+
+        return dp[(prices.size()-1) % 2][1];
+
+    }
+
+};
+
+   
+
+        
+
+   
