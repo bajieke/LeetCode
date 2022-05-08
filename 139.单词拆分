@@ -1,0 +1,174 @@
+/*
+
+//回溯法－超出时间限制
+
+class Solution {
+
+private:
+
+    bool backTracking(string s, unordered_set<string> 
+
+                            wordSet, int startIndex) {
+
+        //递归的退出条件
+
+        if(startIndex >= s.size())
+
+            return true;
+
+        
+
+        //回溯
+
+        for(int i = startIndex; i < s.size(); i++) {
+
+            string word = s.substr(startIndex, 
+
+                                   i - startIndex + 1);
+
+            
+
+            if(wordSet.find(word) != wordSet.end() &&
+
+               backTracking(s, wordSet, i + 1))      {
+
+                //最后递归成功退出条件
+
+                return true;
+
+            }
+
+        }
+
+        
+
+        //最后没有退出成功，一路返回false
+
+        return false;
+
+    }
+
+public:
+
+    bool wordBreak(string s, vector<string>& wordDict) 
+
+                                                      {
+
+        unordered_set<string> wordSet(wordDict.begin(),
+
+                                      wordDict.end());
+
+        
+
+        return backTracking(s, wordSet, 0);
+
+    }
+
+};
+
+*/
+
+
+
+
+
+//回溯法－记忆递归
+
+class Solution {
+
+private:
+
+    bool backTracking(string s, unordered_set<string>&
+
+                                     wordSet, 
+
+                                vector<bool>& memory, 
+
+                                int startIndex) {
+
+        //退出条件
+
+        if(startIndex >= s.size())
+
+            return true;
+
+        
+
+        //提前判断 以本次startIndex开始的字符串们是否可以
+
+        if(memory[startIndex] == false) {
+
+            return memory[startIndex];
+
+        }
+
+        
+
+        //递归－回溯
+
+        for(int i = startIndex; i < s.size(); i++) {
+
+            string word = s.substr(startIndex,
+
+                                   i - startIndex + 1);
+
+            
+
+            //判断
+
+            if(wordSet.find(word) != wordSet.end() &&
+
+               backTracking(s, wordSet, memory, i+1)) {
+
+                //处理
+
+                //memory[startIndex] = 1;
+
+                return true;
+
+            }
+
+        }
+
+        
+
+        //以startIndex开始的各种字符串，都不满足条件
+
+        memory[startIndex] = false;
+
+       return false;
+
+    }
+
+    
+
+    
+
+public:
+
+    bool wordBreak(string s, vector<string>& wordDict) 
+
+                                                      {
+
+        unordered_set<string> wordSet(wordDict.begin(),
+
+                                      wordDict.end());
+
+        
+
+        vector<bool> memory(s.size(), 1);
+
+        
+
+        return backTracking(s, wordSet, memory, 0);
+
+    }
+
+};
+
+
+
+
+
+
+
