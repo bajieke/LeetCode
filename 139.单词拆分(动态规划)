@@ -1,0 +1,61 @@
+/*
+
+//动态规划
+
+class Solution {
+
+public:
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+
+        
+
+        unordered_set<string> wordSet(wordDict.begin(), 
+
+                                      wordDict.end());
+
+        
+
+        vector<bool> dp(s.size() + 1, false);
+
+        
+
+        dp[0] = 1;
+
+        
+
+        //遍历背包容量
+
+        for(int i = 1; i <= s.size(); i++) {
+
+            //遍历物品，(j-i)控制物品
+
+            for(int j = 0; j < i; j++) {
+
+                //物品
+
+                string word = s.substr(j, i-j);
+
+                //判断
+
+                if(wordSet.find(word) != wordSet.end() 
+
+                                            && dp[j]) {
+
+                    dp[i] = true;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return dp[s.size()];
+
+    }
+
+};
+
+*/
