@@ -1,0 +1,84 @@
+/*
+
+//暴力算法－超出时间限制
+
+class Solution {
+
+public:
+
+    int maxProfit(vector<int>& prices) {
+
+        //初始化
+
+        int result = 0;
+
+        
+
+        for(int i = 0; i < prices.size(); i++) {
+
+            for(int j = i+1; j < prices.size(); j++) {
+
+                //选最大间距   
+
+                //prices[j] - prices[i] 可能为 负
+
+                result = max(result ,
+
+                             prices[j] - prices[i]);
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+   
+
+   
+
+//贪心算法
+
+class Solution {
+
+public:
+
+    int maxProfit(vector<int>& prices) {
+
+        //初始化
+
+        int result = 0;
+
+    
+
+        for(int i = 0; i < prices.size(); i++) {
+
+            //买入最低价格－贪心
+
+            int low = min(low, prices[i]);
+
+            
+
+            //卖出最大利润
+
+            //prices[i] 和 low可能是同一天买入，卖出
+
+            result = max(result, prices[i] - low);
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};   
+
+*/
+
