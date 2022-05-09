@@ -1,0 +1,57 @@
+//动态规划
+
+class Solution {
+
+public:
+
+    int lengthOfLIS(vector<int>& nums) {
+
+        
+
+        if(nums.size() == 0) return 0;
+
+        if(nums.size() == 1) return 1;
+
+        
+
+        vector<int> dp(nums.size(), 1);
+
+        
+
+        int resultMax = 0;
+
+        
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            //dp[j]    下标: 0 ~ (i-2)
+
+            for(int j = 0; j < i; j++) {
+
+                //有前提条件
+
+                //只有比dp[]它大了
+
+                //才有资格用人家的
+
+                if(nums[j] < nums[i]) {
+
+                    dp[i] = max(dp[i], dp[j] + 1);
+
+                }
+
+            }
+
+            //意外呀
+
+            if(dp[i] > resultMax) resultMax = dp[i];
+
+        }
+
+              
+
+        return resultMax;
+
+    }
+
+};
