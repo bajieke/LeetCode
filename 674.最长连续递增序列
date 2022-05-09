@@ -1,0 +1,115 @@
+/*
+
+//动态规划
+
+class Solution {
+
+public:
+
+    int findLengthOfLCIS(vector<int>& nums) {
+
+        //特殊 (1)
+
+        if(nums.size() == 1)
+
+            return 1;
+
+        
+
+        vector<int> dp(nums.size(), 1);
+
+        int resultMax = 0;
+
+        
+
+                     //[i+1] < nums.size()
+
+        for(int i = 0; i < nums.size() - 1; i++) {
+
+            //包含本位 dp[i+1] nums[i+1] > nums[i]
+
+            if(nums[i+1] > nums[i]) {
+
+                dp[i+1] = dp[i] + 1;
+
+            }
+
+            //选出最后最大的 连续递增子序列
+
+            if(resultMax < dp[i+1])
+
+                resultMax = dp[i+1];
+
+        }
+
+        
+
+        return resultMax;
+
+    }
+
+};
+
+*/
+
+//贪心算法
+
+class Solution {
+
+public:
+
+    int findLengthOfLCIS(vector<int>& nums) {
+
+        //特殊情况
+
+        if(nums.size() == 0) return 0;
+
+        if(nums.size() == 1) return 1;
+
+        
+
+        //最终结果
+
+        int resultMax = 1;
+
+        
+
+        //每次一个，连续递增子序列的记录
+
+        int count = 1;
+
+        
+
+        for(int i = 0; i < nums.size() - 1; i++) {
+
+            if(nums[i+1] > nums[i]) {
+
+                count++;
+
+            }
+
+            else {
+
+                //不连续了，count开始重新计数
+
+                count = 1;
+
+            }
+
+            
+
+            //保存最大
+
+            if(resultMax < count)
+
+                resultMax = count;
+
+        }
+
+        
+
+        return resultMax;
+
+    }
+
+};
