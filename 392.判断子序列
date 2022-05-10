@@ -1,0 +1,59 @@
+//动态规划
+
+class Solution {
+
+public:
+
+    bool isSubsequence(string s, string t) {
+
+        //定义＋初始化
+
+        vector<vector<int>> dp(s.size() + 1, 
+
+                        vector<int>(t.size() + 1, 0));
+
+                        
+
+        //递推  
+
+        for(int i = 1; i <= s.size(); i++) {
+
+            for(int j = 1; j <= t.size(); j++) {
+
+                //当前相等
+
+                if(s[i-1] == t[j-1]) {
+
+                    //在s[i-2] 和 t[j-2] 基础上，加一
+
+                    dp[i][j] = dp[i-1][j-1] + 1;
+
+                }
+
+                //当前不等
+
+                else {
+
+                    //s[i-1] 和 t[j-2] 结果一样
+
+                    dp[i][j] = dp[i][j-1];
+
+                }
+
+            }
+
+        }
+
+        
+
+        if(dp[s.size()][t.size()] == s.size()) 
+
+            return true;
+
+        
+
+        return false;
+
+    }
+
+};
