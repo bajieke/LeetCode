@@ -1,0 +1,180 @@
+/*
+
+//动态规划
+
+class Solution {
+
+public:
+
+    int findLength(vector<int>& nums1, vector<int>& 
+
+                                              nums2) {
+
+        //定义＋初始化
+
+        vector<vector<int>> dp(nums1.size() + 1, 
+
+                     vector<int>(nums2.size() + 1, 0));
+
+        
+
+        int resultMax = 0;
+
+        
+
+        //递推过程
+
+        for(int i = 1; i <= nums1.size(); i++) {
+
+            for(int j = 1; j <= nums2.size(); j++) {
+
+                //凑成连续的
+
+                if(nums1[i-1] == nums2[j-1]) {
+
+                    dp[i][j] = dp[i-1][j-1] + 1;
+
+                }
+
+                //选最大
+
+                if(resultMax < dp[i][j]) {
+
+                    resultMax = dp[i][j];
+
+                }
+
+            }
+
+        }
+
+        
+
+        return resultMax;
+
+    }
+
+};
+
+*/
+
+//动态规划－空间优化
+
+class Solution {
+
+public:
+
+    int findLength(vector<int>& nums1, vector<int>& 
+
+                                            nums2) {
+
+        //特殊
+
+                                            
+
+                                                
+
+        vector<int> dp(nums2.size() + 1, 0);
+
+        
+
+        int resultMax = 0;
+
+        
+
+        for(int i = 1; i <= nums1.size(); i++) {
+
+            for(int j = nums2.size(); j > 0; j--) {
+
+                //相等，连续
+
+                if(nums1[i-1] == nums2[j-1]) {
+
+                    dp[j] = dp[j-1] + 1;
+
+                }
+
+                else {
+
+                    //不连续了，及时，重新计算
+
+                    dp[j] = 0;
+
+                }
+
+            
+
+                //及时记录，更新最大
+
+                if(resultMax < dp[j]) {
+
+                    resultMax = dp[j];
+
+                }
+
+            }
+
+        }
+
+        
+
+        return resultMax;
+
+    }
+
+};
+
+
+
+
+
+/*
+
+class Solution {
+
+public:
+
+    int findLength(vector<int>& A, vector<int>& B) {
+
+        vector<vector<int>> dp (A.size() + 1, 
+
+                         vector<int>(B.size() + 1, 0));
+
+        
+
+        int result = 0;
+
+        
+
+        for (int i = 1; i <= A.size(); i++) {
+
+            for (int j = 1; j <= B.size(); j++) {
+
+                //
+
+                if (A[i - 1] == B[j - 1]) {
+
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+
+                }
+
+                //
+
+                if (dp[i][j] > result) 
+
+                    result = dp[i][j];
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+};
+
+*/
+                                            
+
+                                  
