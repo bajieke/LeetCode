@@ -1,0 +1,143 @@
+/*
+
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        int max = INT32_MIN;
+
+        int sum = 0;
+
+        
+
+        for(int i=0; i<nums.size(); i++) {
+
+            //更新sum，下一轮开始
+
+            //sum = nums[i];
+
+            sum = 0;
+
+            
+
+            //j=i+1
+
+            for(int j=i; j<nums.size(); j++) {
+
+                
+
+                
+
+                sum += nums[j];
+
+                
+
+                //更新max，从本位开始更新(－2，1)
+
+                if(max < sum) max = sum;
+
+                
+
+                //错误，局部贪心
+
+                //if(sum < 0) sum = 0;
+
+            }
+
+        }
+
+        
+
+        return max;
+
+    }
+
+};
+
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        int max = INT32_MIN;
+
+        int sum = 0;
+
+        
+
+        //只用了 一层for循环
+
+        for(int i=0; i<nums.size(); i++) {
+
+            //局部贪心
+
+            if(sum < 0) sum = 0;
+
+            
+
+            sum += nums[i];
+
+            
+
+            if(max < sum) max = sum;
+
+        }
+
+        
+
+        return max;
+
+    }
+
+};
+
+*/
+
+//动态规划
+
+class Solution {
+
+public:     
+
+    int maxSubArray(vector<int>& nums) {
+
+        //dp[i] 包括nums[i]在内，之前的，最大子序和
+
+        vector<int> dp(nums.size());
+
+        
+
+        //初始化
+
+        dp[0] = nums[0];
+
+        
+
+        int result = nums[0];
+
+        
+
+        //递推
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            dp[i] = max(dp[i-1] + nums[i], nums[i]);
+
+            
+
+            //更新
+
+            result = (dp[i] > result) ? dp[i] : result;
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
