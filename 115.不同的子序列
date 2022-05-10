@@ -1,0 +1,83 @@
+//动态规划
+
+class Solution {
+
+public:
+
+    int numDistinct(string s, string t) {
+
+        //定义＋初始化
+
+        vector<vector<uint64_t>> dp(s.size() + 1, 
+
+                    vector<uint64_t>(t.size() + 1));
+
+        
+
+        //初始化
+
+        for(int i = 1; i <= s.size(); i++) {
+
+            //当 t 为空串时，空串匹配任何的s
+
+            dp[i][0] = 1;
+
+        }
+
+        
+
+        //空串 匹配 空串
+
+        dp[0][0] = 1;
+
+        
+
+        //初始化
+
+        for(int j = 1; j <= t.size(); j++) {
+
+            //当 s 为空串时，t匹配不了s
+
+            dp[0][j] = 0;
+
+        }
+
+        
+
+        //递推
+
+        for(int i = 1; i <= s.size(); i++) {
+
+            for(int j = 1; j <= t.size(); j++) {
+
+                //相等
+
+                if(s[i-1] == t[j-1]) {
+
+                    //之前已经匹配的个数 ＋ 本次不匹配的个数
+
+                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+
+                }
+
+                //不相等
+
+                else {
+
+                    //本次不匹配的个数(无法匹配)
+
+                    dp[i][j] = dp[i-1][j];
+
+                }
+
+            }
+
+        }
+
+        
+
+        return dp[s.size()][t.size()];
+
+    }
+
+};
