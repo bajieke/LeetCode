@@ -1,0 +1,64 @@
+//双指针－中心轴对称(中心轴可能为1个 or 2个)
+
+class Solution {
+
+private:
+
+    //判断 以[i, j]为中心轴 字符串是不是回文串
+
+    int extend(const string& s, int i, int j,
+
+                                       int length) {
+
+        int res = 0;
+
+        
+
+        while(i >= 0 && j < length && s[i] == s[j]) {
+
+            res++;
+
+            i--;  //向左扩展        //i++;   错
+
+            j++;  //向右扩展        //j--;   错
+
+        }
+
+        
+
+        return res;
+
+    }
+
+    
+
+public:
+
+    int countSubstrings(string s) {
+
+        int result = 0;
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            //以 1个 为中心轴
+
+            result += extend(s, i, i, s.size());
+
+            
+
+            //以 2个 为中心轴
+
+            result += extend(s, i, i+1, s.size());
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
