@@ -1,0 +1,89 @@
+//动态规划
+
+class Solution {
+
+public:
+
+    int minDistance(string word1, string word2) {
+
+        //定义
+
+        vector<vector<int>> dp(word1.size() + 1, vector<int>(word2.size() + 1));
+
+        
+
+        //初始化－－word2为空
+
+        for(int i = 1; i <= word1.size(); i++) {
+
+            dp[i][0] = i;
+
+        }
+
+        
+
+        //初始化2－－word1为空
+
+        for(int j = 1; j <= word2.size(); j++) {
+
+            dp[0][j] = j;
+
+        }
+
+        
+
+        //word1 word2 都为空，不需要任何操作
+
+        dp[0][0] = 0;
+
+        
+
+        //递推f
+
+        for(int i = 1; i <= word1.size(); i++) {
+
+            for(int j = 1; j <= word2.size(); j++) {
+
+                //不相等
+
+                if(word1[i-1] == word2[j-1]) {
+
+                    //不做任何操作
+
+                    dp[i][j] = dp[i-1][j-1];
+
+                }
+
+                //不相等
+
+                else {
+
+                    //3类大操作
+
+                    dp[i][j] = min({dp[i][j-1] + 1, 
+
+                                    dp[i-1][j] + 1, 
+
+                                    dp[i-1][j-1] + 1});
+
+                }
+
+            }
+
+        }
+
+        
+
+        return dp[word1.size()][word2.size()];
+
+    }
+
+};
+
+    
+
+    
+
+    
+
+   
