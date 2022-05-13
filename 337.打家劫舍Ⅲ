@@ -1,0 +1,264 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+ * };
+
+ */
+
+ 
+
+ /*
+
+//暴力算法－超出时间限制
+
+class Solution {
+
+public:
+
+    //递归
+
+    int rob(TreeNode* root) {
+
+        //退出条件
+
+        //跳孙子，跳到空节点
+
+        if(root == nullptr) {
+
+            return 0;
+
+        }
+
+        //跳孙子，跳到叶子结点
+
+        if(root->left == nullptr && 
+
+          root->right == nullptr) {
+
+            return root->val;
+
+        }
+
+        
+
+        //1.偷父亲结点
+
+        int val1 = root->val;
+
+            //跳过儿子
+
+            //左孙子，开始判断
+
+        if(root->left)
+
+            val1 += rob(root->left->left) + 
+
+                    rob(root->left->right);
+
+            //右孙子，开始判断
+
+        if(root->right)
+
+            val1 += rob(root->right->left) + 
+
+                    rob(root->right->right);
+
+        
+
+        
+
+        //2.不偷父亲结点
+
+        int val2 = rob(root->left) + rob(root->right);
+
+        
+
+        //动规思路
+
+        //返回 两者的较大值
+
+        return max(val1, val2);
+
+    }
+
+};
+
+*/
+
+
+
+
+
+
+/*
+
+//记忆化递归－解决暴力算法
+
+//         (重复把某结点作为root，进去递归情况)
+
+class Solution {
+
+private:
+
+    //记忆化umap，记录计算过的结点
+
+    unordered_map<TreeNode*, int> umap;
+
+    
+
+public:
+
+    int rob(TreeNode* root) {
+
+        //退出条件
+
+        //跳到空节点
+
+        if(root == nullptr) return 0;
+
+        //跳到叶子结点
+
+        if(root->left == nullptr &&
+
+           root->right == nullptr) {
+
+            return root->val;
+
+        }
+
+        
+
+        //记忆－判断
+
+        if(umap[root]) return umap[root];
+
+        
+
+        //偷父亲结点
+
+        int val1 = root->val;
+
+            //左孙子
+
+        if(root->left) 
+
+            val1 += rob(root->left->left) + 
+
+                    rob(root->left->right);
+
+            //右孙子
+
+        if(root->right)
+
+            val1 += rob(root->right->left) + 
+
+                    rob(root->right->right);
+
+            
+
+            
+
+        //不偷父亲结点
+
+        int val2 = rob(root->left) + rob(root->right);
+
+        
+
+        //进行标记－记忆
+
+        umap[root] = max(val1, val2);
+
+        
+
+        //返回两者中大值
+
+        return max(val1, val2);
+
+    }
+
+};
+
+*/
+
+
+
+
+
+
+//动态规划
+
+class Solution {
+
+private:
+
+    //返回类型dp数组
+
+    vector<int> robTree(TreeNode* root) {
+
+        if(root == nullptr) return vector<int>{0, 0};
+
+        
+
+        //左
+
+        vector<int> left = robTree(root->left);
+
+        //右
+
+        vector<int> right = robTree(root->right);
+
+        
+
+        //中
+
+        //偷父亲结点
+
+        int val1 = root->val + left[0] + right[0];
+
+        
+
+        //不偷父亲结点
+
+        int val2 = max(left[0], left[1]) + 
+
+                   max(right[0], right[1]); 
+
+               
+
+              //不偷，偷
+
+        return {val2, val1};
+
+    }
+
+public:
+
+    int rob(TreeNode* root) {
+
+        //根结点的dp数组
+
+        vector<int> dp = robTree(root);
+
+        
+
+        return max(dp[0], dp[1]);
+
+    }
+
+};
+
