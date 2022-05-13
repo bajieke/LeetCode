@@ -1,0 +1,80 @@
+//动态规划－偷环形房屋
+
+class Solution {
+
+private:
+
+    //198.打家劫舍逻辑代码
+
+    int robRange(const vector<int>& nums, int start,
+
+                                          int end) {
+
+        //只有一个元素                        
+
+        if(start == end) return nums[start];
+
+        
+
+        //以下，至少2个元素了
+
+        
+
+        vector<int> dp(nums.size());
+
+        
+
+        dp[start] = nums[start];
+
+        dp[start+1] = max(nums[start], nums[start+1]);
+
+        
+
+        for(int i = start + 2; i <= end; i++) {
+
+            dp[i] = max(dp[i-2] + nums[i], dp[i-1]);
+
+        }
+
+        
+
+        return dp[end];
+
+    }
+
+    
+
+public:
+
+    int rob(vector<int>& nums) {
+
+        //特殊情况
+
+        if(nums.size() == 0) return 0;
+
+        if(nums.size() == 1) return nums[0];
+
+        
+
+        //传进来 >=2个元素，截取一下 >=1个元素
+
+        
+
+        //情况二
+
+        int result1 = robRange(nums, 0, nums.size()-2);
+
+        //情况三
+
+        int result2 = robRange(nums, 1, nums.size()-1);
+
+        
+
+        //情况2 情况3 选择
+
+        return max(result1, result2);
+
+    }
+
+};   
+
