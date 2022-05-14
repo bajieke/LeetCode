@@ -1,0 +1,58 @@
+//对称二叉树
+
+class Solution {
+
+private:
+
+    //对比             中 左右         中 右左
+
+    bool contrast(TreeNode* p1, TreeNode* p2) {
+
+        //同时为空
+
+        if(p1 == nullptr && p2 == nullptr) 
+
+            return true;
+
+        
+
+        //不同时为空，有一个为空
+
+        if(p1 == nullptr || p2 == nullptr) 
+
+            return false;
+
+        
+
+        //都不为空，不相等
+
+        if(p1->val != p2->val) 
+
+            return false;
+
+        
+
+        return contrast(p1->left, p2->right) &&
+
+               contrast(p1->right, p2->left);
+
+    }
+
+public:
+
+    bool isSymmetric(TreeNode* root) {
+
+        //特殊
+
+        if(root = nullptr) return true;
+
+        
+
+        //都从根结点开始  中 左右    中 右左
+
+        return contrast(root, root);
+
+    }
+
+};
+
