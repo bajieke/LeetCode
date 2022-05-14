@@ -1,0 +1,105 @@
+/*
+
+//回文数字－反转之后判断相等
+
+//优化－反转一半，就进行判断
+
+class Solution {
+
+public:
+
+    bool isPalindrome(int x) {
+
+        //特殊
+
+        if(x < 0 || (x!=0 && (x%10) == 0)) {
+
+            return false;
+
+        }
+
+        
+
+        //反转后的数字
+
+        int revertNumber = 0;
+
+        
+
+        //判断一半
+
+        while(revertNumber < x) {
+
+            revertNumber = revertNumber * 10 + x % 10;
+
+            
+
+            x /= 10;
+
+        }
+
+        //while循环出来之后
+
+        //要么 x == revertNumber
+
+        //要么 x < revertNumber
+
+        
+
+        return (x == revertNumber) ||  
+
+               (x == revertNumber / 10);
+
+    }
+
+};
+
+*/
+
+class Solution {
+
+public:
+
+    bool isPalindrome(int x) {
+
+        //特殊情况
+
+        if(x < 0 || (x!=0 && (x%10 == 0))) {
+
+            return false;
+
+        }
+
+    
+
+        string s = to_string(x);
+
+        
+
+        int i = 0;
+
+        int j = s.size() - 1;
+
+        
+
+        while(i <= j) {
+
+            if(s[i] != s[j]) {
+
+                return false;
+
+            }
+
+            ++i;
+
+            --j;
+
+        }
+
+        
+
+     return true;
+
+    }
+
+};
