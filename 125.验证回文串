@@ -1,0 +1,73 @@
+//验证回文串
+
+class Solution {
+
+public:
+
+    bool isPalindrome(string s) {
+
+        //特殊情况
+
+        if(s.size() == 0) return true;
+
+        
+
+        //大写字母 -> 小写字母
+
+        for(int i = 0; i < s.size(); i++) {
+
+            if(s[i] >= 'A' && s[i] <= 'Z') {
+
+                s[i] = s[i] + 32;
+
+            }
+
+        }
+
+        
+
+        //开始遍历－双指针
+
+        int left = 0;
+
+        int right = s.size() - 1;
+
+        
+
+        for( ; left < right; ++left, --right) {
+
+            //
+
+            while ((!isalnum(s[left])) && left < right) {
+
+                ++left;
+
+            }
+
+            
+
+            //
+
+            while ((!isalnum(s[right])) && left < right) {
+
+                --right;
+
+            }
+
+            
+
+            if(s[left] != s[right]) {
+
+                return false;
+
+            }
+
+        }
+
+        
+
+        return true;
+
+    }
+
+};
