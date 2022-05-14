@@ -1,0 +1,113 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+
+ */
+
+/*
+
+//二叉树的镜像－先序遍历
+
+class Solution {
+
+public:
+
+    TreeNode* mirrorTree(TreeNode* root) {
+
+        //特殊情况
+
+        if(root == nullptr) return root;
+
+        
+
+        //叶子结点，不交换       //只有一个根结点
+
+        if(root->left == nullptr && 
+
+           root->right == nullptr) {
+
+            //返回此结点
+
+            return root;
+
+        }
+
+        
+
+        //交换
+
+        TreeNode* temp = root->left;
+
+        root->left = root->right;
+
+        root->right = temp;
+
+        
+
+        //递归
+
+        if(root->left)
+
+            mirrorTree(root->left);
+
+        if(root->right)
+
+            mirrorTree(root->right);
+
+        
+
+        //最后返回根结点
+
+        return root;
+
+    }
+
+};
+
+*/
+
+class Solution {
+
+public:
+
+    TreeNode* mirrorTree(TreeNode* root) {
+
+        //特殊
+
+        if(root == nullptr) return nullptr;
+
+        
+
+        //临时结点
+
+        TreeNode* tmp = root->left;
+
+        
+
+        //左
+
+        root->left = mirrorTree(root->right);
+
+        //右
+
+        root->right = mirrorTree(tmp);
+
+        
+
+        return root;
+
+    }
+
+};
