@@ -1,0 +1,95 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+
+ */
+
+ 
+
+ 
+
+//JZ_32.从上到下打印二叉树①
+
+//二叉树的层序遍历
+
+class Solution {
+
+public:
+
+    vector<int> levelOrder(TreeNode* root) {
+
+        //que存的是TreeNode, 而不是int
+
+        //因为要进行判断，que.front()的左右孩子
+
+        queue<TreeNode*> que;
+
+        vector<int> result;
+
+        
+
+        //root存在，插入队列
+
+        if(root) 
+
+            que.push(root);
+
+        
+
+        //层序遍历的逻辑
+
+        while(! que.empty()) {
+
+            //队列大小－本层 结点个数
+
+            int size = que.size();
+
+            
+
+            //根据这层子结点，插入对应结点
+
+            for(int i = 0; i < size; i++) {
+
+                TreeNode* node = que.front();
+
+                result.push_back(node->val);
+
+                que.pop();
+
+            
+
+                if(node->left) {
+
+                    que.push(node->left);
+
+                }
+
+                if(node->right) {
+
+                    que.push(node->right);
+
+                }
+
+            }   
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
