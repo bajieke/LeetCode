@@ -1,0 +1,155 @@
+//顺时针打印螺旋矩阵－左闭右开原则
+
+class Solution {
+
+public:
+
+    vector<int> spiralOrder(vector<vector<int>>& 
+
+                                          matrix) {
+
+        vector<int> ans;
+
+        
+
+        if(matrix.size() == 0) return ans;
+
+        
+
+        int m = matrix.size();
+
+        int n = matrix[0].size();
+
+        
+
+        //每次循环开始的第一位置坐标
+
+        int startx = 0, starty = 0;
+
+        
+
+        //循环的圈数
+
+        int loop = min(m, n) / 2;
+
+        
+
+        //坐标控制
+
+        int i, j;
+
+        
+
+        //控制遍历长度
+
+        int offect = 1;
+
+        
+
+        //循环填充过程
+
+        while(loop--) {
+
+            
+
+            //超级容易忘记
+
+            i = startx;
+
+            j = starty;
+
+            
+
+            //→
+
+            for(j = startx; j < n - offect; j++) {
+
+                ans.push_back(matrix[startx][j]);
+
+            }
+
+            
+
+            //↓
+
+            for(i = starty; i < m - offect; i++) {
+
+                ans.push_back(matrix[i][j]);
+
+            }
+
+            
+
+            //←
+
+            for( ; j > starty; j--) {
+
+                ans.push_back(matrix[i][j]);
+
+            }
+
+            
+
+            //↑
+
+            for( ; i > startx; i--) {
+
+                ans.push_back(matrix[i][j]);
+
+            }
+
+            
+
+            startx++;
+
+            starty++;
+
+            
+
+            offect++;
+
+        }
+
+        
+
+        int minSize = min(m, n);
+
+        //有多余
+
+        if(minSize % 2 == 1) {
+
+            //横条
+
+            if(m <= n) {
+
+                for(j = starty; j < n-offect+1; j++) {
+
+                    ans.push_back(matrix[startx][j]);
+
+                }
+
+            }//竖条
+
+            else {
+
+                for(i = startx; i < m-offect+1; i++) {
+
+                    ans.push_back(matrix[i][starty]);
+
+                }
+
+            }
+
+        }
+
+        
+
+        //返回最终结果
+
+        return ans;
+
+    }
+
+};
+
+ 
