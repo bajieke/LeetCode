@@ -1,0 +1,49 @@
+//JZ_31.栈的压入，弹出序列
+
+class Solution {
+
+public:
+
+    bool validateStackSequences(vector<int>& pushed, 
+
+                                vector<int>& popped) {
+
+        //辅助栈
+
+        stack<int> stk;
+
+        int cur = 0;
+
+        
+
+        for(int i = 0; i < pushed.size(); i++) {
+
+            //首先第一步，先入栈
+
+            stk.push(pushed[i]);
+
+            
+
+            //只要不相等，就入栈直到 等于栈顶元素
+
+            //只有和栈顶元素相等，就出栈，pushed指针后移
+
+            while(!stk.empty() && 
+
+                  stk.top() ==  popped[cur]) {
+
+                stk.pop();
+
+                cur++;
+
+            }
+
+        }
+
+        //辅助栈，排空了－>说明全部匹配，弹出栈顶
+
+        return stk.empty();
+
+    }
+
+};
