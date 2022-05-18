@@ -1,0 +1,97 @@
+//JZ_33.二叉搜索树的后序遍历序列
+
+class Solution {
+
+private:
+
+    //左闭－右开区间  vec[start, end)
+
+    bool traversal(vector<int> vec, int start, int end) 
+
+                                                      {
+
+        //递归退出条件
+
+        if(vec.size()==0) 
+
+            return true;
+
+        
+
+        int root = vec[end - 1];
+
+        
+
+        //左子树  [start, i)
+
+        int i = start;
+
+        for(; i < end - 1; i++) {
+
+            if(vec[i] > root)
+
+                break;
+
+        }
+
+        
+
+        //右子树
+
+        int j = i;
+
+        for(; j < end - 1; j++) {
+
+            if(vec[j] < root)
+
+                return false;
+
+        }
+
+        
+
+        //递归左子树 [start, i)
+
+        bool left = true;
+
+        if(i > start) {
+
+            left = traversal(vec, start, i);
+
+        }
+
+        
+
+        
+
+        //递归右子树 [i, end-1)
+
+        bool right = true;
+
+        if(i < (end - 1)) {
+
+            right = traversal(vec, i, end - 1);
+
+        }
+
+        
+
+        return left && right;
+
+    }
+
+    
+
+public:
+
+    bool verifyPostorder(vector<int>& postorder) {
+
+        return traversal(postorder, 0, 
+
+                                    postorder.size());
+
+    }
+
+};
+
+    
