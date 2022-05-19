@@ -1,0 +1,141 @@
+/*
+
+class Solution {
+
+public:
+
+    ListNode* deleteNode(ListNode* head, int val) {
+
+        //特殊情况
+
+        if(!head) return head;
+
+        
+
+        //删除结点是头结点
+
+        while(head && head->val == val) {
+
+            ListNode* temp = head;
+
+            head = head->next;
+
+            delete temp;
+
+        }
+
+        
+
+        if(!head) return head;
+
+        
+
+        //此时，pre指向的head 绝对不是删除的元素
+
+        ListNode* pre = head;
+
+        ListNode* cur = head->next;
+
+        
+
+        
+
+        while(cur) {
+
+            if(cur->val == val) {
+
+                ListNode* temp = cur;
+
+                pre->next = cur->next;
+
+                cur = cur->next;
+
+            
+
+                delete temp;
+
+            }
+
+            else {
+
+                pre = cur;
+
+                cur = cur->next;
+
+            }
+
+        }
+
+        
+
+        return head;
+
+    }
+
+};
+
+*/
+
+
+
+//删除链表结点
+
+//链表结点－元素值都不重复(这就简单，有意思多了)
+
+class Solution {
+
+public:
+
+    ListNode* deleteNode(ListNode* head, int val) {
+
+        if(head->val == val) {
+
+            return head->next;
+
+        }
+
+        
+
+        ListNode* newHead = head;
+
+        //head->next不想等，才往后移动()
+
+        while(head && head->next->val != val) {
+
+            head = head->next;
+
+        }
+
+        //①跳出循环说明 head->next值 == val
+
+        //②or head->next为空，跳到末尾了
+
+        
+
+        //①
+
+        if(head->next) {
+
+            head->next = head->next->next;
+
+        }
+
+        //②
+
+        else {
+
+            //不做处理
+
+        }
+
+        
+
+        return newHead;
+
+    }
+
+};
+
+    
+
+
