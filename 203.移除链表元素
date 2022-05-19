@@ -1,0 +1,269 @@
+class Solution {
+
+public:
+
+    ListNode* removeElements(ListNode* head,int val)
+
+    {
+
+        if (head==nullptr) return head;
+
+        
+
+        ListNode* dummyHead = new ListNode(0);
+
+        dummyHead->next = head;
+
+        ListNode* cur = dummyHead;
+
+        
+
+        while (cur->next!=nullptr)
+
+        {
+
+            if (cur->next->val==val)
+
+            {
+
+                ListNode* temp = cur->next;
+
+                cur->next = cur->next->next;
+
+                delete temp;
+
+            }
+
+            else
+
+                cur = cur->next;
+
+        }
+
+        
+
+        head = dummyHead->next;
+
+        delete dummyHead;
+
+        return head;
+
+    }
+
+};
+
+
+
+
+//二刷
+
+/*
+
+class Solution {
+
+public:
+
+    ListNode* removeElements(ListNode* head, int val) {
+
+        //特殊情况
+
+        if(!head) return head;
+
+        
+
+        //删除结点是头结点
+
+        while(head && head->val == val) {
+
+            ListNode* temp = head;
+
+            head = head->next;
+
+            delete temp;
+
+        }
+
+        
+
+         //全部都是特殊结点
+
+        if(!head) return head;
+
+        
+
+        //此时，pre指向的head 绝对不是删除的元素
+
+        ListNode* pre = head;
+
+        ListNode* cur = head->next;
+
+        
+
+        //双指针pre, cur 删除操作，
+
+        while(cur) {
+
+            if(cur->val == val) {
+
+                ListNode* temp = cur;
+
+                pre->next = cur->next;
+
+                cur = cur->next;
+
+            
+
+                delete temp;
+
+            }
+
+            else {
+
+                pre = cur;
+
+                cur = cur->next;
+
+            }
+
+        }
+
+        
+
+        return head;
+
+    }
+
+};
+
+*/
+
+
+
+
+/*
+
+//单指针cur，进行删除
+
+class Solution {
+
+public:
+
+    ListNode* removeElements(ListNode* head, int val) {
+
+        if(! head) return head;
+
+        
+
+        //删除头结点是删除点情况
+
+        while(head && head->val == val) {
+
+            ListNode* temp = head;
+
+            head = head->next;
+
+            delete temp;
+
+        }
+
+        
+
+        //删完之后，为空
+
+        if(! head) return head;
+
+        
+
+        //此时，cur一定不是要删除的那个结点
+
+        ListNode* cur = head;
+
+        
+
+        //cur的next 不是删除点，才正常移动cur
+
+        while(cur->next) {
+
+            //cur的下一位是删除位，跳过删除位
+
+            if(cur->next->val == val) {
+
+                ListNode* temp = cur->next;
+
+                cur->next = cur->next->next;
+
+                delete temp;
+
+            }//下一位不是删除位，正常移动
+
+            else {
+
+                cur = cur->next;
+
+            }
+
+        }
+
+        
+
+        return head;
+
+    }
+
+};
+
+*/
+
+
+
+class Solution {
+
+public:
+
+    ListNode* removeElements(ListNode* head, int val) {
+
+        if(! head) return head;
+
+        
+
+        ListNode* dummyHead = new ListNode(0);
+
+        dummyHead->next = head;
+
+        ListNode* cur = dummyHead;
+
+        
+
+        while(cur->next) {
+
+            if(cur->next->val == val) {
+
+                ListNode* temp = cur->next;
+
+                cur->next = cur->next->next;
+
+                delete temp;
+
+            }
+
+            else {
+
+                cur = cur->next;
+
+            }
+
+        }
+
+        
+
+        return dummyHead->next;
+
+    }
+
+};
+
+    
+
+
+
+
