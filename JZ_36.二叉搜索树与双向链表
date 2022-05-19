@@ -1,0 +1,123 @@
+/*
+
+// Definition for a Node.
+
+class Node {
+
+public:
+
+    int val;
+
+    Node* left;
+
+    Node* right;
+
+    Node() {}
+
+    Node(int _val) {
+
+        val = _val;
+
+        left = NULL;
+
+        right = NULL;
+
+    }
+
+    Node(int _val, Node* _left, Node* _right) {
+
+        val = _val;
+
+        left = _left;
+
+        right = _right;
+
+    }
+
+};
+
+*/
+
+//JZ_36.二叉搜索树与双向链表
+
+class Solution {
+
+private:
+
+    Node *pre = nullptr, *head = nullptr;
+
+    //Node *pre, *head;
+
+    //中序遍历
+
+    void traversal(Node* cur) {
+
+        //退出条件
+
+        if(!cur) return;
+
+        
+
+        //左
+
+        traversal(cur->left);
+
+        
+
+        //中
+
+        if(pre) {
+
+            pre->right = cur;
+
+        }
+
+        else {
+
+            head = cur;
+
+        }
+
+        
+
+        cur->left = pre;
+
+        pre = cur;    
+
+        
+
+        //右
+
+        traversal(cur->right);
+
+    }
+
+  
+
+public:
+
+    Node* treeToDoublyList(Node* root) {
+
+        if(!root) return root;
+
+        
+
+        traversal(root);
+
+        
+
+        //首尾循环－此时pre为双向链表尾巴
+
+        pre->right = head;
+
+        head->left = pre;
+
+        
+
+        return head;
+
+    }
+
+};
+
+  
