@@ -1,0 +1,104 @@
+/*
+
+//排序－中位数
+
+class Solution {
+
+public:
+
+    int majorityElement(vector<int>& nums) {
+
+        sort(nums.begin(), nums.end());
+
+        
+
+        return nums[nums.size()/2];
+
+    }
+
+};
+
+*/
+
+/*
+
+//哈希
+
+class Solution {
+
+public:
+
+    int majorityElement(vector<int>& nums) {
+
+        unordered_map<int, int> umap;
+
+        //数字max[0]－次数max[1]
+
+        int max[2] = {nums[0], 0};
+
+        
+
+        for(int num : nums) {
+
+            umap[num]++;
+
+            
+
+            if(max[1] < umap[num]) {
+
+                max[1] = umap[num];
+
+                max[0] = num;
+
+            }    
+
+        }
+
+        
+
+        return max[0];
+
+    }
+
+};
+
+*/
+
+/*
+
+//哈希
+
+class Solution {
+
+public:
+
+    int majorityElement(vector<int>& nums) {
+
+        unordered_map<int, int> umap;
+
+        
+
+        for(int num : nums) {
+
+            umap[num]++;
+
+            
+
+            if(umap[num] > nums.size()/2) {
+
+                return num;
+
+            }    
+
+        }
+
+        
+
+        return -1;
+
+    }
+
+};
+
+*/
+
