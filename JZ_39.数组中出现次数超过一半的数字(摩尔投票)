@@ -1,0 +1,61 @@
+/*
+
+//摩尔投票
+
+class Solution {
+
+public:
+
+    int majorityElement(vector<int>& nums) {
+
+        //候选数
+
+        int candidate = nums[0];
+
+        int times = 1;
+
+        
+
+        //摩尔投票
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            if(times == 0) {
+
+                candidate = nums[i];
+
+                times = 1;
+
+                //重新开始
+
+                continue;
+
+            }
+
+            
+
+            if(candidate != nums[i]) {
+
+                times--;
+
+            }
+
+            else {
+
+                times++;
+
+            }
+
+        }
+
+        
+
+        return candidate;
+
+    }
+
+};
+
+*/
+
+    
