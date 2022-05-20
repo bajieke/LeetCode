@@ -1,0 +1,147 @@
+/*
+
+//随机数
+
+class Solution {
+
+public:    
+
+    int majorityElement(vector<int>& nums) {
+
+        
+
+        while(true) {
+
+            //nums中随便选一个候选数，概率很大的
+
+            int candidate = nums[rand() % nums.size()];
+
+            int count = 0;
+
+            
+
+            //统计－确认选中数是否是 要求的数
+
+            for(int num : nums) {
+
+                if(num == candidate) {    
+
+                    count++;
+
+                }
+
+                if(count > nums.size()/2) {
+
+                    return candidate;
+
+                }
+
+            }
+
+        }
+
+        return -1;
+
+    }
+
+};
+
+*/
+
+//分治
+
+class Solution {
+
+private:
+
+    int isMajority(vector<int>& nums, int target, 
+
+                               int start, int end) {
+
+        int count = 0;
+
+        for(int i = start; i <= end; i++) {
+
+            if(target == nums[i]) {
+
+                count++;
+
+            }
+
+        }
+
+        return count;
+
+    }
+
+    int partition(vector<int>& nums, int low, int high)
+
+                                                      {
+
+        //退出条件
+
+        if(low == high) {
+
+            return nums[low];
+
+        }
+
+        
+
+        int mid = low + (high-low)/2;
+
+        
+
+        //左右递归
+
+        int left_majority = partition(nums, low, mid);
+
+        int right_majority = partition(nums, mid+1, 
+
+                                                high);
+
+        
+
+        //判断众数
+
+        if(isMajority(nums, left_majority, low, high) 
+
+                                  > (high-low+1)/2) {
+
+                           // 必须> 不能 >=
+
+            return left_majority;
+
+        }
+
+        
+
+        if(isMajority(nums, right_majority, low, high)
+
+                                  > (high-low+1)/2) {
+
+            return right_majority;
+
+        }
+
+        
+
+        //  (6, 5) 这种情况
+
+        return nums[0];
+
+    }
+
+    
+
+public:
+
+    int majorityElement(vector<int>& nums) {
+
+        return partition(nums, 0, nums.size()-1);
+
+    }
+
+};
+
+ 
