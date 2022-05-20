@@ -1,0 +1,173 @@
+/*
+
+//同一树枝去重
+
+class Solution {
+
+private:
+
+    vector<string> result;
+
+    string path;
+
+    
+
+    void backTracking(string s, vector<bool>& used) {
+
+        //退出条件
+
+        if(path.size() == s.size()) {
+
+            result.push_back(path);
+
+            return;
+
+        }
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            //树层去重
+
+            if(i > 0 && s[i] == s[i-1] 
+
+                     && used[i-1] == false) {
+
+                continue;
+
+            }
+
+            
+
+            //树枝去重
+
+            if(used[i] == true) {
+
+                continue;
+
+            }
+
+            
+
+            //处理
+
+            //path.push_back(s[i]);
+
+            path += s[i];
+
+            used[i] = true;
+
+            
+
+            //递归
+
+            backTracking(s, used);
+
+            
+
+            //回溯
+
+            path.pop_back();
+
+            used[i] = false;
+
+        }
+
+    }
+
+    
+
+public:
+
+    vector<string> permutation(string s) {
+
+        result.clear();
+
+        path.clear();
+
+        
+
+        if(s.size() == 0) return result;
+
+    }
+
+};
+
+*/
+
+//书上的方法
+
+class Solution {
+
+private:
+
+    vector<string> result;
+
+    
+
+    void dfs(string s, int index) {
+
+        if(index == s.size()-1) {
+
+            result.push_back(s);
+
+            return;
+
+        }
+
+        
+
+        set<int> myset;
+
+        for(int i = index; i < s.size(); i++) {
+
+            //同一层剪枝
+
+            if(myset.find(s[i]) != myset.end() ) {
+
+                continue;
+
+            }
+
+            myset.insert(s[i]);
+
+            
+
+            swap(s[index], s[i]);
+
+            
+
+            dfs(s, index+1);
+
+            
+
+            swap(s[index], s[i]);
+
+        }
+
+        
+
+    }
+
+public:
+
+    vector<string> permutation(string s) {
+
+        result.clear();
+
+        
+
+        if(s.size() == 0) return result;
+
+        
+
+        dfs(s, 0);
+
+        
+
+        return result;
+
+    }
+
+};
