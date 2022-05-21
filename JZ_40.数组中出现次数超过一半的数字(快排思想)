@@ -1,0 +1,95 @@
+ //快排－思想
+
+class Solution {
+
+private:
+
+    vector<int> quickSort(vector<int>&arr, int k, 
+
+                            int left, int right) {
+
+        //初始化
+
+        int i = left, j = right;
+
+       
+
+        while(i < j) {
+
+            //到 比它小 为止停－右边
+
+            while(i < j && arr[j] >= arr[left]) {
+
+                --j;
+
+            }
+
+            //到 比它小 为止停－左边
+
+            while(i < j && arr[i] <= arr[left]) {
+
+                ++i;
+
+            }
+
+            //刚好交换－> 小的到左边－大的在右边
+
+            if(i < j) {
+
+                swap(arr[i], arr[j]);
+
+            }
+
+        }
+
+        //退出循环 i刚好是 arr[left]的新位置
+
+        // 左边比它小  i 右边比它大
+
+        
+
+        swap(arr[left], arr[j]);
+
+        
+
+        if(k < j) quickSort(arr, k, left, i-1);
+
+        if(k > j) quickSort(arr, k, i+1, right);
+
+        
+
+        //到这里 k 刚好等于 j了
+
+        return vector<int>(arr.begin(), arr.begin()+k);
+
+    }
+
+    
+
+public:
+
+    vector<int> getLeastNumbers(vector<int>& arr, 
+
+                                              int k) {
+
+        iif(k == 0) {
+
+            vector<int> temp;
+
+            return temp;
+
+        }
+
+        if(k >= arr.size()) {
+
+            return arr;
+
+        }
+
+        
+
+        return quickSort(arr, k, 0, arr.size()-1);
+
+    }
+
+};
