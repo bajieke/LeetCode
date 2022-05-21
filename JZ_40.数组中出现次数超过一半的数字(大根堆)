@@ -1,0 +1,75 @@
+//大根堆
+
+class Solution {
+
+public:
+
+    vector<int> getLeastNumbers(vector<int>& arr,    
+
+                                           int k) {
+
+        //定义结果集
+
+        vector<int> result;
+
+        
+
+        //特殊情况
+
+        if(k > arr.size() || arr.size() == 0 || k==0) {
+
+            return result;
+
+        }
+
+        
+
+        //优先队列－大根堆
+
+        priority_queue<int> pri_que;
+
+        
+
+        for(const int val : arr) {
+
+            if(pri_que.size() < k) {
+
+                pri_que.push(val);
+
+            }
+
+            else {
+
+                if(val < pri_que.top()) {
+
+                    //删除大根堆－最大元素
+
+                    pri_que.pop();
+
+                    //插入新元素
+
+                    pri_que.push(val);
+
+                }
+
+            }
+
+        }
+
+        
+
+        while(! pri_que.empty()) {
+
+            result.push_back(pri_que.top());
+
+            pri_que.pop();
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
