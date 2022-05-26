@@ -1,0 +1,99 @@
+//动态规划
+
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        if(nums.size() == 0) return 0;
+
+        
+
+        vector<int> dp(nums.size());
+
+        int result = nums[0];
+
+        
+
+        dp[0] = nums[0];
+
+        
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            dp[i] = max(nums[i], 
+
+                        dp[i-1] + nums[i]);
+
+            
+
+            result = (result >= dp[i]) ? result : 
+
+                                         dp[i];
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+/*
+
+//分析数组规律
+
+class Solution {
+
+public:
+
+    int maxSubArray(vector<int>& nums) {
+
+        if(nums.size() == 0) return 0;
+
+        
+
+        int curSum = nums[0];
+
+        int result = nums[0];
+
+        
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            if(curSum <= 0) {
+
+                curSum = nums[i];
+
+            }
+
+            else {
+
+                curSum += nums[i];
+
+            }
+
+            
+
+            if(result < curSum) {
+
+                result = curSum;
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+*/
+
+         
