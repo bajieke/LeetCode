@@ -1,0 +1,66 @@
+//数字规律
+
+class Solution {
+
+public:
+
+    int countDigitOne(int n) {
+
+        if(n == 0) return 0;
+
+        //初始化
+
+        long base = 1;
+
+        int count = 0;
+
+        
+
+        while(base <= n && base != 0) {
+
+            //分为 a cur(本位) b   三部分
+
+            int a = (n / base) / 10;
+
+            int cur = (n / base) % 10;
+
+            int b = n % base;
+
+            
+
+            //本位情况
+
+            if(cur > 1) {
+
+                count += (a+1) * base;
+
+            }
+
+            else if(cur == 1){
+
+                count += a*base + 1*(b+1);
+
+            }
+
+            else { //cur == 0
+
+                count += a * base;
+
+            }
+
+            
+
+            //再进行下一步
+
+            base *= 10;
+
+        }
+
+        
+
+        return count;
+
+    }
+
+};
+
