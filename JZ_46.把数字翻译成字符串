@@ -1,0 +1,58 @@
+//动规
+
+class Solution {
+
+public:
+
+    int translateNum(int num) {
+
+    
+
+        string str = to_string(num);
+
+        vector<int> dp(str.size() + 1);
+
+        
+
+        dp[0] = 1;
+
+        dp[1] = 1;
+
+        
+
+        //从dp下标=2开始
+
+        for(int i = 2; i <= str.size(); i++) {
+
+            //str下标 = dp下标-1
+
+            if(str[i-2] == '1' || 
+
+              (str[i-2] == '2' && str[i-1] <= '5')) {
+
+                //dp[i-1]  i和i-1分开 
+
+                //dp[i-2]  i和i-1可以凑在一起
+
+                dp[i] = dp[i-1] + dp[i-2];
+
+            }
+
+            else {
+
+                //dp[i-1]  i和i-1分开 
+
+                dp[i] = dp[i-1];
+
+            }
+
+        }
+
+        
+
+        return dp[str.size()];
+
+    }
+
+};
+
