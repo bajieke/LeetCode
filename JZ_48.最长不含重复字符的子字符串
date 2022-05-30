@@ -1,0 +1,125 @@
+/*
+
+//动规
+
+class Solution {
+
+public:
+
+    int lengthOfLongestSubstring(string s) {
+
+        if(s.size() == 0) return 0;
+
+        
+
+        vector<int> dp(s.size());
+
+        
+
+        dp[0] = 1;
+
+        int maxDistance = 1;
+
+        
+
+        for(int i = 1; i < s.size(); i++) {
+
+            //j从i左边开始移动
+
+            int j = i-1;
+
+            
+
+            // j 向左移动，直到 j 与 i 相等  
+
+            //           or   j<0了
+
+            while(j >= 0 && s[j] != s[i]) {
+
+                j--;
+
+            }
+
+            
+
+            //(i-j)范围够大，可以尝试扩增
+
+            if((i-j) > dp[i-1]) {
+
+                dp[i] = dp[i-1] + 1;
+
+            }
+
+            //(i-j)范围内已经开始重复了，立刻缩小范围
+
+            else {
+
+                dp[i] = i-j;
+
+            }
+
+            
+
+            maxDistance = max(maxDistance, dp[i]);
+
+        }
+
+        
+
+        return maxDistance;
+
+    }
+
+};
+
+*/
+
+//哈希表
+
+class Solution {
+
+public:
+
+    int lengthOfLongestSubstring(string s) {
+
+        unordered_map<char, int> umap;
+
+        
+
+        int maxDistance = 0;
+
+        int i = -1;
+
+        
+
+        for(int j = 0; j < s.size(); j++) {
+
+            //与当前 字符 重复
+
+            if(umap.count(s[j])) {
+
+                //最近的重复位置
+
+                //umap[s[j]] -> 该字符上一个重复的位置
+
+                i = max(i, umap[s[j]]);
+
+            }
+
+            
+
+            umap[s[j]] = j;
+
+            
+
+            maxDistance = max(maxDistance, j-i);
+
+        }
+
+        
+
+        return maxDistance;
+
+    }
+
+};
