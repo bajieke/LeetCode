@@ -1,0 +1,135 @@
+/*
+
+//动规
+
+class Solution {
+
+public:
+
+    int nthUglyNumber(int n) {
+
+        //定义
+
+        vector<int> dp(n);
+
+        
+
+        //初始化
+
+        dp[0] = 1;
+
+        
+
+        //乘以2，乘以3，乘以5 的各个数的下标
+
+        int a = 0, b = 0, c = 0;
+
+        
+
+        for(int i = 1; i < n; i++) {
+
+            //接下来的丑数，一定取的是最小
+
+            dp[i] = min(dp[a] * 2, min(dp[b] * 3, 
+
+                                       dp[c] * 5));
+
+            
+
+            //成为丑数了，跳过，下一个继续
+
+            if(dp[a] * 2 == dp[i]) a++;
+
+            if(dp[b] * 3 == dp[i]) b++;
+
+            if(dp[c] * 5 == dp[i]) c++;
+
+        }
+
+        
+
+        return dp[n-1];
+
+    }
+
+};
+
+*/
+
+//暴力－遍历
+
+class Solution {
+
+private:
+
+    bool isUgly(unsigned number) {
+
+        while(number % 2 == 0) {
+
+            number /= 2;
+
+        }
+
+        
+
+        while(number % 3 == 0) {
+
+            number /= 3;
+
+        }
+
+        
+
+        while(number % 5 == 0) {
+
+            number /= 5;
+
+        }
+
+        
+
+        return (number == 1) ? true : false;
+
+    }
+
+public:
+
+     int nthUglyNumber(int n) {
+
+        if(n <= 6) return n;
+
+        
+
+        unsigned number = 0;
+
+        
+
+        while(n) {
+
+            //先加加
+
+            number++;
+
+            
+
+            //再判断是否是丑数
+
+            if(isUgly(number)) {
+
+                n--;
+
+            }
+
+        }
+
+        
+
+        return (int)number;
+
+    }
+
+};
+
+ 
+
+ 
