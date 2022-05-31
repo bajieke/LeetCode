@@ -1,0 +1,68 @@
+//二分查找－第一个 下标 和 数字不等的
+
+class Solution {
+
+public:
+
+    int missingNumber(vector<int>& nums) {
+
+        if(nums.size() == 0) return -1;
+
+        
+
+        int left = 0;
+
+        int right = nums.size() - 1;
+
+        
+
+        //查找 第一个 和下标不等的数
+
+        while(left <= right) {
+
+            int mid = left + (right-left)/2;
+
+            
+
+            if(nums[mid] != mid) {
+
+                if(mid==0 || nums[mid-1]==mid-1) {
+
+                    return mid;
+
+                }
+
+                else {
+
+                    // mid-1≠   mid≠
+
+                    //左边找 -->不等于的
+
+                    right = mid - 1;
+
+                }
+
+            }
+
+            //等于 直接往右边找
+
+            else {
+
+                // mid＝
+
+                // 右边找 -->不等于的
+
+                left = mid + 1;
+
+            }
+
+        }
+
+        
+
+        return nums.size();
+
+    }
+
+};
+
