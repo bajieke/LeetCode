@@ -1,0 +1,161 @@
+/*
+
+//暴力法－超出时间限制
+
+class Solution {
+
+public:
+
+    int reversePairs(vector<int>& nums) {
+
+        int count = 0;
+
+        
+
+        for(int i = 0; i < nums.size(); i++) {
+
+            for(int j = i+1; j < nums.size(); j++) {
+
+                //判断
+
+                if(nums[i] > nums[j]) {
+
+                    count++;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return count;
+
+    }
+
+};
+
+*/
+
+//归并排序－分治
+
+class Solution {
+
+private:
+
+    int mergeSort(int left, int right, vector<int>& nums, vector<int>& temp) {
+
+        //退出条件
+
+        if(left >= right) return 0;
+
+        
+
+        //递归
+
+        int mid = left + (right - left)/2;
+
+        
+
+        int res = mergeSort(left, mid, nums, temp) + 
+
+                  mergeSort(mid+1, right, nums, temp);
+
+        
+
+        //递归到最低层
+
+        //先复制数组
+
+        for(int k = left; k <= right; k++) {
+
+            temp[k] = nums[k];
+
+        }
+
+        
+
+        //再进行合并
+
+        int i = left, j = mid + 1;
+
+        
+
+        for(int k = left; k <= right; k++) {
+
+            //左区间部分，全部划分完毕; -->右区间补上
+
+            if(i == mid + 1) {
+
+                while(k <= right) {
+
+                    nums[k++] = temp[j++];
+
+                }
+
+            }
+
+            //右区间部分，全部划分完毕; -->左区间补上
+
+            else if(j == right + 1) {
+
+                while(k <= right) {
+
+                    nums[k++] = temp[i++];
+
+                }
+
+            }
+
+            //小于
+
+            else if(temp[i] <= temp[j]) {
+
+                nums[k] = temp[i++];
+
+            }
+
+            //左边 ＞ 右边    进行统计
+
+            else if(temp[i] > temp[j]) {
+
+                nums[k] = temp[j++];
+
+                
+
+                //[i]也＞[j]的话，
+
+                //那 i 后面到 mid 都＞[j]
+
+                res += (mid - i + 1);
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+public:
+
+    int reversePairs(vector<int>& nums) {
+
+        //临时对比数组
+
+        vector<int> temp(nums.size());
+
+        
+
+        //归并排序
+
+        return mergeSort(0, nums.size()-1, nums, temp);
+
+    }
+
+};
+
+   
