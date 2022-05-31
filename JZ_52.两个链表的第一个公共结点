@@ -1,0 +1,125 @@
+/**
+
+ * Definition for singly-linked list.
+
+ * struct ListNode {
+
+ *     int val;
+
+ *     ListNode *next;
+
+ *     ListNode(int x) : val(x), next(NULL) {}
+
+ * };
+
+ */
+
+ 
+
+//双指针
+
+class Solution {
+
+public:
+
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+
+        //特殊情况
+
+        if(headA == nullptr || headB == nullptr) {
+
+            return nullptr;
+
+        }
+
+        
+
+        //初始化
+
+        ListNode* pa = headA;
+
+        ListNode* pb = headB;
+
+        int countA = 0, countB = 0;
+
+        
+
+        // 统计链表长度
+
+        while(pa) {
+
+            countA++;
+
+            pa = pa->next;
+
+        }
+
+        
+
+        while(pb) {
+
+            countB++;
+
+            pb = pb->next;
+
+        }
+
+        
+
+        //更新pa,pb链表
+
+        pa = headA;
+
+        pb = headB;
+
+        //让pa始终指向->长链表
+
+        if(countA < countB) {
+
+            swap(pa, pb);
+
+            swap(countA, countB);
+
+        }
+
+        
+
+        //移动 长的链表 ->开始位置
+
+        int gap = countA - countB;
+
+        while(gap--) {
+
+            pa = pa->next;
+
+        }
+
+        
+
+        //寻找共同结点
+
+        while(pa && pb) {
+
+            if(pa == pb) {
+
+                return pa;
+
+            }
+
+            
+
+            pa = pa->next;
+
+            pb = pb->next;
+
+        }
+
+        
+
+        return nullptr;
+
+    }
+
+};
+
+ 
