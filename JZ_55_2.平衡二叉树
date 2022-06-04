@@ -1,0 +1,173 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+
+ */
+
+ 
+
+ 
+
+ /*
+
+ //先序遍历二叉树每一个节点，利用二叉树深度判断
+
+ //先序遍历中包含后序遍历，重复结点判断－时间效率差
+
+class Solution {
+
+private:
+
+    int depth(TreeNode* cur) {
+
+        if(cur == nullptr) {
+
+            return 0;
+
+        }
+
+        
+
+        int leftNumber = depth(cur->left);
+
+        int rightNumber = depth(cur->right);
+
+        
+
+        //后序遍历
+
+        return max(leftNumber+1, rightNumber+1);
+
+    }
+
+    
+
+public:
+
+    bool isBalanced(TreeNode* root) {
+
+        if(root == nullptr ) return true;
+
+        
+
+        //先序遍历 － 中
+
+        int left = depth(root->left);
+
+        int right = depth(root->right);
+
+        
+
+        int diff = left - right;
+
+        
+
+        //只要在遍历每一个节点时，不false就行
+
+        if(diff < -1 || diff > 1) {
+
+            return false;
+
+        }
+
+        
+
+        //先序遍历 － 左右
+
+        return isBalanced(root->left) &&
+
+               isBalanced(root->right);
+
+    }
+
+};
+
+*/
+
+//后序遍历－不重复判断
+
+class Solution {
+
+private:
+
+    bool isBalancedNode(TreeNode* cur, int& dept) {
+
+        //叶子结点的孩子－平衡－深度为0
+
+        if(cur == nullptr) {
+
+            dept = 0;
+
+            return true;
+
+        }
+
+        
+
+        int leftDept, rightDept;
+
+        
+
+        //左孩子的左右平衡 ＋ 右孩子的左右平衡
+
+        if(isBalancedNode(cur->left, leftDept) && 
+
+           isBalancedNode(cur->right, rightDept)) {
+
+            
+
+            //左右子树遍历－结束
+
+            int diff = leftDept - rightDept;
+
+            
+
+            //左孩子 ＋ 右孩子 也平衡
+
+            if(diff >= -1 && diff <= 1) {
+
+                dept = max(leftDept+1, rightDept+1);
+
+                //左右孩子，不超1
+
+                return true;
+
+            }
+
+        }
+
+        
+
+        //否则，左右孩子不平衡
+
+        return false;
+
+    }
+
+    
+
+public:
+
+    bool isBalanced(TreeNode* root) {
+
+        int dept = 0;
+
+        
+
+        return isBalancedNode(root, dept);
+
+    }
+
+};
