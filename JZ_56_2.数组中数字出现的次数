@@ -1,0 +1,107 @@
+/*
+
+//排序－判断
+
+class Solution {
+
+public:
+
+    int singleNumber(vector<int>& nums) {
+
+        if(nums.size() == 1) return nums[0];
+
+        
+
+        //先排序
+
+        sort(nums.begin(), nums.end());
+
+        
+
+        for(int i = 0; i < nums.size(); i+=3) {
+
+            //3 3 3 4
+
+            if(i == (nums.size()-1)) {
+
+                return nums[i];
+
+            }
+
+            //4 3 3 3
+
+            if(nums[i] != nums[i+2]) {
+
+                return nums[i];
+
+            }
+
+            else {//3 3 3 4 5 5 5
+
+                //nums[i] == nums[i+2]
+
+                continue;
+
+            }
+
+        }
+
+        
+
+        return -1;
+
+    }
+
+};
+
+*/
+
+//位运算－升级版
+
+class Solution {
+
+public:
+
+    int singleNumber(vector<int>& nums) {
+
+        int res = 0;
+
+        
+
+        //遍历int 32位的每一比特
+
+        for(int i = 0; i < 32; i++) {
+
+            int countOne = 0;
+
+            
+
+            for(int num : nums) {
+
+                //num右移一位，和 1相与
+
+                //(前面全与0，只保留最后一位)
+
+                countOne += (num >> i) & 1;
+
+            }
+
+            
+
+            //countOne%3 只有0和1两种情况
+
+            if(countOne % 3) {
+
+                res |= (1 << i);
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
