@@ -1,0 +1,72 @@
+//异或升级版
+
+class Solution {
+
+public:
+
+    vector<int> singleNumbers(vector<int>& nums) {
+
+        //分为a b两组
+
+        int a = 0, b = 0;
+
+        
+
+        //
+
+        int n = 0;
+
+        
+
+        //记录 异或特殊位
+
+        int m = 1;
+
+        
+
+        //全部异或结果 0010
+
+        for(int num : nums) {
+
+            n ^= num;
+
+        }
+
+        
+
+        //找出0010 的1位(m)
+
+        while((n & m) == 0) {
+
+            m <<= 1;
+
+        }
+
+        
+
+        //分组异或
+
+        for(int num : nums) {
+
+            if((num & m) == 0) {
+
+                a ^= num;
+
+            }
+
+            else {
+
+                b ^= num;
+
+            }
+
+        }
+
+        
+
+        return vector<int> {a, b};
+
+    }
+
+};
+
