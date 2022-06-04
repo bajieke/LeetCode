@@ -1,0 +1,87 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+
+ * };
+
+ */
+
+//中序遍历－左中右(从小到大) 
+
+//        右中左(从大到小)
+
+class Solution {
+
+private:
+
+    int result = 0;
+
+    
+
+    //深度优先遍历
+
+    //                    这个k，在递归中是变化的！！！
+
+    void DFS(TreeNode* cur, int& k) {
+
+        if(cur == nullptr) return;
+
+        
+
+        //右
+
+        if(cur->right) DFS(cur->right, k);
+
+        
+
+        //中
+
+        //k--;
+
+        if(k == 1) {
+
+            result = cur->val;
+
+            //return;
+
+        }
+
+        k--;
+
+        
+
+        //左
+
+        if(cur->left) DFS(cur->left, k);
+
+    }
+
+    
+
+public:
+
+    int kthLargest(TreeNode* root, int k) {
+
+        //
+
+        DFS(root, k);
+
+        
+
+        return result;
+
+    }
+
+};
+
+ 
