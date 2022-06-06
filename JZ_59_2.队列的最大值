@@ -1,0 +1,177 @@
+/*
+
+class MaxQueue {
+
+public:
+
+    MaxQueue() {
+
+    }
+
+    
+
+    int max_value() {
+
+    }
+
+    
+
+    void push_back(int value) {
+
+    }
+
+    
+
+    int pop_front() {
+
+    }
+
+};
+
+*/
+
+/*
+
+//两个双端队列进行模拟
+
+class MaxQueue {
+
+public:
+
+    MaxQueue():curIndex(0){
+
+        //初始化
+
+        maxQue.clear();
+
+        que.clear();
+
+    }
+
+    
+
+    int max_value() {
+
+        if(!maxQue.empty()) {
+
+            return maxQue[0].number;
+
+        }
+
+        return -1;
+
+    }
+
+    
+
+    //尾插
+
+    void push_back(int value) {
+
+        //maxQuoe 中 所有比value小的全部pop
+
+        //保留最大值永远在队首
+
+        while(!maxQue.empty() && value > 
+
+                                 maxQue[0].number) {
+
+            maxQue.pop_front();
+
+        }
+
+        
+
+        Data data = {value, curIndex};
+
+        maxQue.push_back(data);
+
+        que.push_back(data);
+
+        
+
+        curIndex++;
+
+    }
+
+    
+
+    //头删
+
+    int pop_front() {
+
+        //删除的，正好是队首的元素
+
+        if(!maxQue.empty() && maxQue[0].index == 
+
+                              que[0].index) {
+
+            maxQue.pop_front();
+
+        }
+
+        
+
+        if(que.empty()) return -1;
+
+        
+
+        int temp = que.front().number;
+
+        que.pop_front();
+
+        
+
+        return temp;
+
+    }
+
+    
+
+private:
+
+    struct Data {
+
+        int number;
+
+        int index;
+
+    };
+
+    
+
+    
+
+    deque<Data> maxQue;//最大数队列
+
+    
+
+    deque<Data> que;  //真实队列
+
+    
+
+    int curIndex = 0; //模拟下标，区分每一个数
+
+};
+
+*/
+
+/**
+
+ * Your MaxQueue object will be instantiated and called as such:
+
+ * MaxQueue* obj = new MaxQueue();
+
+ * int param_1 = obj->max_value();
+
+ * obj->push_back(value);
+
+ * int param_3 = obj->pop_front();
+
+ */
+
+ 
+
+ 
+
+ 
