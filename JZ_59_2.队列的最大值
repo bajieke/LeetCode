@@ -173,5 +173,109 @@ private:
  
 
  
+//最大数队列
 
+class MaxQueue {
+
+private:
+
+    //双端队列  头删－尾删＋尾插
+
+    deque<int> maxdeque; // 尾部删除'，尾部添加
+
+    //队列 (头)删－(尾)插
+
+    queue<int> que;  //尾部添加
+
+    
+
+public:
+
+    MaxQueue() { }
+
+    
+
+    int max_value() {
+
+        if(maxdeque.empty()) {
+
+            //maxdeque都为空了，那么真实que也空
+
+            return -1;
+
+        }
+
+        else {
+
+            //返回当前，真实存在的最大值
+
+            return maxdeque.front();
+
+        }
+
+    }
+
+    
+
+    void push_back(int val) {
+
+        //尾插，插入的时候只能尾巴插入
+
+        que.push(val);
+
+        
+
+        while(!maxdeque.empty() && maxdeque.back() < 
+
+                                                val) {
+
+            //双端队列，才能尾部也删除
+
+            maxdeque.pop_back();
+
+        }
+
+        
+
+        //尾插
+
+        maxdeque.push_back(val);
+
+    }
+
+    
+
+    int pop_front() {
+
+        if(que.empty()) return -1;
+
+        
+
+        int temp = que.front();
+
+        
+
+        if(temp == maxdeque.front()) {
+
+            //头删
+
+            maxdeque.pop_front();
+
+        }
+
+        
+
+        //头删－不分头尾(默认就是删头)
+
+        que.pop();
+
+        
+
+        return temp;
+
+    }
+
+};
+
+     
  
