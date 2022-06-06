@@ -1,0 +1,203 @@
+/*
+
+class Solution {
+
+public:
+
+    string reverseWords(string s) {
+
+        //翻转整个字符串
+
+        reverse(s.begin(), s.end());
+
+        int i = 0, j = 0;
+
+        
+
+        while(i < s.size() && j < s.size()) {
+
+            if(s[i] == ' ') {
+
+                i++;
+
+                j++;
+
+            }
+
+            else if(s[j] == ' ' || j == s.size()) {
+
+                reverse(s.begin()+i, s.begin()+j);
+
+                i = j + 1;
+
+            }
+
+            else {
+
+                j++;
+
+            }
+
+        }
+
+        
+
+        return s;
+
+    }
+
+};
+
+*/
+
+//先反转整个字符串  ＋  移动字符串  ＋ 反转局部字符串
+
+//最后－删除多余字符串
+
+class Solution {
+
+public:
+
+    string reverseWords(string s) {
+
+        //反转整个字符串
+
+        reverse(s.begin(), s.end());
+
+    
+
+        int idx = 0;
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            //移动到i所在位置，不为空格时
+
+            if(s[i] != ' ') {
+
+                //为上一个单词，添加一个空格
+
+                if(idx != 0) {
+
+                    s[idx++] = ' ';
+
+                }
+
+            
+
+                //移动j到字母末尾
+
+                int j = i;
+
+            
+
+                while(j < s.size() && s[j] != ' ') {
+
+                    s[idx++] = s[j++];
+
+                }
+
+                
+
+                //反转字母
+
+                reverse(s.begin() + idx - (j-i), 
+
+                        s.begin()+idx);
+
+            
+
+                //更新i为下一个起始位置
+
+                i = j;
+
+            
+
+            }
+
+            //i为空格时，跳过
+
+            else {
+
+                continue;
+
+            }
+
+        }
+
+        
+
+        //修剪多余部分
+
+        s.erase(s.begin() + idx, s.end());
+
+        
+
+        return s;
+
+    }
+
+};
+
+/*
+
+class Solution {
+
+public:
+
+    string reverseWords(string s) {
+
+        // 反转整个字符串
+
+        reverse(s.begin(), s.end());
+
+        int n = s.size();
+
+        int idx = 0;
+
+        
+
+        for (int i = 0; i < n; ++i) {
+
+            if (s[i] != ' ') {
+
+                // 填一个空白字符然后将idx移动到下一个单词的开头位置
+
+                if (idx != 0) s[idx++] = ' ';
+
+                // 循环遍历至单词的末尾
+
+                int j = i;
+
+                while (j < n && s[j] != ' ') 
+
+                    s[idx++] = s[j++];
+
+                // 反转整个单词
+
+                reverse(s.begin() + idx - (j - i), 
+
+                        s.begin() + idx);
+
+                // 更新start，去找下一个单词
+
+                i = j;
+
+            }
+
+        }
+
+        
+
+        s.erase(s.begin() + idx, s.end());
+
+        return s;
+
+    }
+
+};
+
+*/
+
+          
