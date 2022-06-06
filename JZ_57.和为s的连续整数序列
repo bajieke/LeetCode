@@ -1,0 +1,153 @@
+//双指针－升级版
+
+class Solution {
+
+public:
+
+    vector<vector<int>> findContinuousSequence(int 
+
+                                            target) {
+
+        
+
+        vector<vector<int>> result;
+
+        int small = 1, big = 2;
+
+        
+
+        while(small <= (target/2)) {
+
+            int sum = 0;
+
+            for(int i = small; i <= big; i++) {
+
+                sum += i;
+
+            }
+
+            
+
+            if(sum == target) {
+
+                vector<int> vec;
+
+                for(int i = small; i <= big; i++) {
+
+                    vec.push_back(i);
+
+                }
+
+                result.push_back(vec);
+
+                
+
+                small++;
+
+            }
+
+            else if(sum < target) {
+
+                big++;
+
+            }
+
+            else { //sum > target
+
+                small++;
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+/*
+
+//双指针－升级版
+
+class Solution {
+
+public:
+
+    vector<vector<int>> findContinuousSequence(int 
+
+                                            target) {
+
+        
+
+        vector<vector<int>> result;
+
+        int small = 1, big = 2;
+
+        int sum = 3;
+
+        
+
+        while(small <= (target/2)) {
+
+          
+
+            if(sum == target) {
+
+                vector<int> vec;
+
+                for(int i = small; i <= big; i++) {
+
+                    vec.push_back(i);
+
+                }
+
+                result.push_back(vec);
+
+                
+
+                //①从下一个数开始
+
+                sum -= small;
+
+                small++;
+
+                
+
+                //②和超过target,下次自动砍small
+
+                //big++;
+
+                //sum += big;
+
+            }
+
+            else if(sum < target) {
+
+                big++;
+
+                sum += big;
+
+            }
+
+            else { //sum > target
+
+                sum -= small;
+
+                small++;
+
+            }
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+*/
