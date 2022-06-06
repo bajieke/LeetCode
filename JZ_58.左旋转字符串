@@ -1,0 +1,54 @@
+/*
+
+class Solution {
+
+public:
+
+    string reverseLeftWords(string s, int n) {
+
+        reverse(s.begin(),s.begin()+n);
+
+        reverse(s.begin()+n,s.end());
+
+        reverse(s.begin(),s.end());
+
+        
+
+        return s;
+
+    }
+
+};
+
+*/
+
+class Solution {
+
+public:
+
+    string reverseLeftWords(string s, int n) {
+
+        //反转 0 ~ n-1
+
+        reverse(s.begin(), s.begin() + n);
+
+        
+
+        //反转 n ~ end()-1
+
+        reverse(s.begin() + n, s.end());
+
+        
+
+        //反转整体
+
+        reverse(s.begin(), s.end());
+
+        
+
+        return s;
+
+    }
+
+};
+
