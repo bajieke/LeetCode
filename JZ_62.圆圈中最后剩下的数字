@@ -1,0 +1,37 @@
+class Solution {
+
+public:
+
+    int lastRemaining(int n, int m) {
+
+        //刚开始，胜利者坐标0
+
+        int win = 0; 
+
+        
+
+        //递推胜利者坐标
+
+        // 从 2个人时胜利者的坐标   
+
+        //递推到  -->   n个人时胜利者的坐标
+
+        for(int i = 2; i <= n; i++) {
+
+            //左移m位，(长度为i－模i)
+
+            win = (win + m) % i;
+
+        }
+
+        
+
+        //返回， n个人时，胜利者的坐标
+
+        return win;
+
+    }
+
+};
+
+    
