@@ -1,0 +1,88 @@
+class Solution {
+
+public:
+
+    bool isStraight(vector<int>& nums) {
+
+        if(nums.size() != 5) {
+
+            return false;
+
+        }
+
+        
+
+        //排序
+
+        sort(nums.begin(), nums.end());
+
+        
+
+        int countZero = 0;
+
+        
+
+        for(auto num : nums) {
+
+            //统计0个个数，0可以充当任何数
+
+            if(num == 0) {
+
+                countZero++;
+
+            }
+
+        }
+
+        
+
+        int i = countZero, j = i + 1;
+
+        int countGap = 0;
+
+        
+
+        while(j < nums.size()) {
+
+            //出现对子，一定不是顺子
+
+            if(nums[i] == nums[j]) {
+
+                return false;
+
+            }
+
+            
+
+            //0 0 0    2 (3 4 5 6 ) 7
+
+            //         7－2－1 = 4
+
+            countGap += (nums[j] - nums[i] - 1);
+
+            
+
+            i++;
+
+            j++;
+
+        }
+
+        
+
+        if(countZero < countGap) {
+
+            //0 不够 填充空缺的个数
+
+            return false;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+};
+
