@@ -1,0 +1,243 @@
+/*
+
+class Solution {
+
+public:
+
+    int sumNums(int n) {
+
+    }
+
+};
+
+*/
+
+/*
+
+//利用构造函数
+
+class Solution {
+
+public:
+
+    static int count;
+
+    static int sum;
+
+    
+
+    Solution()
+
+    {
+
+        count++;
+
+        sum += count;
+
+    }
+
+    
+
+    static void reset()
+
+    {
+
+        count = 0;
+
+        sum = 0;
+
+    }
+
+    
+
+public:
+
+    int sumNums(int n) 
+
+    {
+
+        reset();
+
+        
+
+        Solution *arr = new Solution[n];
+
+        delete[] arr;
+
+        
+
+        return sum;
+
+    }
+
+};
+
+int Solution::count = 0;
+
+int Solution::sum = 0;
+
+*/
+
+/*
+
+//利用虚函数
+
+class A;
+
+A *arr[2];
+
+//基类
+
+class A {
+
+public:
+
+    //充当－递归退出条件
+
+    virtual int sum(int n) 
+
+    {
+
+        return 0;
+
+    }
+
+};
+
+//派生类
+
+class B : public A {
+
+public:
+
+    //充当－递归函数
+
+    virtual int sum(int n)
+
+    {
+
+        //arr[1]->sum(n-1); //递归正常进行
+
+        //arr[0]->sum(n-1); //递归退出条件
+
+        
+
+        return n + arr[!!n]->sum(n-1);
+
+    }
+
+};
+
+class Solution {
+
+public:
+
+    int sumNums(int n)
+
+    {
+
+        A a;
+
+        B b;
+
+        
+
+        arr[0] = &a;
+
+        arr[1] = &b;
+int result = arr[1]->sum(n);
+
+        
+
+        return result;
+
+    }
+
+};
+
+*/
+
+//函数指针
+
+int temp1(int n) 
+
+{
+
+    return 0;
+
+}
+
+int temp2(int n)
+
+{
+
+    int (*ptr[2])(int) = {temp1, temp2};
+
+    
+
+    return n + ptr[!!n](n-1);
+
+}
+
+class Solution {
+
+public:
+
+    int sumNums(int n)
+
+    {
+
+        return temp2(n);
+
+    }
+
+};
+
+/*
+
+//函数指针
+
+typedef int (*fun)(int);
+
+int Over(int n)
+
+{
+
+    return 0;
+
+}
+
+class Solution {
+
+public:
+
+    static fun ptr[2] ;
+
+public:
+
+    int sumNums(int n) 
+
+    {
+
+        //静态变量，属于类－不属于函数
+
+        
+
+        
+
+        //ptr[1](n-1)  //递归函数
+
+        //ptr[0](n-1)  //递归退出条件
+
+        
+
+        return n + ptr[!!n](n-1);
+
+    }
+
+};
+
+fun ptr[2] = {Over, Solution::sumNums};
+
+*/
+     
