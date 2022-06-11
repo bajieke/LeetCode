@@ -1,0 +1,36 @@
+class Solution {
+
+public:
+
+    int add(int a, int b) {
+
+    
+
+        while(b) {
+
+            //进位－(&)与运算
+
+            int carry = a & b;
+
+            
+
+            //本位－(-)异或运算
+
+            a = a ^ b;
+
+            
+
+            //进位移到，该加的那一位
+
+            b = (unsigned)carry << 1;
+
+        }
+
+        
+
+        return a;
+
+    }
+
+};
+
