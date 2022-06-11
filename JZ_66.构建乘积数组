@@ -1,0 +1,113 @@
+/*
+
+class Solution {
+
+public:
+
+    vector<int> constructArr(vector<int>& a) {
+
+        vector<int> c(a.size());
+
+        vector<int> d(a.size());
+
+        vector<int> b(a.size());
+
+        
+
+        if(b.size() == 0) return b;
+
+        
+
+        c[0] = 1;
+
+        d[a.size()-1] = 1;
+
+        
+
+        for(int i = 1; i < a.size(); i++) {
+
+            c[i] = c[i-1] * a[i-1];
+
+        }
+
+        
+
+        for(int i = a.size()-2; i >= 0; i--) {
+
+            d[i] = d[i+1] * a[i+1];
+
+        }
+
+        
+
+        for(int i = 0; i < a.size(); i++) {
+
+            b[i] = c[i] * d[i];
+
+        }
+
+        
+
+        return b;
+
+    }
+
+};
+
+*/
+
+//优化空间
+
+class Solution {
+
+public:
+
+    vector<int>constructArr(vector<int>& a) {
+
+        vector<int> b(a.size());
+
+        
+
+        if(a.size() == 0) return b;
+
+        
+
+        b[0] = 1;
+
+        
+
+        for(int i = 1; i < a.size(); i++) {
+
+            //用b[i]，取代c[i]
+
+            b[i] = b[i-1] * a[i-1];
+
+        }
+
+        
+
+        int temp = 1;
+
+        
+
+        for(int i = a.size()-2; i >= 0; i--) {
+
+            //用temp代替 d[i]
+
+            temp = temp * a[i+1];
+
+            
+
+            //代替第三个for循环
+
+            b[i] *=  temp;
+
+        }
+
+        
+
+        return b;
+
+    }
+
+};
