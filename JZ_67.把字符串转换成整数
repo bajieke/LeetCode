@@ -1,0 +1,115 @@
+//特殊情况很多
+
+class Solution {
+
+public:
+
+    int strToInt(string str) {
+
+        //
+
+        int i = 0;
+
+        int len = str.size();
+
+        
+
+     //－－－－去除空格
+
+        while(i < len && str[i] == ' ') {
+
+            i++;
+
+        }
+
+        //要么i=空格，要么[i]=len
+
+        
+
+        if(i >= len) return 0;
+
+        
+
+        
+
+    //－－－－找符号位
+
+        bool sign = true;
+
+        
+
+        if(str[i] == '+') {
+
+            sign = true;
+
+            i++;
+
+        }
+
+        else if(str[i] == '-') {
+
+            sign = false;
+
+            i++;
+
+        }
+
+        
+
+        if(i >= len) return 0;
+
+        
+
+     
+
+    //－－－－空格或者符号之后，没有数字
+
+        if(str[i] < '0' || str[i] > '9') {
+
+            return 0;
+
+        }
+
+        
+
+    //－－－－数字组建
+
+        long res = 0;
+
+        
+
+        while(i < len) {
+
+            //数字，后出现其他字符，忽视break
+
+            if(str[i] < '0' || str[i] > '9') {
+
+                break;
+
+            }
+
+            
+
+            res = res * 10 + (str[i] - '0');
+
+            i++;
+
+            
+
+            if(res > INT_MAX) {
+
+                return sign ? INT_MAX : INT_MIN;
+
+            }
+
+        }
+
+        
+
+        return sign ? res : (-res);
+
+    }
+
+};
+
+        
