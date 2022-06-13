@@ -1,0 +1,181 @@
+/*
+
+class Solution {
+
+public:
+
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+
+    }
+
+};
+
+*/
+
+class Solution {
+
+public:
+
+    double findMedianSortedArrays(vector<int>& nums1,
+
+                                 vector<int>& nums2) {
+
+        //初始化
+
+        int m = nums1.size(), n = nums2.size();
+
+        int count = m + n;
+
+        
+
+        //－－－特殊情况
+
+        if(nums1.size() == 0 && nums2.size() == 0) {
+
+            return 0.0;
+
+        }
+
+        
+
+        double result;
+
+        
+
+        //－－－nums1为空
+
+        if(nums1.size() == 0) {
+
+            if(n % 2 == 0) {
+
+                result = (double)(nums2[n/2] + 
+
+                                  nums2[n/2-1]);
+
+                return result/2;
+
+            }
+
+            else {
+
+               return (double)nums2[n/2];
+
+            }
+
+        }
+
+        
+
+        //－－－nums2为空
+
+        if(nums2.size() == 0) {
+
+            if(m % 2 == 0) {
+
+                result = (double)(nums1[m/2] + 
+
+                                  nums1[m/2-1]);
+
+                return result/2;
+
+            }
+
+            else {
+
+                return (double)nums1[count/2];
+
+            }
+
+        }
+
+        
+
+        //－－－正式开始
+
+        int i = 0, j = 0;
+
+        int index = 0;
+
+        
+
+        double temp, preTemp;
+
+        
+
+        while((i < m || j < n) && (index < count)) {
+
+            //特殊情况
+
+            if(i >= m) {     // nums1结束
+
+                temp = nums2[j];
+
+                j++;
+
+            }
+
+            else if(j >= n) {    // nums2结束
+
+                temp = nums1[i];
+
+                i++;
+
+            }
+
+            else {    //正常
+
+                if(nums1[i] < nums2[j]) {
+
+                    temp = nums1[i];
+
+                    i++;
+
+                }
+
+                else {
+
+                    temp = nums2[j];
+
+                    j++;
+
+                }
+
+            }
+
+            
+
+            //找到了，目标
+
+            if(index == count/2) {
+
+                if(count % 2 == 0) {
+
+                    return (temp + preTemp)/2;
+
+                }
+
+                else {
+
+                    return temp;
+
+                }
+
+            }
+
+            
+
+            preTemp = temp;
+
+            index++;
+
+        }
+
+        
+
+        return 0.0;
+
+    }
+
+};
+
+     
