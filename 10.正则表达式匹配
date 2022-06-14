@@ -1,0 +1,85 @@
+class Solution {
+
+public:
+
+    bool isMatch(string s, string p) {
+
+        int m = s.size(), n = p.size();
+
+        
+
+        vector<vector<bool>> dp(m + 1,
+
+                vector<bool>(n + 1, false));
+
+            
+
+        for(int i = 1; i <= n; i++) {
+
+            if(p[i-1] == '*') {
+
+                dp[0][i] = true;
+
+            }
+
+            else {
+
+                break;
+
+            }
+
+        }
+
+        
+
+        for(int i = 1; i <= m; i++) {
+
+            for(int j = 1; j <= n; j++) {
+
+                if(p[j-1] == '*') {
+
+                    //这里可就复杂了
+
+                    //先不管 *和前面字母 －－跳2格
+
+                    dp[i][j]=dp[i][j-2];
+
+            
+
+                    //前一位匹配成功
+
+                    if(s[i-1]==p[j-2]||p[j-2]=='.')
+
+                    {
+
+                        //往前匹配
+
+                        dp[i][j] |= dp[i-1][j];
+
+                    }
+
+                }
+
+                else if(p[j-1] == '.' && dp[i][j]) {
+
+                    dp[i][j] = true;
+
+                }
+
+                else if(p[j-1] == s[i-1] && dp[i][j]) {
+
+                    dp[i][j] = true;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return dp[m][n];
+
+    }
+
+};
