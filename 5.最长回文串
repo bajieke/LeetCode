@@ -1,0 +1,221 @@
+/*
+
+class Solution {
+
+public:
+
+    string longestPalindrome(string s) {
+
+    }
+
+};
+
+*/
+
+/*
+
+//暴力解法－超出时间限制
+
+class Solution {
+
+public:
+
+    string longestPalindrome(string s) {
+
+        //
+
+        string result = "";
+
+        string temp = "";
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            for(int j = i; j < s.size(); j++) {
+
+                temp += s[j];
+
+                string reTemp = temp;
+
+                reverse(reTemp.begin(), reTemp.end());
+
+                
+
+                //判断回文串
+
+                if(temp == reTemp) {
+
+                    //更新回文串
+
+                    if(result.size() < temp.size()) 
+
+                        result = temp;
+
+                }
+
+            }
+
+            
+
+            temp = "";
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
+
+*/
+
+/*
+
+//动态规划
+
+class Solution {
+
+public:
+
+    string longestPalindrome(string s) {
+
+        //
+
+        int left = 0, right = 0;
+
+        int maxLen = 0;
+
+        
+
+        vector<vector<bool>> dp(s.size(), 
+
+                        vector<bool>(s.size(), false));
+
+        
+
+        for(int i = s.size()-1; i >= 0; i--) {
+
+            for(int j = i; j < s.size(); j++) {
+
+                if(s[i] == s[j]) {
+
+                    // a    aa
+
+                    if((j-i+1) <= 2) {
+
+                        dp[i][j] = true;
+
+                    }
+
+                    else {  // a cbabc a
+
+                        //遍历reason: 
+
+                        //从下到上－从左到右
+
+                        if(dp[i+1][j-1]) {
+
+                            dp[i][j] = true;
+
+                        }
+
+                    }
+
+                }
+
+                //统计
+
+                if(dp[i][j] && maxLen < (j-i+1)) {
+
+                    //更新
+
+                    maxLen = j - i + 1;
+
+                    left = i;
+
+                    right = j;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return s.substr(left, maxLen);
+
+    }
+
+};
+
+*/
+
+//中心扩展法
+
+class Solution {
+
+private:
+
+    int left = 0, right = 0;
+
+    int maxLen = 0;
+
+    
+
+    void extend(const string& s, int i, int j) {
+
+        while(i >= 0 && j < s.size() && s[i]==s[j]) {
+
+            //更新
+
+            if(maxLen < (j-i+1)) {
+
+                maxLen = j - i + 1;
+
+                left = i;
+
+                right = j;
+
+            }
+
+            
+
+            i--;
+
+            j++;
+
+        }
+
+    }
+
+public:
+
+    string longestPalindrome(string s) {
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            //  以 中心一位 扩展
+
+            extend(s, i, i);
+
+            
+
+            //  以 中心两位 扩展
+
+            extend(s, i, i+1);
+
+        }
+
+        
+
+        return s.substr(left, maxLen);
+
+    }
+
+};
