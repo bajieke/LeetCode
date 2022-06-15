@@ -1,0 +1,103 @@
+//找规律
+
+class Solution {
+
+public:
+
+    void nextPermutation(vector<int>& nums) {
+
+        
+
+        int i = nums.size() - 2;
+
+        int j = nums.size() - 1;
+
+        
+
+        while(i >=0 && i < j) {
+
+            if(nums[i] < nums[j]) {
+
+                break;
+
+            }
+
+            else {
+
+                i--;
+
+                j--;
+
+            }
+
+        }
+
+        
+
+        //654321
+
+        if(j == 0) {
+
+            int l = 0, r = nums.size()-1;
+
+            for(; l <= r; l++,r--) {
+
+                swap(nums[l], nums[r]);
+
+            }
+
+            return;
+
+        }
+
+        
+
+        //寻找 j 以后最小值
+
+        int minNum = nums[j], minIndex = j;
+
+        
+
+        for(int in = j; in < nums.size(); in++) {
+
+            //满足条件
+
+            if(nums[i] < nums[in]) {
+
+                //寻找满足条件－最小的
+
+                if(minNum > nums[in]) {
+
+                    minNum = nums[in];
+
+                    minIndex = in;
+
+                }
+
+            }
+
+        }
+
+        
+
+        //交换
+
+        swap(nums[i], nums[minIndex]);
+
+        
+
+        //排序 [j, end)
+
+        sort(nums.begin() + j, nums.end());
+
+        
+
+        return;
+
+        
+
+    }
+
+}; 
+
+    
