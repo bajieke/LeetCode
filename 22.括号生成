@@ -1,0 +1,68 @@
+//递归－深度遍历－回溯
+
+class Solution {
+
+private:
+
+    vector<string> result;
+
+    
+
+    void dfs(string path, int leftC, int rightC, int n) 
+
+                                                     {
+
+        //不符合条件
+
+        if(leftC > n || rightC > n || rightC > leftC) {
+
+            return;
+
+        }
+
+        //符合最终结果
+
+        if(leftC == n && leftC == rightC) {
+
+            result.push_back(path);
+
+            return;
+
+        }
+
+        
+
+        //递归左括号
+
+        dfs(path + "(", leftC+1, rightC, n);
+
+        //递归右括号
+
+        dfs(path + ")", leftC, rightC+1, n);
+
+        
+
+        return;
+
+    }
+
+    
+
+public:
+
+    vector<string> generateParenthesis(int n) {
+
+        result.clear();
+
+        
+
+        dfs("", 0, 0, n);
+
+        
+
+        return result;
+
+    }
+
+};
+
