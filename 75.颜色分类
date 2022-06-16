@@ -1,0 +1,159 @@
+/*
+
+//冒泡排序
+
+class Solution {
+
+public:
+
+    void sortColors(vector<int>& nums) {
+
+    
+
+        for(int i = 0; i < nums.size(); i++) {
+
+            for(int j = i+1; j < nums.size(); j++) {
+
+                if(nums[i] > nums[j]) {
+
+                    swap(nums[i], nums[j]);
+
+                }
+
+            }
+
+        }
+
+        
+
+    }
+
+};
+
+*/
+
+/*
+
+//简单数组代替哈希
+
+class Solution {
+
+public:
+
+    void sortColors(vector<int>& nums) {
+
+        int a[3] = {0, 0, 0};
+
+        
+
+        for(int i = 0; i < nums.size(); i++) {
+
+           
+
+            if(nums[i] == 0) {
+
+                a[0] ++;
+
+            } 
+
+            else if(nums[i] == 1) {
+
+                a[1] ++;
+
+            }
+
+            else if(nums[i] == 2) {
+
+                a[2] ++;
+
+            }
+
+            
+
+        }
+
+        
+
+        for(int i = 0; i < nums.size(); i++) {
+
+            
+
+            if(a[0]-- > 0) nums[i] = 0;
+
+            else if(a[1]-- > 0) nums[i] = 1;
+
+            else nums[i] = 2;
+
+        }
+
+    }
+
+};
+
+*/
+
+//原地交换
+
+class Solution {
+
+public:
+
+    void sortColors(vector<int>& nums) {
+
+        
+
+        int index = 0;
+
+        int zero = -1, two = nums.size();
+
+        
+
+        //寻找 0 和 2 放在数组两边，
+
+        //剩下中间的自然就是1
+
+        while(index < two) {//i遍历到没有0了，
+
+                            //也到了最后放2的位置
+
+                            
+
+            //寻找2－－－把 2 放右边
+
+            if(nums[index] == 2) {
+
+                swap(nums[index], nums[--two]);
+
+            }
+
+            
+
+            //寻找0－－－把 0 放左边
+
+            else if(nums[index] == 0) {
+
+                swap(nums[index++], nums[++zero]);
+
+            }
+
+            
+
+            //i自动忽略，继续找 0 和 2 ，
+
+            else { //nums[i] == 1
+
+                index++;
+
+            }
+
+        }
+
+        
+
+        //最后，0 和 2 都放到对应位置，
+
+        //那么自然而然，1也到了它对应的中间位置
+
+    }
+
+};
