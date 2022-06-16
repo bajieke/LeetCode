@@ -1,0 +1,119 @@
+/*
+
+//哈希
+
+class Solution {
+
+public:
+
+    vector<vector<string>> groupAnagrams
+
+                               (vector<string>& strs) {
+
+        //
+
+        unordered_map<string, vector<string>> umap;
+
+        
+
+        //遍历，插入umap
+
+        for(string str : strs) {
+
+            
+
+            string key = str;
+
+            sort(key.begin(), key.end());
+
+            
+
+            umap[key].push_back(str);
+
+        }
+
+        
+
+        vector<vector<string>> result;
+
+        
+
+        //遍历umap, 找到对应结果集
+
+        for(auto it = umap.begin(); it != umap.end();
+
+                                               it++) {
+
+            result.push_back(it->second);
+
+        } 
+
+        
+
+        return result;
+
+    }
+
+};
+
+*/
+
+//哈希－质数相乘
+
+class Solution {
+
+public:
+
+    vector<vector<string>> groupAnagrams
+
+                               (vector<string>& strs) {
+
+        //
+
+        unordered_map<double, vector<string>> umap;
+
+        
+
+        double a[26] = {2,3,5,7,11,13,17,19,23,29,31,
+
+                             37,41,43,47,53,59,61,67,
+
+                               71,73,79,83,89,97,101};
+
+        //
+
+        for(auto str : strs) {
+
+            double t = 1;
+
+            for(char ch : str) {
+
+                t *= a[ch - 'a'];
+
+            }
+
+            umap[t].push_back(str);
+
+        }
+
+        
+
+        vector<vector<string>> result;
+
+        
+
+        //
+
+        for(auto temp : umap) {
+
+            result.push_back(temp.second);
+
+        }
+
+        
+
+        return result;
+
+    }
+
+};
