@@ -1,0 +1,137 @@
+/*
+
+//暴力算法－－－超出时间限制
+
+class Solution {
+
+private:
+
+    int minHeight(const vector<int>& height, int start, int end) {
+
+        int minRes = height[start];
+
+        
+
+        for(int i = start; i <= end; i++) {
+
+            minRes = min(minRes, height[i]);
+
+        }
+
+        
+
+        return minRes;
+
+    }
+
+        
+
+public:
+
+    int largestRectangleArea(vector<int>& height) {
+
+        int res = height[0];
+
+        int temp = res;
+
+        
+
+        for(int i = 0; i < height.size(); i++) {
+
+            for(int j = i; j < height.size(); j++) {
+
+                //
+
+                temp = minHeight(height, i, j) * 
+
+                                           (j-i+1);
+
+            
+
+                res = max(res, temp);
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
+*/
+
+//单调栈
+
+class Solution {
+
+public:
+
+    int largestRectangleArea(vector<int>& height) {
+
+        //首尾－插0
+
+        height.insert(height.begin(), 0);
+
+        height.push_back(0);
+
+        
+
+        int res = height[0];
+
+        
+
+        //单调栈
+
+        stack<int> stk;
+
+        
+
+        for(int i = 0; i < height.size(); i++) {
+
+            //
+
+            while(!stk.empty() && height[stk.top()] >
+
+                                           height[i]) {
+
+                int cur = stk.top();
+
+                stk.pop();
+
+            
+
+                //stk.top()之后的元素－绝对比height[cur]大
+
+                int left = stk.top() + 1;
+
+                //cur 之后，i之前的元素也绝对比height[cur]大
+
+                int right = i - 1;
+
+                
+
+                res = max(res, 
+
+                          height[cur]*(right-left+1));
+
+            }
+
+            
+
+            stk.push(i);
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
+ 
