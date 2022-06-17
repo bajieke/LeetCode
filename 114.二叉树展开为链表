@@ -1,0 +1,231 @@
+/**
+
+ * Definition for a binary tree node.
+
+ * struct TreeNode {
+
+ *     int val;
+
+ *     TreeNode *left;
+
+ *     TreeNode *right;
+
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+
+ * };
+
+ */
+
+ /*
+
+class Solution {
+
+public:
+
+    void flatten(TreeNode* root) {
+
+    }
+
+};
+
+*/
+
+/*
+
+//队列
+
+class Solution {
+
+private:
+
+   
+
+    void dfs(TreeNode* cur, queue<TreeNode*>& que) {
+
+        //退出条件
+
+        if(cur == nullptr) return;
+
+        
+
+        que.push(cur);
+
+        
+
+        dfs(cur->left, que);
+
+        dfs(cur->right, que);
+
+        
+
+    }
+
+public:
+
+    void flatten(TreeNode* root) {
+
+        
+
+        if(root == nullptr) return;
+
+        
+
+        queue<TreeNode*> que;
+
+        
+
+        dfs(root, que);
+
+        
+
+        TreeNode* dummy = new TreeNode(1);
+
+        TreeNode* node = dummy;
+
+        
+
+        while(!que.empty()) {
+
+            node->right = que.front();
+
+            que.pop();
+
+            
+
+            node = node ->right;
+
+        }
+
+        
+
+        node->right = nullptr;
+
+        
+
+        root = dummy->right;
+
+        delete dummy;
+
+    }
+
+};
+
+*/
+
+/*
+
+//递归
+
+class Solution {
+
+public:
+
+    void flatten(TreeNode* root) {
+
+        
+
+        while(root) {
+
+            TreeNode* p = root->left;
+
+            
+
+            //左子树存在的条件下
+
+            if(p) {
+
+                while(p->right) {
+
+                    p = p->right;
+
+                }
+
+                //左子树 头尾 插入root->right
+
+                p->right = root->right;
+
+                root->right = root->left;
+
+                
+
+                root->left = nullptr;
+
+            }
+
+            
+
+            root = root->right;
+
+        }
+
+    }
+
+};
+
+*/
+
+//迭代
+
+class Solution {
+
+private:
+
+    void dfs(TreeNode* root) {
+
+        //退出条件
+
+        if(root == nullptr) return;
+
+        
+
+        //处理－－－当前结点root
+
+        if(root->left) {
+
+            TreeNode* p = root->left;
+
+            
+
+            while(p->right) {
+
+                p = p->right;
+
+            }
+
+            
+
+            p->right = root->right;
+
+            root->right = root->left;
+
+            root->left = nullptr;
+
+        }
+
+        
+
+        //递归左右子树
+
+        dfs(root->left);
+
+        dfs(root->right);
+
+    }
+
+public:
+
+    void flatten(TreeNode* root) {
+
+        dfs(root);
+
+    }
+
+};
+
+    
+
+    
