@@ -1,0 +1,109 @@
+class Solution {
+
+private:
+
+    bool backTracking(vector<vector<char>>& board,
+
+              int x, int y, string word, int index) {
+
+                    
+
+        int rows = board.size();
+
+        int cols = board[0].size();
+
+        
+
+        //退出条件－－－－－－－－－
+
+        if(x >= rows || y >= cols || x < 0 || y < 0) 
+
+            return false;
+
+        
+
+        if(board[x][y] != word[index]) 
+
+            return false;
+
+        
+
+        //满足条件
+
+        if(index == word.size()-1) return true;
+
+        
+
+        //－－－－－－－－－－－－－
+
+        //处理－避免回串回来
+
+        board[x][y] = '.'; 
+
+        
+
+        //递归  //右 左 下 上
+
+        if(backTracking(board, x, y+1, word,index+1) || 
+
+           backTracking(board, x, y-1, word,index+1) || 
+
+           backTracking(board, x-1, y, word,index+1) || 
+
+           backTracking(board, x+1, y, word,index+1)) {
+
+            //
+
+            return true;
+
+        }
+
+        
+
+        //回溯
+
+        board[x][y] = word[index];
+
+        
+
+        //最终失败
+
+        return false;
+
+    }
+
+    
+
+public:
+
+    bool exist(vector<vector<char>>& board,
+
+                                      string word) {
+
+        int rows = board.size();
+
+        int cols = board[0].size();
+
+        
+
+        for(int i = 0; i < rows; i++) {
+
+            for(int j = 0; j < cols; j++) {
+
+                if(backTracking(board, i,j, word, 0)) {
+
+                    return true;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return false;
+
+    }
+
+};
