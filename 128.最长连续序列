@@ -1,0 +1,89 @@
+//哈希
+
+class Solution {
+
+public:
+
+    int longestConsecutive(vector<int>& nums) {
+
+        //哈希表
+
+        unordered_set<int> uset;
+
+        
+
+        //去重，and 加入哈希表方便快速查找
+
+        for(auto num : nums) {
+
+            uset.insert(num);
+
+        }
+
+        
+
+        int res = 0;
+
+        
+
+        while(!uset.empty()) {
+
+            //以第一个为目标，保存之后删除
+
+            int temp = *uset.begin();
+
+            uset.erase(temp);
+
+            
+
+            int left = temp - 1;
+
+            int right = temp + 1;
+
+            
+
+            //向左寻找
+
+            while(uset.find(left) != uset.end()) {
+
+                uset.erase(left);
+
+                left--;
+
+            }
+
+            
+
+            //向右寻找
+
+            while(uset.find(right) != uset.end()) {
+
+                uset.erase(right);
+
+                right++;
+
+            }
+
+            
+
+            left++;   //缩回范围 [
+
+            right--;  //缩回范围 ]
+
+            
+
+            //计算这一轮，以temp为标准的连续数个数
+
+            res = max(res, right-left+1);
+
+        }
+
+        
+
+        return res;
+
+  }
+
+};
+
+  
