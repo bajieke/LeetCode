@@ -1,0 +1,239 @@
+/*
+
+class LRUCache {
+
+public:
+
+    LRUCache(int capacity) {
+
+    }
+
+    
+
+    int get(int key) {
+
+    }
+
+    
+
+    void put(int key, int value) {
+
+    }
+
+};
+
+*/
+
+/**
+
+ * Your LRUCache object will be instantiated and called as such:
+
+ * LRUCache* obj = new LRUCache(capacity);
+
+ * int param_1 = obj->get(key);
+
+ * obj->put(key,value);
+
+ */
+
+ 
+
+ 
+
+ 
+
+ 
+
+//哈希表＋双链表
+
+class LRUCache {
+
+private:
+
+    //结构体
+
+    struct Node {
+
+        //
+
+        int key;
+
+        int val;
+
+        Node* left;
+
+        Node* right;
+
+        
+
+        //
+
+        Node(int key_, int val_):key(key_), val(val_),
+
+                         left(nullptr), right(nullptr)
+
+            { }
+
+            
+
+    }*L,*R;
+
+    
+
+private:
+
+    int n;   //容量
+
+    unordered_map<int, Node*> umap;  //哈希表
+
+    
+
+public:
+
+    //构造函数
+
+    LRUCache(int capacity) {
+
+        n = capacity;
+
+        
+
+        L = new Node(-1,-1);
+
+        R = new Node(-1,-1);
+
+        
+
+        //左边界L, 右边界R 是不存入哈希表的
+
+        L->right = R;
+
+        R->left = L;
+
+    }
+
+    
+
+    //删除结点
+
+    void remove(Node* p) {
+
+        p->left->right = p->right;
+
+        
+
+        p->right->left = p->left;
+
+    }
+
+    
+
+    //插入最左边
+
+    void insert(Node* p) {
+
+        p->right = L->right;
+
+        p->left = L;
+
+        
+
+        L->right->left = p;
+
+        L->right = p;
+
+    }
+
+    
+
+    //题目要求－获取元素
+
+    int get(int key) {
+
+        //1.不存在
+
+        if(umap.count(key) == 0) return -1;
+
+        
+
+        //2.存在
+
+        Node* p = umap[key];
+
+        remove(p);
+
+        insert(p);  //更新到最左边－最新的
+
+        
+
+        return p->val;
+
+    }
+
+    
+
+    //题目要求－更新元素
+
+    void put(int key, int value) {
+
+        //存在
+
+        if(umap.count(key) > 0) {
+
+            Node* p = umap[key];
+
+            
+
+            p->val = value;
+
+            
+
+            remove(p);
+
+            insert(p);
+
+        }
+
+        else {  //不存在
+
+            //缓存已满
+
+            if(umap.size() == n) {
+
+                Node* pDel = R->left;
+
+            
+
+                //从umap中删除
+
+                umap.erase(pDel->key);
+
+                //从双链表删除
+
+                remove(pDel);
+
+            }
+
+            
+
+            //元素本身不存在，先new出来一个，再插入
+
+            Node* p = new Node(key, value);
+
+            //umap插入
+
+            umap[key] = p;
+
+            //双链表插入
+
+            insert(p);
+
+        }
+
+       
+
+    }
+
+};
+
+    
