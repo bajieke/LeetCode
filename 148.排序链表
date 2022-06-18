@@ -1,0 +1,127 @@
+/**
+
+ * Definition for singly-linked list.
+
+ * struct ListNode {
+
+ *     int val;
+
+ *     ListNode *next;
+
+ *     ListNode() : val(0), next(nullptr) {}
+
+ *     ListNode(int x) : val(x), next(nullptr) {}
+
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+
+ * };
+
+ */
+
+//拆分链表－合并有序链表
+
+class Solution {
+
+private:
+
+    //合并有序链表
+
+    ListNode* merge(ListNode* p1, ListNode* p2) {
+
+        //退出条件
+
+        if(p1 == nullptr) return p2;
+
+        if(p2 == nullptr) return p1;
+
+        
+
+        if(p1->val < p2->val) {
+
+            p1->next = merge(p1->next, p2);
+
+            //选中p1
+
+            return p1;
+
+        }
+
+        else {
+
+            p2->next = merge(p1, p2->next);
+
+            //选中p2
+
+            return p2;
+
+        }
+
+        
+
+        //象征性返回没用的 东西
+
+        return nullptr;
+
+    }
+
+    
+
+public:
+
+    ListNode* sortList(ListNode* head) {
+
+        //退出条件
+
+        if(head == nullptr) return nullptr;
+
+        if(head->next == nullptr) return head;
+
+        
+
+        ListNode* fast = head;
+
+        ListNode* slow = head;
+
+        ListNode* brk = head;
+
+        
+
+        //fast 是 slow 的二倍速
+
+        while(fast && fast->next) {
+
+            fast = fast->next->next;
+
+            
+
+            if(!fast || !fast->next) {
+
+                brk = slow; //分割点
+
+            }
+
+            
+
+            slow = slow->next; //slow在分割点后
+
+        }
+
+        //分割链表
+
+        brk->next = nullptr;
+
+        
+
+        //递归－归并
+
+        ListNode* head1 = sortList(head);
+
+        ListNode* head2 = sortList(slow);
+
+        
+
+        return merge(head1, head2);
+
+    }
+
+};
