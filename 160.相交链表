@@ -1,0 +1,173 @@
+/**
+
+ * Definition for singly-linked list.
+
+ * struct ListNode {
+
+ *     int val;
+
+ *     ListNode *next;
+
+ *     ListNode(int x) : val(x), next(NULL) {}
+
+ * };
+
+ */
+
+ 
+
+ /*
+
+//链表相交
+
+class Solution {
+
+public:
+
+    ListNode *getIntersectionNode(ListNode *head1, 
+
+                                ListNode *head2) {
+
+        //特殊情况
+
+        if(head1 == head2) return head1;
+
+        
+
+        ListNode* p1 = head1;
+
+        ListNode* p2 = head2;
+
+        
+
+        int countA = 0, countB = 0;
+
+        
+
+        //计算head1，head2长度
+
+        while(p1) {
+
+            countA++;
+
+            p1 = p1->next;
+
+        }
+
+        
+
+        while(p2) {
+
+            countB++;
+
+            p2 = p2->next;
+
+        }
+
+        
+
+        //计算两者差度
+
+        int tap = 0;
+
+        if(countA > countB) {
+
+            p1 = head1;
+
+            tap = countA - countB;
+
+            p2 = head2;
+
+        }
+
+        else {
+
+            p1 = head2;
+
+            tap = countB - countA;
+
+            p2 = head1;
+
+        }
+
+        
+
+        //补进
+
+        while(tap--) {
+
+            p1 = p1->next;
+
+        }
+
+        
+
+        //正式－齐头判断
+
+        while(p1 && p2) {
+
+            if(p1 == p2) {
+
+                return p1;
+
+            }
+
+            
+
+            p1 = p1->next;
+
+            p2 = p2->next;
+
+        }
+
+        
+
+        return nullptr;
+
+    }
+
+};
+
+*/
+
+//绝妙的方法－利用数学
+
+class Solution {
+
+public:
+
+    ListNode* getIntersectionNode(ListNode* head1, 
+
+                                ListNode* head2) {
+
+        ListNode* p1 = head1;
+
+        ListNode* p2 = head2;
+
+        
+
+        while(p1 != p2) {
+
+        
+
+            p1 = (p1!=nullptr) ? p1->next : head2;
+
+            
+
+            p2 = (p2!=nullptr) ? p2->next : head1;
+
+        }
+
+        
+
+        return p1;
+
+        // p1 == p2 (不为空)  return p1;
+
+        // p1 == p2 (同时空)  return nullptr;
+
+    }
+
+};
+
+     
