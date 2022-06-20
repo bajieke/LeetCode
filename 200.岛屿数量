@@ -1,0 +1,197 @@
+/*
+
+//dfs－深度优先遍历
+
+class Solution {
+
+private:
+
+    void dfs(vector<vector<char>>& grid, int i, int j)
+
+                                                    {
+
+        //越界
+
+        if(i < 0 || j < 0 || i >= grid.size() ||
+
+                             j >= grid[0].size()) 
+
+            return;
+
+            
+
+        //已为水
+
+        if(grid[i][j] == '0') 
+
+            return;
+
+        
+
+        
+
+        grid[i][j] = '0';  //陆地置0
+
+         //代表已包含在这一整块陆地岛屿中
+
+        
+
+        dfs(grid, i, j-1);  //岛屿探索
+
+        dfs(grid, i, j+1);
+
+        dfs(grid, i+1, j);
+
+        dfs(grid, i-1, j);
+
+    }
+
+    
+
+public:
+
+    int numIslands(vector<vector<char>>& grid) {
+
+        int res = 0;
+
+        
+
+        for(int i = 0; i < grid.size(); i++) {
+
+            for(int j = 0; j < grid[0].size(); j++) {
+
+                //进入陆地
+
+                if(grid[i][j] == '1') {
+
+                    //探索－上下左右－相连陆地
+
+                    dfs(grid, i, j);
+
+                    res++;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
+*/
+
+//宽度优先遍历－借助队列－－－－－效率很低
+
+class Solution {
+
+private:
+
+    //迭代
+
+  //void bfs(vector<vector<char>& grid, int i, int j) {
+
+    void bfs(vector<vector<char>>& grid, int i, int j)
+
+                                                    {
+
+        //
+
+        queue<pair<int, int>> que;
+
+        que.push(make_pair(i, j));
+
+        
+
+        while(!que.empty()) {
+
+            auto cur = que.front();
+
+            que.pop();
+
+            
+
+            int row = cur.first;
+
+            int col = cur.second;
+
+            
+
+            if(row < 0 || col < 0 || 
+
+               row >= grid.size() || 
+
+               col >= grid[0].size()) {
+
+               //越界，不必下一步了
+
+                continue;
+
+            }
+
+            
+
+            //水地，没必要继续－探索陆地了
+
+            if(grid[row][col] == '0') continue;
+
+            
+
+            grid[row][col] = '0'; //标记陆地
+
+            
+
+            que.push(make_pair(row, col-1));
+
+            que.push(make_pair(row, col+1));
+
+            que.push(make_pair(row-1, col));
+
+            que.push(make_pair(row+1, col));
+
+        }
+
+    }
+
+public:
+
+    int numIslands(vector<vector<char>>& grid) {
+
+        int res = 0;
+
+        
+
+        for(int i = 0; i < grid.size(); i++) {
+
+            for(int j = 0; j < grid[0].size(); j++) {
+
+                //判断陆地
+
+                if(grid[i][j] == '1') {
+
+                    //探寻－扩大 陆地
+
+                    bfs(grid, i, j);
+
+                    res++;
+
+                }
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
+  
