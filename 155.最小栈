@@ -1,0 +1,88 @@
+ //最小栈
+
+class MinStack {
+
+private:
+
+    stack<int> stk;
+
+    stack<int> minStk;
+
+    
+
+public:
+
+    MinStack() {
+
+        while(!stk.empty()) stk.pop();
+
+        while(!minStk.empty()) minStk.pop();
+
+    }
+
+    
+
+    void push(int val) {
+
+        stk.push(val);
+
+        
+
+        if(minStk.empty() || val < minStk.top()) {
+
+            minStk.push(val);
+
+        }
+
+        else {
+
+            minStk.push(minStk.top());
+
+        }
+
+    }
+
+    
+
+    void pop() {
+
+        if(stk.empty() || minStk.empty()) {
+
+            return;
+
+        }
+
+        
+
+        stk.pop();
+
+        minStk.pop();
+
+    }
+
+    
+
+    int top() {
+
+        if(stk.empty()) return -1;
+
+        
+
+        return stk.top();
+
+    }
+
+    
+
+    int getMin() {
+
+        if(minStk.empty()) return -1;
+
+        
+
+        return minStk.top();
+
+    }
+
+};
+
