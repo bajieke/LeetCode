@@ -1,0 +1,84 @@
+/*
+
+class Solution {
+
+public:
+
+    int maxProduct(vector<int>& nums) {
+
+    }
+
+};
+
+*/
+
+//巧妙绝伦
+
+class Solution {
+
+public:
+
+    int maxProduct(vector<int>& nums) {
+
+        //
+
+        int res = INT_MIN;
+
+        
+
+        int imax = 1, imin = 1;
+
+        
+
+        for(int i = 0; i < nums.size(); i++) {
+
+            //swap
+
+            if(nums[i] < 0) {
+
+                //换过来的is正(取小正) --->伤害最小
+
+                //换过来的is负(极端最小)-->负负无敌大
+
+                swap(imax, imin);
+
+            }
+
+            
+
+            
+
+            //当碰到负数时
+
+                 // 负*负 得正    正*负 得负(选择了个新开始)
+
+            imax = max(imax*nums[i], nums[i]);
+
+            //当碰到正数时
+
+                  
+
+            //往极端最小值靠近，越小越好，
+
+            //将来碰到负数，交换时－负负得正，无敌大
+
+            imin = min(imin*nums[i], nums[i]);
+
+            
+
+            
+
+            //及时更新
+
+            res = max(res, imax);
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
