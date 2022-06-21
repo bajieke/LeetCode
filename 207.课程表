@@ -1,0 +1,215 @@
+/*
+
+//入度表－广度优先遍历
+
+class Solution {
+
+public:
+
+    bool canFinish(int numCourses, vector<vector<int>>&
+
+                                       prerequisites) {
+
+        //构造入度表
+
+        vector<int> degrees(numCourses, 0);
+
+        
+
+        //构造序列
+
+        vector<vector<int>> adjacent(numCourses);
+
+        
+
+        //初始化
+
+        for(auto vec : prerequisites) {
+
+            adjacent[vec[1]].push_back(vec[0]); //去向
+
+            
+
+            degrees[vec[0]]++;  //来源
+
+        }
+
+        
+
+        //入队
+
+        queue<int> que;
+
+        int count = numCourses;
+
+        
+
+        for(int i = 0; i < degrees.size(); i++) {
+
+            if(degrees[i] == 0) {
+
+                que.push(i);   //下标才是课程
+
+                count--;       //degrees[i]是，来源次数
+
+            }
+
+        }
+
+        
+
+        //拓扑排序
+
+        while(!que.empty()) {
+
+            int temp = que.front();
+
+            que.pop();
+
+            
+
+            //去向表
+
+            for(auto node : adjacent[temp]) {
+
+                //来源表－减一
+
+                degrees[node]--;
+
+            
+
+                //来源，都除去了
+
+                if(degrees[node] == 0) {
+
+                    que.push(node);  //
+
+                    count--;
+
+                }
+
+            }
+
+        }
+
+        
+
+        //只有它们所有来源，都被清理pop了
+
+        //才会入队列
+
+        if(count == 0) {
+
+            return true;
+
+        }
+
+        
+
+        return false;
+
+    }
+
+};
+
+*/
+
+//深度
+
+class Solution {
+
+private:
+
+    //无环－返回true          //有环－返回false
+
+    bool dfs(int i, vector<vector<int>>& adjacent, 
+
+                                vector<int>& flags) {
+
+        //退出条件
+
+        if(flags[i] == 1) return false;   //有环
+
+        if(flags[i] == -1) return true;   //此点后，无环
+
+        
+
+        //处理
+
+        flags[i] = 1;
+
+        
+
+        for(int j = 0; j < adjacent[i].size(); j++) {
+
+            if(!dfs(adjacent[i][j], adjacent, flags)) {
+
+                return false;
+
+            }
+
+        }
+
+        
+
+        //回溯
+
+        flags[i] = -1;
+
+        
+
+        return true;
+
+    }
+    
+
+public:
+
+    bool canFinish(int numCourses, vector<vector<int>>&
+
+                                       prerequisites) {
+
+        //定义
+
+        vector<int> flags(numCourses, 0);
+
+        
+
+        vector<vector<int>> adjacent(numCourses);
+
+        
+
+        for(auto vec : prerequisites) {
+
+            adjacent[vec[1]].push_back(vec[0]);
+
+        }
+
+        
+
+        
+
+        for(int i = 0; i < numCourses; i++) {
+
+            //有环
+
+            if(!dfs(i, adjacent, flags)) {
+
+                return false;
+
+            }
+
+        }
+
+        
+
+        //遍历所有，无环
+
+        return true;
+
+    }
+
+};
+
+
+    
