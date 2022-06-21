@@ -1,0 +1,203 @@
+/*
+
+class Trie {
+
+public:
+
+    Trie() {
+
+    }
+
+    
+
+    void insert(string word) {
+
+    }
+
+    
+
+    bool search(string word) {
+
+    }
+
+    
+
+    bool startsWith(string prefix) {
+
+    }
+
+};
+
+*/
+
+/**
+
+ * Your Trie object will be instantiated and called as such:
+
+ * Trie* obj = new Trie();
+
+ * obj->insert(word);
+
+ * bool param_2 = obj->search(word);
+
+ * bool param_3 = obj->startsWith(prefix);
+
+ */
+
+ 
+
+ //前缀树结点
+
+class TrieNode {
+
+public:
+
+    //数据成员
+
+    vector<TrieNode*> children;  //子字母表
+
+    bool isWord;  //是否为单词结尾
+
+    
+
+    //构造函数
+
+    TrieNode():children(26, nullptr), isWord(false) { }
+
+    //析构函数
+
+    ~TrieNode() {
+
+        for(auto pch : children) {
+
+            delete pch;
+
+        }
+
+    }
+
+};
+
+//前缀树
+
+class Trie {
+
+public:
+
+    Trie() { root = new TrieNode(); }
+
+    ~Trie() { delete root; }
+
+    
+
+    //插入
+
+    void insert(string word) {
+
+        TrieNode* p = root;
+
+        
+
+        for(char ch : word) {
+
+            int i = ch - 'a';
+
+            
+
+            if(!p->children[i]) {
+
+                p->children[i] = new TrieNode();
+
+            }
+
+            
+
+            p = p->children[i];
+
+        }
+
+        
+
+        p->isWord = true;
+
+    }
+
+    
+
+    //查询单词
+
+    bool search(string word) {
+
+        TrieNode* p = root;
+
+        
+
+        for(char ch : word) {
+
+            int i = ch - 'a';
+
+            
+
+            if(!p->children[i]) {
+
+                return false;
+
+            }
+
+            
+
+            p = p->children[i];
+
+        }
+
+        
+
+        if(!p->isWord) return false;
+
+        
+
+        return true;
+
+    }
+
+    
+
+    //查询前缀
+
+    bool startsWith(string prefix) {
+
+        TrieNode* p = root;
+
+        
+
+        for(char ch : prefix) {
+
+            int i = ch - 'a';
+
+            
+
+            if(!p->children[i]) {
+
+                return false;
+
+            }
+
+            
+
+            p = p->children[i];
+
+        }
+
+        
+
+        return true;
+
+    }
+
+    
+
+private:
+
+    TrieNode* root;
+
+};
