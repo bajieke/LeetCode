@@ -1,0 +1,141 @@
+/*
+
+//函数对象
+
+class cmp {
+
+public:
+
+    //less<T>  a > b
+
+    bool operator()(int a, int b) {
+
+        return a > b;
+
+    }
+
+};
+
+//优先队列－小根堆
+
+class Solution {
+
+public:
+
+    int findKthLargest(vector<int>& nums, int k) {
+
+        //排序方式－－－less(大 ~ 小)
+
+        priority_queue<int, vector<int>, cmp> pri_que;
+
+        
+
+        for(int num : nums) {
+
+            if(pri_que.size() < k) {
+
+                pri_que.push(num);
+
+            }
+
+            else {
+
+                if(pri_que.top() < num) {
+
+                    pri_que.pop();
+
+                    pri_que.push(num);
+
+                }
+
+            }
+
+        }
+
+        
+
+        return pri_que.top();
+
+    }
+
+};
+
+*/
+
+/*
+
+//快速排序
+
+class Solution {
+
+private:
+
+    //从小 到大－排序
+
+    int quickSort(vector<int>& nums, int k, 
+
+                                int left, int right) {
+
+        //定义
+
+        int i = left, j = right;
+
+        
+
+        while(i < j) {
+
+            while((i < j) && nums[left] <= nums[j]) {
+
+                --j;
+
+            }
+
+            
+
+            while((i < j) && nums[left] <= nums[i]) {
+
+                ++i;
+
+            }
+
+            
+
+            if(i < j) swap(nums[i], nums[j]);
+
+        }
+
+        
+
+        swap(nums[left], nums[j]);
+
+        
+
+        if(k < j) quickSort(nums, k, left, i-1);
+
+        if(k > j) quickSort(nums, k, i+1, right);
+
+        
+
+        // k == j
+
+        return nums[k];
+
+    }
+
+    
+
+    
+
+public:
+
+    int findKthLargest(vector<int>& nums, int k) {
+
+        if(nums.size() < k) return -1;
+
+        
+
+        return quickSort(nums, k-1, 0, nums.size()-1);
+
+    }
+
+};
