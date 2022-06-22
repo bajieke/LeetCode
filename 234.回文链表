@@ -1,0 +1,135 @@
+/**
+
+ * Definition for singly-linked list.
+
+ * struct ListNode {
+
+ *     int val;
+
+ *     ListNode *next;
+
+ *     ListNode() : val(0), next(nullptr) {}
+
+ *     ListNode(int x) : val(x), next(nullptr) {}
+
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+
+ * };
+
+ */
+
+ 
+
+ /*
+
+class Solution {
+
+public:
+
+    bool isPalindrome(ListNode* head) {
+
+        vector<int> vec;
+
+        
+
+        ListNode* p = head;      
+
+        while(p) {
+
+            vec.push_back(p->val);
+
+            p = p->next;
+
+        }
+
+        
+
+        int i = 0, j = vec.size() - 1;
+
+        while(i < j) {
+
+            if(vec[i] != vec[j]) {
+
+                return false;
+
+            }
+
+            ++i;
+
+            --j;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+};
+
+*/
+
+/*
+
+//递归
+
+class Solution {
+
+private:
+
+    ListNode* left;
+
+    
+
+private:
+
+    bool dfs(ListNode* right) {
+
+        //退出条件
+
+        if(right == nullptr) return true;
+
+        
+
+        //判断回溯之前一轮－比较结果
+
+        if(!dfs(right->next)) {
+
+            return false;
+
+        }
+
+        
+
+        if(right->val != left->val) {
+
+            return false;  //不相等
+
+        }
+
+        
+
+        left = left->next;
+
+        return true;  //相等
+
+    }
+
+public:
+
+    bool isPalindrome(ListNode* head) {
+
+        left = head;
+
+        
+
+        return dfs(head);
+
+    }
+
+};
+
+*/
+
+      
