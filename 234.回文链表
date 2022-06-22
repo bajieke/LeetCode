@@ -132,4 +132,114 @@ public:
 
 */
 
-      
+  
+  
+  
+  
+  //反转链表
+
+class Solution {
+
+private:
+
+    //反转链表
+
+    ListNode* reverseListNode(ListNode* head) {
+
+        //
+
+        ListNode* pre = nullptr;
+
+        ListNode* cur = head;
+
+        ListNode* temp = nullptr;
+
+        
+
+        while(cur) {
+
+            temp = cur->next;
+
+            cur->next = pre;
+
+            
+
+            pre = cur;
+
+            cur = temp;
+
+        }
+
+        
+
+        return pre;
+
+    }
+
+    //寻找链表中间结点
+
+    ListNode* halfNode(ListNode* head) {
+
+        ListNode* fast = head;
+
+        ListNode* slow = head;
+
+        
+
+        while(fast->next && fast->next->next) {
+
+            fast = fast->next->next;
+
+            slow = slow->next;
+
+        }
+
+        
+
+        return slow;
+
+    }
+
+       
+
+public:
+
+    bool isPalindrome(ListNode* head) {
+
+        ListNode* p = head;
+
+        int count = 0;
+
+        
+
+        ListNode* slow = halfNode(head);
+
+        
+
+        ListNode* pEnd = reverseListNode(slow->next);
+
+        
+
+     p = head;
+
+        while(p && pEnd) {
+
+            if(p->val != pEnd->val)
+
+                return false;
+
+            
+
+            p = p->next;
+
+            pEnd = pEnd->next;
+
+        }
+
+        
+
+        return true;
+
+    }
+
+};
