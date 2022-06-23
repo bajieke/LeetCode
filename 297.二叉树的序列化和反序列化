@@ -1,0 +1,131 @@
+class Codec {
+
+public:
+
+    //序列化
+
+    string serialize(TreeNode* root) {
+
+        if(root == nullptr) return "";
+
+        
+
+        queue<TreeNode*> que;
+
+        que.push(root);
+
+        
+
+        ostringstream output;
+
+        
+
+        while(!que.empty()) {
+
+            TreeNode* node = que.front();
+
+            que.pop();
+
+            
+
+            if(node) {
+
+                output << node->val << " ";
+
+            
+
+                que.push(node->left);
+
+                que.push(node->right);
+
+            }
+
+            else {
+
+                output << "#" << " ";
+
+            }
+
+        }
+
+       
+
+        return output.str();
+
+    }
+
+    //反序列化
+
+    TreeNode* deserialize(string data) {
+
+        if(data.size() == 0) return nullptr;
+
+        
+
+        vector<TreeNode*> nodes;
+
+        
+
+        istringstream input(data);
+
+        
+
+        string val;
+
+        while(input >> val) {
+
+            if(val == " ") {
+
+                continue;
+
+            }
+
+            else if(val == "#") {
+
+                nodes.push_back(nullptr);
+
+            }
+
+            else {
+
+                nodes.push_back(new 
+
+                                TreeNode(stoi(val)));
+
+            }
+
+        }
+
+        
+
+        int pos = 1;
+
+        for(int i = 0; i < nodes.size(); i++) {
+
+            //
+
+            if(nodes[i] != nullptr) {
+
+                nodes[i]->left = nodes[pos++];
+
+                nodes[i]->right = nodes[pos++];
+
+            }
+
+            else {  //nodes[i] == nullptr
+
+                continue;
+
+            }
+
+        }
+
+        
+
+        return nodes[0];
+
+    }
+
+};
+
+   
