@@ -1,0 +1,86 @@
+/*
+
+//排序
+
+class Solution {
+
+public:
+
+    int findDuplicate(vector<int>& nums) {
+
+        sort(nums.begin(), nums.end());
+
+        
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            if(nums[i] == nums[i-1]) {
+
+                return nums[i];
+
+            }
+
+        }
+
+        
+
+        return -1;
+
+    }
+
+};
+
+*/
+
+//链表－环的入口
+
+class Solution {
+
+public:
+
+    int findDuplicate(vector<int>& nums) {
+
+        int fast = 0;
+
+        int slow = 0;
+
+        
+
+        while(true) {
+
+            fast = nums[nums[fast]];
+
+            slow = nums[slow];
+
+            
+
+            if(fast == slow) break;
+
+        }
+
+        
+
+        int finder = 0;
+
+        
+
+        while(true) {
+
+            fast = nums[fast];
+
+            finder = nums[finder];
+
+            
+
+            if(fast == finder) break;
+
+        }
+
+        
+
+        return finder;
+
+    }
+
+};
+
