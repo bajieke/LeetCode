@@ -1,0 +1,131 @@
+class Solution {
+
+private:
+
+    int max_;     //  '(' or')'最多的数量
+
+    string s_;    //字符串s
+
+    set<string> result_;  //结果集(自动去重)
+
+   
+
+    int len_;  //记录符合规定的，res最大值
+
+    
+
+private:
+
+    void dfs(int pos, int scores, string res) {
+
+        //退出条件
+
+        if(scores < 0 || scores > max_) return;
+
+        
+
+        if(pos == s_.size()) {
+
+            //成功
+
+            if(scores == 0 && res.size() >= len_) {
+
+                //之前的全部作废－我要的是删除最少的括号
+
+                if(res.size() > len_) {
+
+                    result_.clear();
+
+                }
+
+                
+
+                len_ = res.size();     //更新
+
+                result_.insert(res);  //插入
+
+            }
+
+            
+
+            return;
+
+        }
+
+        
+
+        char ch = s_[pos];
+
+        if(ch == '(') {
+
+            dfs(pos + 1, scores + 1, res + ch);
+
+            dfs(pos + 1, scores, res);
+
+        }
+
+        else if(ch == ')') {
+
+            dfs(pos + 1, scores - 1, res + ch);
+
+            dfs(pos + 1, scores, res);
+
+        }
+
+        else {  // ch == '字母'
+
+            dfs(pos + 1, scores, res + ch);
+
+        }
+
+        
+
+        return;
+
+    }
+
+public:
+
+    vector<string> removeInvalidParentheses(string s) {
+
+        int leftC = 0, rightC = 0;
+
+        
+
+        for(int i = 0; i < s.size(); i++) {
+
+            if(s[i] == '(')  //左括号
+
+                leftC++;
+
+            else if(s[i] == ')')  //右括号
+
+                rightC++;
+
+            else      //字母
+
+                continue;
+
+        }
+
+        
+
+        max_ = min(leftC, rightC);
+
+        s_ = s;
+
+        
+
+        //当前下标，得分，字符串
+
+        dfs(0, 0, "");
+
+        
+
+        return vector<string>(result_.begin(), 
+
+                              result_.end());
+
+    } 
+
+};
