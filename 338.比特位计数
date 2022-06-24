@@ -1,0 +1,58 @@
+class Solution {
+
+public:
+
+    vector<int> countBits(int n) {
+
+        //考虑特殊情况
+
+        if(n < 0) {
+
+            vector<int> temp;
+
+            return temp;
+
+        }
+
+        
+
+        vector<int> ans(n + 1, 0);
+
+        
+
+        ans[0] = 0;
+
+        //ans[1] = 1; //错误. n=0时, 只有ans[0]
+
+        
+
+        for(int i = 1; i <= n; i++) {
+
+            //奇数
+
+            if(i%2 == 1) {
+
+                ans[i] = ans[i-1] + 1;
+
+            }
+
+            //偶数
+
+            else {
+
+                ans[i] = ans[i/2];
+
+                //ans[i] = ans[i >> 1];
+
+            }
+
+        }
+
+        
+
+        return ans;
+
+    }
+
+};
+
