@@ -192,4 +192,38 @@ public:
 
             
 
-            visited[umap
+            visited[umap[s1]] = true;   //标记
+
+            dfs(G, W, visited, 1.0, umap[s1],   //递归
+
+                                    umap[s2]);
+
+            visited[umap[s1]] = false;  //取消标记
+
+            
+
+            //在dfs里，只能标志你找到了  flag == 1
+
+            //但是－找不到需要，这里额外处理
+
+            if(flag == 0) {  //没找到
+
+                res.push_back(-1.0);
+
+            }
+
+            else {
+
+                flag = 0; //方便for中下一次，找
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
