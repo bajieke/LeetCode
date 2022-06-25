@@ -1,0 +1,156 @@
+ 
+
+/*
+
+//递归
+
+class Solution {
+
+private:
+
+    int res = 0;
+
+private:            //curSum并不会改变原来的值
+
+    void dfs(TreeNode* cur, double curSum, 
+
+                            int targetSum) {
+
+        //退出条件
+
+        if(!cur) return;
+
+        
+
+        curSum += cur->val;  //处理
+
+        
+
+        //满足条件－－继续递归
+
+        //说不定后面一负一正还有呢
+
+        if(curSum == targetSum) res++;
+
+        
+
+        //左
+
+        dfs(cur->left, curSum, targetSum);
+
+        
+
+        //右
+
+        dfs(cur->right, curSum, targetSum);
+
+    }
+
+    
+
+public:
+
+    int pathSum(TreeNode* root, int targetSum) {
+
+        if(!root) return 0;
+
+        
+
+        dfs(root, 0, targetSum);
+
+        
+
+        pathSum(root->left, targetSum);
+
+        pathSum(root->right, targetSum);
+
+        
+
+        return res;
+
+    }
+
+};
+
+*/
+
+//前缀和_一次遍历解决
+
+class Solution {
+
+private:
+
+    int res = 0;
+
+    int targetSum_;
+
+    unordered_map<double, int> prefix;
+
+    
+
+private:
+
+    void dfs(TreeNode* cur, double curSum) {
+
+        //退出条件
+
+        if(!cur) return;
+
+        
+
+        curSum += cur->val;  //处理
+
+        
+
+        //找到满足条件的[段]  
+
+        // curSum - targetSum = [段]
+
+        if(prefix.count(curSum - targetSum_)) {
+
+            res += prefix[curSum - targetSum_];
+
+        }
+
+        
+
+        //我当前结点，只要结束了它的左右孩子
+
+        //就从umap中，去除当前结点－－－－
+
+        prefix[curSum]++;
+
+        
+
+        dfs(cur->left, curSum);
+
+        dfs(cur->right, curSum);
+
+        
+
+        prefix[curSum]--;
+
+    }
+
+    
+
+public:
+
+    int pathSum(TreeNode* root, int targetSum) {
+
+        targetSum_ = targetSum;
+
+        prefix[0] = 1;
+
+        
+
+        dfs(root, 0);
+
+        
+
+        return res;
+
+    }
+
+};
+
