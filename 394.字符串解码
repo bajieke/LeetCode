@@ -1,0 +1,191 @@
+/*
+
+//辅助栈
+
+class Solution {
+
+public:
+
+    string decodeString(string s) {
+
+        stack<pair<string, int>> matchStk;
+
+        
+
+        string res = "";
+
+        int num = 0;
+
+        
+
+        for(char ch : s) {
+
+            //
+
+            if(ch == '[') {
+
+                //res代表:  当前'[' ~ 前一个'['的字符串
+
+                matchStk.push({res, num});
+
+                
+
+                //碰到'['之后，把数字，字符串清零
+
+                num = 0;
+
+                res = "";
+
+            }
+
+            //
+
+            else if(ch == ']') {
+
+                auto [preStr, cnt] = matchStk.top();
+
+                matchStk.pop();
+
+            
+
+                for(int i = 0; i < cnt; i++) {
+
+                    //当前字符串，追加一下res
+
+                    preStr += res;
+
+                }
+
+                res = preStr;
+
+            }
+
+            //
+
+            else if(ch >= '0' && ch <= '9') {
+
+                //  123[abc]    
+
+                //数字可能不止一个，num*10
+
+                num = num*10 + (int)(ch-'0');
+
+            }
+
+            //
+
+            else {  // ch == 字母
+
+                res += ch;
+
+            }
+
+        }
+
+        
+
+        return res;
+
+    }
+
+};
+
+*/
+
+//递归
+
+class Solution {
+
+private:
+
+    string dfs(int& pos, string& s) {
+
+        //每次碰到'['以后，进去递归
+
+        
+
+        //更新res, 和 num
+
+        string res = "";
+
+        int num = 0;
+
+        
+
+        for(; pos < s.size(); pos++) {
+
+            //递归开始条件
+
+            if(s[pos] == '[') {
+
+                //递归返回之后，pos也会发生改变
+
+                string nextStr = dfs(++pos, s);
+
+            
+
+                while(num != 0){
+
+                    res += nextStr;
+
+                    --num;
+
+                }
+
+            }
+
+            
+
+            //递归结束条件
+
+            else if(s[pos] == ']') {
+
+                return res;
+
+            }
+
+            
+
+            //数字 num[ 进入递归 ]，
+
+            else if(s[pos] >= '0' && s[pos] <= '9') {
+
+                //
+
+                num = num*10 + (int)(s[pos]-'0');
+
+            
+
+            }
+
+            
+
+            else {  //s[i] == 字母
+
+                res += s[pos];
+
+            }
+
+        }
+
+        
+
+        return res; //理论上，不会到这一步
+
+    }
+
+public:
+
+    string decodeString(string s) {
+
+        int index = 0;  //我要改变 indexin(pos)
+
+                 //所以，不能直接dfs传入0，而要定义一个变量
+
+        
+
+        return dfs(index, s);
+
+    }
+
+};
