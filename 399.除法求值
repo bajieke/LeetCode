@@ -1,0 +1,195 @@
+//图
+
+class Solution {
+
+private:
+
+    vector<double> res;  //queries的最终结果集
+
+    bool flag; //每一条路径是否找到
+
+    
+
+private:
+
+    void dfs(vector<vector<int>> &G, 
+
+                    vector<vector<double>> &W, 
+
+                    vector<bool> &visited, double val, 
+
+                    int start, int end) {
+
+                        
+
+        //退出条件－找到了
+
+        if(start == end) {
+
+            res.push_back(val);  //插入，正确答案
+
+            flag = 1;  //此次，已找到路径
+
+            return;
+
+        }
+
+        
+
+        for(int i = 0; i < G[start].size(); i++) {
+
+            //剪枝
+
+            
+
+            //已经作为路径上经过了的，没必要访问
+
+            //for循环上一次，已经找到路径，没必要继续
+
+            if(visited[G[start][i]] || flag)  {
+
+                continue;
+
+            }
+
+            
+
+            //处理
+
+            visited[start] = true;
+
+            val *= W[start][i];
+
+            
+
+            //递归
+
+            dfs(G, W, visited, val, G[start][i], end);
+
+            
+
+            //回溯
+
+            val /= W[start][i];
+
+            visited[start] = false;
+
+            
+
+        }
+
+        
+
+    }
+
+public:
+
+    vector<double> calcEquation(
+
+                    vector<vector<string>>& equations, 
+
+                    vector<double>& values, 
+
+                    vector<vector<string>>& queries) {
+
+        //<字符串_对应索引>
+
+        unordered_map<string, int> umap;
+
+        
+
+        //构建umap<字符串， 索引>
+
+        int cnt = 0;
+
+        for(auto &vec : equations) {
+
+            for(auto &str : vec) {
+
+                if(umap.count(str) != 1)
+
+                    umap[str] = cnt++;
+
+                //否则str，已加入umap
+
+                    //cnt不用++
+
+            }
+
+        }
+
+        
+
+        //结点图G，权值图W
+
+        vector<vector<int>> G(umap.size());
+
+        vector<vector<double>> W(umap.size());
+
+        
+
+        for(int i = 0; i < equations.size(); i++) {
+
+            //正向
+
+            G[umap[equations[i][0]]].push_back
+
+                            (umap[equations[i][1]]);
+
+            W[umap[equations[i][0]]].push_back
+
+                            (values[i]);
+
+            //反向
+
+            G[umap[equations[i][1]]].push_back
+
+                            (umap[equations[i][0]]);
+
+            W[umap[equations[i][1]]].push_back
+
+                            (1/values[i]);
+
+        }
+
+        
+
+        
+
+        flag = false; //初始化
+
+        vector<bool> visited(umap.size());
+
+        
+
+        //解决问题
+
+        for(auto querie : queries) {
+
+            string s1 = querie[0];
+
+            string s2 = querie[1];
+
+            
+
+            if(s1 == s2 && umap.count(s1)) {
+
+                res.push_back(1.0);
+
+                continue;
+
+            }
+
+            
+
+            if(!umap.count(s1) || !umap.count(s2)) {
+
+                res.push_back(-1.0);
+
+                continue;
+
+            }
+
+            
+
+            visited[umap
